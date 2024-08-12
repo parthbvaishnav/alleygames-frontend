@@ -1,24 +1,37 @@
-import React from 'react'
-import { MemberBgImage, TeamImage1, TeamImage2, TeamImage3, TeamImage4, TeamImage5, TeamImage6, TeamImage7, TeamImage8 } from '../../utils/ImagesLoad'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { gameslogo1, MemberBgImage, playicon, TeamImage1, TeamImage2, TeamImage3, TeamImage4, TeamImage5, TeamImage6, TeamImage7, TeamImage8 } from '../../utils/ImagesLoad';
+import { Link } from 'react-router-dom';
+import { getAllGame } from '../../utils/indexService';
 
 const GameList = () => {
+  const [gameData, setGameData] = useState([]);
+
+  useEffect(() => {      
+    getAllListGame();
+  }, []);
+
+  const getAllListGame = () => {
+    getAllGame().then((data) => {    
+      setGameData(data);
+    });
+  };
+
   return (
-    <section className="vs-team-wrapper vs-team-layout1 space-top newsletter-pb">
-        <div className="container">
-           
-
-            <div className="pagination-wrapper pagination-layout1 mt-lg-30 mb-30">
-                <ul>
-                    <li><Link className="active"><span className="text">1</span></Link></li>
-                    <li><Link><span className='text'>2</span></Link></li>
-                    <li><Link><span className='text'>3</span></Link></li>
-                    <li><Link><span className='text'>4</span></Link></li>
-                </ul>
+    <div className="all-items">
+      {gameData.map((game, index) => (
+        <div key={index} className="single-item">
+          <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
+            <div className="bg-area">
+              <img className="bg-item" src={game.Banner_image} alt="gamestabicon"/>
             </div>
+            <Link className="mfp-iframe popupvideo position-absolute d-flex align-items-center justify-content-center" to={game.Game_link || "https://www.youtube.com/watch?v=Djz8Nc0Qxwk"}>
+              <img src={playicon} alt="icon"/>
+            </Link>
+          </div>
         </div>
-    </section>
-  )
-}
+      ))}
+    </div>
+  );
+};
 
-export default GameList
+export default GameList;

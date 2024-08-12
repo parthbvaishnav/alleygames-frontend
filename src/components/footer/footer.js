@@ -11,35 +11,20 @@ library.add(faMapMarkerAlt, faPhone, faEnvelope, faFacebookF, faTwitter, faLinke
 const Footer = () => {
   return (
     <footer className="footer-section">
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-lg-10">
-                    <div className="footer-form">
-                        <div className="section-area mb-30 text-center">
-                            <h4 className="title">To Get Exclusive Benefits</h4>
-                        </div>
-                        <form action="#">
-                            <div className="form-group input-area d-flex align-items-center">
-                                <input type="text" placeholder="Enter your email address"/>
-                                <button className="btn-area"><img src={SendIcon} alt="icon"/></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div className="container">           
             <div className="footer-area pt-120">
                 <div className="row">
                     <div className="col-xl-12">
                         <div className="footer-top d-flex align-items-center justify-content-between">
-                            <a href="index.html">
+                            <Link to="/">
                                 <img src={HeaderLogo} className="logo" alt="logo"/>
-                            </a>
+                            </Link>
                             <div className="footer-box">
                                 <ul className="footer-link d-flex align-items-center gap-4">
-                                    <li><a href="about-us.html">About Us</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="terms-conditions.html">Terms of Service</a></li>
+                                    <li><Link to="/about">About Us</Link></li>
+                                    <li><Link to="/contact">Contact</Link></li>
+                                    <li><Link to="/privacyPolicy">Privacy Policy</Link></li>
+                                    <li><Link to="/TermsConditions">Terms of Service</Link></li>
                                 </ul>
                             </div>
                         </div>
