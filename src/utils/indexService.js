@@ -1,7 +1,11 @@
 // import { toast } from "react-toastify";
 import axios from "axios";
-import {ALL_CATEGORIES, ALL_GAME, CONTACT_US, }  from "../utils/constant";
-
+import { ALL_CATEGORIES, ALL_GAME, CONTACT_US } from "../utils/constant";
+import {
+  setError,
+  setGameList,
+  setLoading,
+} from "../redux/reducers/rootReducer";
 const getToken = () => {
   let user = localStorage.getItem("user");
   if (user != null) {
@@ -31,35 +35,39 @@ const getHeaders = () => {
     Authorization: "Bearer " + getToken(),
   };
 };
-
-export const getAllGame = async () => {
-  return axios
-    .get(ALL_GAME)
-    .then((response) => {
-      return response.data;
-    });
+export const getAllGame = () => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await axios.get(ALL_GAME);
+      dispatch(setGameList(response.data));
+    } catch (error) {
+      console.error("Error fetching games:", error);
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 };
 export const getAllCategories = async () => {
-  return axios
-    .get(ALL_CATEGORIES)
-    .then((response) => {
-      return response.data;
-    });
+  return axios.get(ALL_CATEGORIES).then((response) => {
+    return response.data;
+  });
 };
 
 export const submitContactForm = async ({ Name, Email, Message }) => {
-    return await axios
-      .post(
-        CONTACT_US,
-        {
-            Name: Name,
-            Email: Email,
-            Message: Message,
-        },
-        // { headers: getHeaders() }
-      )
-      .then((response) => {
-        console.log('response----submitContactForm------', response);
-        return response.data.data;
-      });
+  return await axios
+    .post(
+      CONTACT_US,
+      {
+        Name: Name,
+        Email: Email,
+        Message: Message,
+      }
+      // { headers: getHeaders() }
+    )
+    .then((response) => {
+      console.log("response----submitContactForm------", response);
+      return response.data.data;
+    });
 };

@@ -10,28 +10,30 @@ import Contact from "./pages/contact/contact";
 import PrivacyPolicy from "./pages/policy/privacyPolicy";
 import TermsConditions from "./pages/policy/termsConditions";
 import AllGame from "./pages/allGame/allGame";
+import store from "./redux/store/store";
+import { Provider } from "react-redux";
 
 export const Context = createContext();
 
 function App() {
   return (
-    <Context.Provider value={{}}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-               <Route exact path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/allGame" element={<AllGame />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blogdetails" element={<BlogDetails />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} /> 
-              <Route path="/privacyPolicy" element={<PrivacyPolicy />} /> 
-              <Route path="/TermsConditions" element={<TermsConditions />} /> 
-            </Route>
-          </Routes>
-        </BrowserRouter>
-    </Context.Provider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/allGame" element={<AllGame />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blogdetails" element={<BlogDetails />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+            <Route path="/TermsConditions" element={<TermsConditions />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
