@@ -114,32 +114,6 @@ const AllGame = () => {
                       </a>
                     </div>
                   </div>
-                  <div
-                    className="tab-pane fade"
-                    id="slots-popular"
-                    role="tabpanel"
-                    aria-labelledby="slots-popular-tab"
-                  >
-                    <GameList />
-                    <div className="btn-area mt-3 text-center">
-                      <a href="#" className="cmn-btn">
-                        Load More
-                      </a>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="slots-new"
-                    role="tabpanel"
-                    aria-labelledby="slots-new-tab"
-                  >
-                    <GameList />
-                    <div className="btn-area mt-3 text-center">
-                      <a href="#" className="cmn-btn">
-                        Load More
-                      </a>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

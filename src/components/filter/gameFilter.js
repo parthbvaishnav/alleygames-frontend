@@ -1,6 +1,12 @@
 import React from "react";
-
+import { useDispatch } from "react-redux";
+import { setFilterKey } from "../../redux/reducers/filterReducer";
 const GameFilter = () => {
+  const dispatch = useDispatch();
+
+  const handleFilterClick = (key) => {
+    dispatch(setFilterKey(key));
+  };
   return (
     <ul className="nav bottom-nav gap-3" role="tablist">
       <li className="nav-item" role="presentation">
@@ -13,6 +19,7 @@ const GameFilter = () => {
           role="tab"
           aria-controls="slots-all"
           aria-selected="true"
+          onClick={() => handleFilterClick('All')}
         >
           All
         </button>
@@ -27,6 +34,7 @@ const GameFilter = () => {
           role="tab"
           aria-controls="slots-popular"
           aria-selected="false"
+          onClick={() => handleFilterClick('Popular')}
         >
           Popular
         </button>
@@ -41,6 +49,7 @@ const GameFilter = () => {
           role="tab"
           aria-controls="slots-new"
           aria-selected="false"
+          onClick={() => handleFilterClick('New')}
         >
           New
         </button>

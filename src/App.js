@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 import Home from "./pages/home/home";
 import Blog from "./pages/blog/blog";
 import Layout from "./layout/layout";
@@ -12,10 +12,32 @@ import TermsConditions from "./pages/policy/termsConditions";
 import AllGame from "./pages/allGame/allGame";
 import store from "./redux/store/store";
 import { Provider } from "react-redux";
+import PlayGame from "./pages/playGame/playGame";
 
 export const Context = createContext();
 
 function App() {
+  // useEffect(() => {
+  //   const disableShortcuts = (event) => {
+  //     if ((event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) ||
+  //         (event.metaKey && event.altKey && event.key === 'I') ||
+  //         event.key === 'F12') {
+  //       event.preventDefault();
+  //     }
+  //   };
+
+  //   const disableRightClick = (event) => {
+  //     event.preventDefault();
+  //   };
+
+  //   window.addEventListener('keydown', disableShortcuts);
+  //   window.addEventListener('contextmenu', disableRightClick);
+
+  //   return () => {
+  //     window.removeEventListener('keydown', disableShortcuts);
+  //     window.removeEventListener('contextmenu', disableRightClick);
+  //   };
+  // }, []);
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -24,6 +46,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/allGame" element={<AllGame />} />
+            <Route path="/playGame" element={<PlayGame />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blogdetails" element={<BlogDetails />} />
             <Route path="/about" element={<About />} />

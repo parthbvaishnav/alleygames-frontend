@@ -2,10 +2,10 @@
 import axios from "axios";
 import { ALL_CATEGORIES, ALL_GAME, CONTACT_US } from "../utils/constant";
 import {
-  setError,
   setGameList,
-  setLoading,
 } from "../redux/reducers/rootReducer";
+import { setLoading, setError, clearError } from "../redux/reducers/statusSlice";
+import { setCategoryList } from "../redux/reducers/categoryReducer";
 const getToken = () => {
   let user = localStorage.getItem("user");
   if (user != null) {
@@ -38,6 +38,7 @@ const getHeaders = () => {
 export const getAllGame = () => {
   return async (dispatch) => {
     dispatch(setLoading(true));
+    dispatch(clearError());
     try {
       const response = await axios.get(ALL_GAME);
       dispatch(setGameList(response.data));
@@ -49,11 +50,22 @@ export const getAllGame = () => {
     }
   };
 };
-export const getAllCategories = async () => {
-  return axios.get(ALL_CATEGORIES).then((response) => {
-    return response.data;
-  });
+export const getAllCategories = () => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearError());
+    try {
+      const response = await axios.get(ALL_CATEGORIES);
+      dispatch(setCategoryList(response.data));
+    } catch (error) {
+      console.error("Error fetching games:", error);
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 };
+
 
 export const submitContactForm = async ({ Name, Email, Message }) => {
   return await axios
