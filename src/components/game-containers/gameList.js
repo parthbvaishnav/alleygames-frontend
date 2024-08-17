@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllGame } from "../../utils/indexService";
 import { useDispatch, useSelector } from "react-redux";
+import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
 
 const GameList = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,9 @@ const GameList = () => {
           to={'/playGame'}
           key={index}
           className="single-item"
+          onClick={()=>{
+            dispatch(setGameLinkKey(game)); 
+          }}
           onMouseEnter={(e) =>{
             const imgElement = e.currentTarget.querySelector("img");
             if (imgElement && game.Video_link) {

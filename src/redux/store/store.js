@@ -5,6 +5,7 @@ import rootReducer from "../reducers/rootReducer";
 import { configureStore } from "@reduxjs/toolkit";
 import statusSlice from "../reducers/statusSlice";
 import categoryFilter from "../reducers/categoryFilter";
+import gameLinkReducer from "../reducers/gameLinkReducer";
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
     filter: filterReducer,
     categories:categoryReducer,
     status: statusSlice,
-    category_filter: categoryFilter
+    category_filter: categoryFilter,
+    gameLink: gameLinkReducer
   },
 });
 

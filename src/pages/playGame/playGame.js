@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import GameList from '../../components/game-containers/gameList';
 
 const PlayGame = () => {
+  const gameLink = useSelector((state) => state.gameLink.gameLinkKey);
+  console.log("gameLink---------------",gameLink);
+  
   const mobileWidth = 600;
-  const gameKey = "?key=9gHj3sP5Kq7Rt4A1fBz0uXmN2vYc6DwE8iF7oLpQbVdSjCkMn";
   const [gameData, setGameData] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const screen = document.getElementById('fullscreen_div');
 
   useEffect(() => {
     const gameDetail =  {
-        gamelink:"https://gamersaimstorage.s3.ap-south-1.amazonaws.com/web_games/Bubble+Pop/index.html",
+        gamelink:gameLink.Game_link,
         category:"",
-        banner_link:"https://gamersaimstorage.s3.ap-south-1.amazonaws.com/games_images/Knife_Shoot_bener.png",
+        banner_link:gameLink.Banner_image,
         img:"https://gamersaimstorage.s3.ap-south-1.amazonaws.com/games_images/Knife_Shoot_bener.png",
         view_type:"",
       }
@@ -27,8 +31,8 @@ const PlayGame = () => {
     
     const { gamelink, category, banner_link, img, view_type } = data;
 
-    await getCategory(false);
-    await getSimilarGames(category);
+    // await getCategory(false);
+    // await getSimilarGames(category);
 
     const handleResize = () => {
       if (window.innerWidth <= mobileWidth) {
@@ -37,22 +41,16 @@ const PlayGame = () => {
         document.querySelector('.game-banner').src = banner_link;
         document.querySelector('.game-logo').src = img;
         document.getElementById('game').classList.add('hidden');
-        document.getElementById('side_similar_game_list').classList.add('hidden');
-        document.getElementById('similar_game_list').classList.remove('hidden');
       } else {
         // Desktop view
         let frameHeight = 600;
         let frameWidth = 350;
 
         if (view_type === "horizontal") {
-          document.getElementById('side_similar_game_list').classList.add('hidden');
-          document.getElementById('similar_game_list').classList.remove('hidden');
 
           frameWidth = Math.round(document.getElementById('game').clientWidth - 20);
           frameHeight = Math.round((4 * frameWidth) / 7);
         } else {
-          document.getElementById('side_similar_game_list').classList.remove('hidden');
-          document.getElementById('similar_game_list').classList.add('hidden');
 
           if (document.body.clientHeight - document.querySelector('header').clientHeight <= 600) {
             frameHeight = document.body.clientHeight - document.querySelector('header').clientHeight - 20;
@@ -61,7 +59,7 @@ const PlayGame = () => {
         }
         
         const dimensions = `${frameWidth}/${frameHeight}`;
-        document.getElementById('game').src = gamelink + gameKey;
+        document.getElementById('game').src = gamelink;
         document.getElementById('game').onload = () => {
           setScreenSize(dimensions);
         };
@@ -105,7 +103,7 @@ const PlayGame = () => {
 
   const fullScreenGame = () => {
     const gameFrame = document.getElementById('game');
-    gameFrame.src = gameData.gamelink + gameKey;
+    gameFrame.src = gameData.Game_link;
     gameFrame.onload = () => {
       gameFrame.contentWindow.postMessage('fullscreen', 'https://gamersaimstorage.s3.ap-south-1.amazonaws.com');
     };
@@ -135,45 +133,44 @@ const PlayGame = () => {
 
   return (
     <div>
-      <section className="sidebar" id="sidebar">
-        <ul className="category-list" id="cat_list">
-          <span>Loading...</span>
-        </ul>
-        <div className="sidebar-ads">Ads</div>
-      </section>
-
-      <section className={`games-container ${!gameData ? 'hidden' : ''}`} id="game_list_section">
-        <div className="game-list" id="game_list">
-          <span>Loading...</span>
-        </div>
-        <div className="side-ads">Ads</div>
-      </section>
-
-      <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
-        <div className="game-div" id="fullscreen_div">
-          <div className={`banner-div ${!gameData ? 'hidden' : ''}`}>
-            <div className="bg-banner-div">
-              <div className="bg-color"></div>
-              <img className="game-banner w-100" alt="game-banner" />
+    <section className="banner-section inner-banner blog details">
+        <div className="overlay">
+            <div className="banner-content">                  
             </div>
-            <div className="game-logo-div">
-              <img className="game-logo" alt="game-logo" />
-              <button className="play-now" onClick={handlePlayNow}>Play Now</button>
-            </div>
-          </div>
-          <div className="back-btn" id="back_btn" onClick={handleBack}>
-            <img src="assets/img/back-icon.png" alt="back-icon" />
-            <img src="assets/img/back-logo.png" alt="back-logo" className="back-logo" />
-          </div>
-          <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
-          <div className="games-container game-suggestion" id="side_similar_game_list"></div>
-          <div className="side-ads">Ads</div>
         </div>
-        <div className="bottom-ads">Ads</div>
-        <div className="games-container game-suggestion" id="similar_game_list"></div>
-      </section>
-
-    </div>
+    </section>
+    <section className="blog-details">
+      <div className="overlay">
+          <div className="container pb-120">
+              <div className="row">
+                  <div className="col-lg-2 sidebar" id="sidebar">
+                    <GameList />
+                  </div>
+                  <div className="col-lg-8 game-area">
+                    <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
+                      <div className="game-div" id="fullscreen_div">
+                        <div className={`banner-div ${!gameData ? 'hidden' : ''}`}>
+                          <div className="bg-banner-div">
+                            <div className="bg-color"></div>
+                            <img className="game-banner w-100" alt="game-banner" />
+                          </div>
+                          <div className="game-logo-div">
+                            <img className="game-logo" alt="game-logo" />
+                            <button className="play-now" onClick={handlePlayNow}>Play Now</button>
+                          </div>
+                        </div>
+                        <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
+                      </div>
+                    </section>
+                  </div>
+                  <div className="col-lg-2 sidebar" id="sidebar">
+                    <GameList />
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+  </div>
   );
 };
 

@@ -2165,10 +2165,14 @@ video.bg-item{
 }
 .game-area{
     background-color: #140836;
-    aspect-ratio: 14 / 7;
+    aspect-ratio: 16 / 10;
     border: 2px solid #38265b;
     border-radius: 8px;
     overflow: hidden;
+    padding: 0;
+    position: relative;
+    height: fit-content;
+    object-fit: contain;
 }
 .game-area iframe{
     width: 100%;
@@ -2177,6 +2181,16 @@ video.bg-item{
     padding: 0;
     margin: 0;
 }
+.game-area .banner-div {
+    background: #00000000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(6px);
+}
+
 .finished-tournaments .single-box .abs-area {
     position: absolute;
     border: 1px solid #42267c;
