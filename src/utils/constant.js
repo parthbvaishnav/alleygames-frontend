@@ -4,3 +4,6 @@ export const BASE_URL = MAIN_URL;
 export const ALL_GAME = BASE_URL + "allgames/";
 export const ALL_CATEGORIES = BASE_URL + "categories/";
 export const CONTACT_US = BASE_URL + "contactus/";
+export const GAME_BY_CAT_ID = BASE_URL + "category/";
+export const GAME_BY_UUID = BASE_URL + "game/";
+export const ALL_BLOG = BASE_URL + "blogs/";

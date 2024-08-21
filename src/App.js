@@ -13,6 +13,7 @@ import AllGame from "./pages/allGame/allGame";
 import store from "./redux/store/store";
 import { Provider } from "react-redux";
 import PlayGame from "./pages/playGame/playGame";
+import NotFound from "./pages/notFound/notFound";
 
 export const Context = createContext();
 
@@ -46,17 +47,21 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/allGame" element={<AllGame />} />
-            <Route path="/playGame" element={<PlayGame />} />
+            <Route path="/playGame/:id" element={<PlayGame />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blogdetails" element={<BlogDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/TermsConditions" element={<TermsConditions />} />
+            
+            {/* Catch all other routes and render NotFound component */}
           </Route>
+            <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Provider>
+
   );
 }
 

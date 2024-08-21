@@ -489,6 +489,10 @@ label {
 
 .preloader {
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100vh;
     z-index: 99999999;
@@ -1260,7 +1264,9 @@ label {
 .banner-section.blog.details .overlay .banner-content {
     padding: 180px 0 235px;
 }
-
+.banner-section.lottery .overlay .game-content-banner {
+    padding: 70px 0 205px;
+}
 .footer-section {
     background-image: url(../images/footer-bg.png);
     background-repeat: no-repeat;
@@ -2165,7 +2171,8 @@ video.bg-item{
 }
 .game-area{
     background-color: #140836;
-    aspect-ratio: 16 / 10;
+    /* aspect-ratio: 16 / 10; */
+    aspect-ratio:auto;
     border: 2px solid #38265b;
     border-radius: 8px;
     overflow: hidden;
@@ -2179,7 +2186,26 @@ video.bg-item{
     height: 100%;
     display: block;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+}
+.game-area .game-logo{
+    border-radius: 10px;
+    object-fit: contain;
+    max-width: 190px;
+    margin: 30px auto;
+    display: block;
+}
+.game-area .game-title{
+    font-size: 19px;
+    text-align: center;
+    padding-bottom: 16px;
+    text-shadow: 0px 0px 8px black;
+}
+
+.game-area .play-now{
+    margin: 0 auto;
+    display: block;
+    max-width: 165px;
 }
 .game-area .banner-div {
     background: #00000000;
@@ -2189,6 +2215,45 @@ video.bg-item{
     right: 0;
     bottom: 0;
     backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.overlay-div-hidden{
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+.game-div{
+    background: var(--body-color);
+}
+.footer-play-section{
+    position: relative;
+    z-index: 9999;
+    background: #5732c6;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-play-section .game-title-bottom{
+    margin: 0;
+    font-size: 18px;
+    line-height: normal;
+    max-width: 390px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.footer-play-section .fullScreenIcon{
+    width: 25px;
+    cursor: pointer;
+
+}
+.footer-play-section .fullScreenIcon img{
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .finished-tournaments .single-box .abs-area {
@@ -2510,14 +2575,18 @@ video.bg-item{
 }
 
 .blog-post .single-box {
-    padding: 5px;
+    padding: 0px;
     border: 1px solid #694cb9;
     border-radius: 15px;
     background-color: #2c1c56;
+    overflow: hidden;
 }
 
 .blog-post .single-box .img-area img {
     width: 100%;
+    max-height: 360px;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .blog-post .single-box .text-area {

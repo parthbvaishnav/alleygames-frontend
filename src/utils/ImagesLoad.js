@@ -1,7 +1,7 @@
 // // Import Image
 import HeaderFavLogoI from "../static/images/fav.png";
 import HeaderLogoI from "../static/images/logo.png";
-import NotFoundI from "../static/images/404.png";
+import NotFoundImageI from "../static/images/404.png";
 import aboutusbannerbgI from "../static/images/about-us-banner-bg.png";
 import aboutusillusI from "../static/images/about-us-illus.png";
 import aboutusobj1I from "../static/images/about-us-obj-1.png";
@@ -172,10 +172,16 @@ import winicon2I from "../static/images/icon/win-icon-2.png";
 import winicon3I from "../static/images/icon/win-icon-3.png";
 import btciconI from "../static/images/icon/btc-icon.png";
 
+// New Added Icon
+import fullScreenI from "../static/images/icon/fullscreen.png";
+import exitFullscreenI from "../static/images/icon/exit-fullscreen.png";
+
 // // Export Image
+export const fullscreen = fullScreenI;
+export const exitFullscreen = exitFullscreenI;
 export const HeaderFavLogo = HeaderFavLogoI;
 export const HeaderLogo = HeaderLogoI;
-export const NotFound = NotFoundI;
+export const NotFoundImage = NotFoundImageI;
 export const aboutusbannerbg = aboutusbannerbgI;
 export const aboutusillus = aboutusillusI;
 export const aboutusobj1 = aboutusobj1I;

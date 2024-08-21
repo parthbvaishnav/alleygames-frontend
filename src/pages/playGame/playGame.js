@@ -1,51 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import GameList from '../../components/game-containers/gameList';
+import { exitFullscreen, fullscreen } from '../../utils/ImagesLoad';
+import { useDispatch, useSelector } from "react-redux";
+import { getGameByUUID } from '../../utils/indexService';
+import { useParams } from 'react-router-dom';
 
 const PlayGame = () => {
-  const gameLink = useSelector((state) => state.gameLink.gameLinkKey);
-  console.log("gameLink---------------",gameLink);
-  
+  const dispatch = useDispatch();
+  const { id } = useParams();
   const mobileWidth = 600;
-  const [gameData, setGameData] = useState(null);
+  const gameData = useSelector((state) => state.singleGame.singleGameList);
+  const loading = useSelector((state) => state.status.loading);
+  const error = useSelector((state) => state.status.error);
+
   const [isFullScreen, setIsFullScreen] = useState(false);
   const screen = document.getElementById('fullscreen_div');
 
   useEffect(() => {
-    const gameDetail =  {
-        gamelink:gameLink.Game_link,
-        category:"",
-        banner_link:gameLink.Banner_image,
-        img:"https://gamersaimstorage.s3.ap-south-1.amazonaws.com/games_images/Knife_Shoot_bener.png",
-        view_type:"",
-      }
-    if (gameDetail && gameDetail !== "null") {
-      setGameData(gameDetail);
-      handleGameSetup(gameDetail);
-    } else {
-      window.location.href = "/allGame";
+    handleGameSetup(gameData);
+  }, [gameData]);
+  useEffect(() => {
+    if (gameData.length === 0 && !loading && !error) {
+      dispatch(getGameByUUID(id));
     }
   }, []);
 
   const handleGameSetup = async (data) => {
-    
-    const { gamelink, category, banner_link, img, view_type } = data;
-
-    // await getCategory(false);
-    // await getSimilarGames(category);
-
+    const { Game_link, Category, Banner_image,Title, view_type } = data;
     const handleResize = () => {
+      // document.querySelector('.banner-div').classList.remove('hidden');
+      document.querySelector('.game-logo').src = Banner_image;
+      document.querySelector('.game-title').innerHTML = Title;
+      document.querySelector('.game-title-bottom').innerHTML = Title;
       if (window.innerWidth <= mobileWidth) {
-        // Mobile view
-        document.querySelector('.banner-div').classList.remove('hidden');
-        document.querySelector('.game-banner').src = banner_link;
-        document.querySelector('.game-logo').src = img;
+        // document.querySelector('.banner-div').classList.remove('hidden');
+        document.querySelector('.game-logo').src = Banner_image;
         document.getElementById('game').classList.add('hidden');
       } else {
         // Desktop view
         let frameHeight = 600;
         let frameWidth = 350;
-
         if (view_type === "horizontal") {
 
           frameWidth = Math.round(document.getElementById('game').clientWidth - 20);
@@ -59,13 +53,13 @@ const PlayGame = () => {
         }
         
         const dimensions = `${frameWidth}/${frameHeight}`;
-        document.getElementById('game').src = gamelink;
+        document.getElementById('game').src = Game_link;
         document.getElementById('game').onload = () => {
           setScreenSize(dimensions);
         };
 
         document.getElementById('game').style.width = `${frameWidth + 10}px`;
-        document.getElementById('game').style.height = `${frameHeight + 10}px`;
+        document.getElementById('game').style.height = isFullScreen ? '92%' : `${frameHeight + 10}px`;
         document.getElementById('game').style.border = 'none';
       }
     };
@@ -75,31 +69,6 @@ const PlayGame = () => {
     return () => window.removeEventListener('resize', handleResize);
   };
 
-  const getCategory = async (isIndexPage) => {
-    // Replace with actual API call
-  };
-
-  const getSimilarGames = async (gameType) => {
-    // Example API call to fetch similar games
-    try {
-      const response = await fetch('https://gamersaim.com/Apis/category_by_data.php', {
-        method: 'POST',
-        body: JSON.stringify({ type: 'category', category_name: gameType }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const gameData = await response.json();
-      const gameHtml = gameData.map(game => (
-        `<div class="game-item" onclick="openGame('${encodeURIComponent(JSON.stringify(game))}');">
-          <img src="${game.img}" alt="game" loading="lazy" />
-        </div>`
-      )).join('');
-      document.querySelector('.game-suggestion').innerHTML = gameHtml;
-    } catch (error) {
-      console.error('Failed to fetch similar games:', error);
-    }
-  };
 
   const fullScreenGame = () => {
     const gameFrame = document.getElementById('game');
@@ -115,6 +84,16 @@ const PlayGame = () => {
   };
 
   const handlePlayNow = () => {
+    // fullScreenGame();
+    // setIsFullScreen(true);
+    // screen.requestFullscreen();
+    document.getElementById('overlay-div').classList.add('overlay-div-hidden');
+    if (gameData.view_type === "horizontal") {
+      screen.orientation.lock('landscape');
+    }
+  };
+
+  const handleFullScreen = () => {
     fullScreenGame();
     setIsFullScreen(true);
     screen.requestFullscreen();
@@ -122,6 +101,7 @@ const PlayGame = () => {
       screen.orientation.lock('landscape');
     }
   };
+
 
   const handleBack = () => {
     if (gameData.view_type === "horizontal") {
@@ -133,43 +113,46 @@ const PlayGame = () => {
 
   return (
     <div>
-    <section className="banner-section inner-banner blog details">
-        <div className="overlay">
-            <div className="banner-content">                  
-            </div>
-        </div>
-    </section>
-    <section className="blog-details">
-      <div className="overlay">
-          <div className="container pb-120">
-              <div className="row">
-                  <div className="col-lg-2 sidebar" id="sidebar">
-                    <GameList />
-                  </div>
-                  <div className="col-lg-8 game-area">
-                    <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
-                      <div className="game-div" id="fullscreen_div">
-                        <div className={`banner-div ${!gameData ? 'hidden' : ''}`}>
-                          <div className="bg-banner-div">
-                            <div className="bg-color"></div>
-                            <img className="game-banner w-100" alt="game-banner" />
-                          </div>
-                          <div className="game-logo-div">
-                            <img className="game-logo" alt="game-logo" />
-                            <button className="play-now" onClick={handlePlayNow}>Play Now</button>
-                          </div>
-                        </div>
-                        <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
-                      </div>
-                    </section>
-                  </div>
-                  <div className="col-lg-2 sidebar" id="sidebar">
-                    <GameList />
-                  </div>
+      <section className="banner-section inner-banner blog details">
+          <div className="overlay">
+              <div className="banner-content game-content-banner">                  
               </div>
           </div>
-      </div>
-    </section>
+      </section>
+      <section className="blog-details">
+        <div className="overlay">
+            <div className="container pb-120">
+                <div className="row">
+                    <div className="col-lg-2 sidebar" id="sidebar">
+                      <GameList category={gameData?.Category}/>
+                    </div>
+                    <div className="col-lg-8 game-area">
+                      <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
+                        <div className="game-div" id="fullscreen_div">
+                          <div className="banner-div" id='overlay-div'>
+                            <div className="game-logo-div">
+                              <img className="game-logo" alt="game-logo" />
+                              <h4 className="game-title"></h4>
+                              <a className="cmn-btn play-now" onClick={handlePlayNow}>Play Now</a>
+                            </div>
+                          </div>
+                          <iframe id="game" className="game-frame" style={{height:isFullScreen ? '92%':'100%'}} allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
+                          <div className="footer-play-section">
+                            <h4 className="game-title-bottom"></h4>
+                            <div className="fullScreenIcon" onClick={isFullScreen == false ? handleFullScreen : handleBack}>
+                              <img src={isFullScreen == true ? exitFullscreen : fullscreen} alt='fullscreen'/>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <div className="col-lg-2 sidebar" id="sidebar">
+                      <GameList category={gameData?.Category}/>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
   </div>
   );
 };

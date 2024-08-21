@@ -1,11 +1,13 @@
 // import { toast } from "react-toastify";
 import axios from "axios";
-import { ALL_CATEGORIES, ALL_GAME, CONTACT_US } from "../utils/constant";
+import { ALL_BLOG, ALL_CATEGORIES, ALL_GAME, CONTACT_US, GAME_BY_CAT_ID, GAME_BY_UUID } from "../utils/constant";
 import {
   setGameList,
 } from "../redux/reducers/rootReducer";
 import { setLoading, setError, clearError } from "../redux/reducers/statusSlice";
 import { setCategoryList } from "../redux/reducers/categoryReducer";
+import { setSingleGameList } from "../redux/reducers/singleGameReducer";
+import { setBlogList } from "../redux/reducers/blogListReducer";
 const getToken = () => {
   let user = localStorage.getItem("user");
   if (user != null) {
@@ -35,12 +37,16 @@ const getHeaders = () => {
     Authorization: "Bearer " + getToken(),
   };
 };
-export const getAllGame = () => {
+export const getAllGame = (category_id) => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearError());
     try {
-      const response = await axios.get(ALL_GAME);
+      let url=ALL_GAME;
+      if(category_id){
+        url = `${GAME_BY_CAT_ID}${category_id}/`
+      }
+      const response = await axios.get(url);
       dispatch(setGameList(response.data));
     } catch (error) {
       console.error("Error fetching games:", error);
@@ -57,6 +63,21 @@ export const getAllCategories = () => {
     try {
       const response = await axios.get(ALL_CATEGORIES);
       dispatch(setCategoryList(response.data));
+    } catch (error) {
+      console.error("Error fetching games:", error);
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};
+export const getGameByUUID = (uuid) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearError());
+    try {
+      const response = await axios.get(`${GAME_BY_UUID}${uuid}/`);
+      dispatch(setSingleGameList(response.data));
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));
@@ -82,4 +103,21 @@ export const submitContactForm = async ({ Name, Email, Message }) => {
       console.log("response----submitContactForm------", response);
       return response.data.data;
     });
+};
+
+
+export const getAllBlogList = (page = 1) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearError());
+    try {
+      const response = await axios.get(`${ALL_BLOG}?page=${page}`);
+      dispatch(setBlogList(response.data));
+    } catch (error) {
+      console.error("Error fetching Blog:", error);
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 };

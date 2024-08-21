@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { getAllGame } from "../../utils/indexService";
 import { useDispatch, useSelector } from "react-redux";
 import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
+import Loader from "../loader/loader";
 
-const GameList = () => {
+const GameList = (props) => {
   const dispatch = useDispatch();
   const gameData = useSelector((state) => state.games.gameList);
   const loading = useSelector((state) => state.status.loading);
@@ -14,7 +15,7 @@ const GameList = () => {
 
   useEffect(() => {
     if (gameData.length === 0 && !loading && !error) {
-      dispatch(getAllGame());
+      dispatch(getAllGame(props?.category));
     }
   }, [dispatch, gameData.length, loading, error]);
 
@@ -40,10 +41,11 @@ const GameList = () => {
 
   return (
     <div className="all-items">
+      {loading && <Loader/>}
       {gameData.map((game, index) => (
         <Link
           // to={game.Game_link}
-          to={'/playGame'}
+          to={'/playGame/'+game.UUID}
           key={index}
           className="single-item"
           onClick={()=>{

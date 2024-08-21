@@ -5,9 +5,9 @@ $(function($) {
 
         // preloader
         $("#preloader").delay(300).animate({
-            "opacity": "0"
+            // "opacity": "1"
         }, 500, function() {
-            $("#preloader").css("display", "none");
+            // $("#preloader").css("display", "block");
         });
 
         // Scroll Top

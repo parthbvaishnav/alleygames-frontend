@@ -35,8 +35,8 @@
                     t.data("counterup-nums", e);
                     t.text("0");
                     var c = function() {
-                        t.text(t.data("counterup-nums").shift());
-                        if (t.data("counterup-nums").length) setTimeout(t.data("counterup-func"), r.delay);
+                        t.text(t.data("counterup-nums")?.shift());
+                        if (t.data("counterup-nums")?.length) setTimeout(t.data("counterup-func"), r.delay);
                         else {
                             delete t.data("counterup-nums");
                             t.data("counterup-nums", null);
