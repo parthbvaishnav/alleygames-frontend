@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import GameList from '../../components/game-containers/gameList';
 import { exitFullscreen, fullscreen } from '../../utils/ImagesLoad';
 import { useDispatch, useSelector } from "react-redux";
-import { getGameByUUID } from '../../utils/indexService';
-import { useParams } from 'react-router-dom';
+import { getGameByUUID, getSimilarGame } from '../../utils/indexService';
+import { Link, useParams } from 'react-router-dom';
 
 const PlayGame = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const mobileWidth = 600;
   const gameData = useSelector((state) => state.singleGame.singleGameList);
+  const similarGames = useSelector((state) => state.similarGame.similarGameList);
   const loading = useSelector((state) => state.status.loading);
   const error = useSelector((state) => state.status.error);
 
@@ -20,10 +21,13 @@ const PlayGame = () => {
     handleGameSetup(gameData);
   }, [gameData]);
   useEffect(() => {
-    if (gameData.length === 0 && !loading && !error) {
-      dispatch(getGameByUUID(id));
+      dispatch(getGameByUUID(id));      
+  }, [id]);
+  useEffect(() => {
+    if(gameData?.Category){
+      dispatch(getSimilarGame(gameData?.Category));
     }
-  }, []);
+  }, [gameData]);
 
   const handleGameSetup = async (data) => {
     const { Game_link, Category, Banner_image,Title, view_type } = data;
@@ -110,7 +114,25 @@ const PlayGame = () => {
     setIsFullScreen(false);
     document.exitFullscreen();
   };
+  const handleMouseEnter = (videoRef) => {
+    if (videoRef) {
+      videoRef.play().catch((error) => {
+        console.error("Error trying to play video:", error);
+      });
+    }
+  };
 
+  const handleMouseLeave = (videoRef) => {
+    if (videoRef) {
+      videoRef.pause();
+      videoRef.currentTime = 0;
+    }
+  };
+
+  const handleVideoError = (event) => {
+    console.error("Video failed to load:", event.target.src);
+    event.target.style.display = "none";
+  };
   return (
     <div>
       <section className="banner-section inner-banner blog details">
@@ -124,7 +146,53 @@ const PlayGame = () => {
             <div className="container pb-120">
                 <div className="row">
                     <div className="col-lg-2 sidebar" id="sidebar">
-                      <GameList category={gameData?.Category}/>
+                      <div className="all-items">      
+                        {similarGames.slice(0,Math.ceil(similarGames.length / 2)).map((game, index) => (
+                          <Link
+                            to={'/playGame/'+game.UUID}
+                            key={index}
+                            className="single-item"
+                            onMouseEnter={(e) =>{
+                              const imgElement = e.currentTarget.querySelector("img");
+                              if (imgElement && game.Video_link) {
+                                imgElement.style.display = 'block';
+                                imgElement.style.opacity = '0';
+                                imgElement.style.visibility = 'hidden';
+
+                                const videoElement = e.currentTarget.querySelector("video");
+                                videoElement.style.display = 'block';
+                                videoElement.style.opacity = '1';
+                                videoElement.style.visibility = 'visible';
+                              }
+                                handleMouseEnter(e.currentTarget.querySelector("video"))
+                            }
+                            }
+                            onMouseLeave={(e) =>{
+                              const imgElement = e.currentTarget.querySelector("img");
+                              if (imgElement) {
+                                imgElement.style.display = 'block';
+                                imgElement.style.opacity = '1';
+                                imgElement.style.visibility = 'visible';
+
+                                const videoElement = e.currentTarget.querySelector("video");
+                                videoElement.style.display = 'block';
+                                videoElement.style.opacity = '0';
+                                videoElement.style.visibility = 'hidden';
+
+                              }
+                              handleMouseLeave(e.currentTarget.querySelector("video"))
+                            }
+                            }
+                          >
+                            <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
+                              <div className="bg-area">
+                                <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
+                                <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                     <div className="col-lg-8 game-area">
                       <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
@@ -143,11 +211,60 @@ const PlayGame = () => {
                               <img src={isFullScreen == true ? exitFullscreen : fullscreen} alt='fullscreen'/>
                             </div>
                           </div>
-                        </div>
+                        </div>                        
                       </section>
+                      <div>                    
+                        <div dangerouslySetInnerHTML={
+                            { __html: gameData?.Game_description }
+                        }></div>                        
+                      </div>
                     </div>
                     <div className="col-lg-2 sidebar" id="sidebar">
-                      <GameList category={gameData?.Category}/>
+                    {similarGames.slice(Math.ceil(similarGames.length / 2)).map((game, index) => (
+                          <Link
+                            to={'/playGame/'+game.UUID}
+                            key={index}
+                            className="single-item"
+                            onMouseEnter={(e) =>{
+                              const imgElement = e.currentTarget.querySelector("img");
+                              if (imgElement && game.Video_link) {
+                                imgElement.style.display = 'block';
+                                imgElement.style.opacity = '0';
+                                imgElement.style.visibility = 'hidden';
+
+                                const videoElement = e.currentTarget.querySelector("video");
+                                videoElement.style.display = 'block';
+                                videoElement.style.opacity = '1';
+                                videoElement.style.visibility = 'visible';
+                              }
+                                handleMouseEnter(e.currentTarget.querySelector("video"))
+                            }
+                            }
+                            onMouseLeave={(e) =>{
+                              const imgElement = e.currentTarget.querySelector("img");
+                              if (imgElement) {
+                                imgElement.style.display = 'block';
+                                imgElement.style.opacity = '1';
+                                imgElement.style.visibility = 'visible';
+
+                                const videoElement = e.currentTarget.querySelector("video");
+                                videoElement.style.display = 'block';
+                                videoElement.style.opacity = '0';
+                                videoElement.style.visibility = 'hidden';
+
+                              }
+                              handleMouseLeave(e.currentTarget.querySelector("video"))
+                            }
+                            }
+                          >
+                            <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
+                              <div className="bg-area">
+                                <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
+                                <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
                     </div>
                 </div>
             </div>

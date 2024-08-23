@@ -2226,6 +2226,7 @@ video.bg-item{
 }
 .game-div{
     background: var(--body-color);
+    position: relative;
 }
 .footer-play-section{
     position: relative;

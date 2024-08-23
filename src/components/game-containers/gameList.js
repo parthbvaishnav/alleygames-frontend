@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
 import Loader from "../loader/loader";
 
-const GameList = (props) => {
+const GameList = () => {
   const dispatch = useDispatch();
   const gameData = useSelector((state) => state.games.gameList);
   const loading = useSelector((state) => state.status.loading);
@@ -15,7 +15,7 @@ const GameList = (props) => {
 
   useEffect(() => {
     if (gameData.length === 0 && !loading && !error) {
-      dispatch(getAllGame(props?.category));
+      dispatch(getAllGame());
     }
   }, [dispatch, gameData.length, loading, error]);
 
@@ -57,6 +57,11 @@ const GameList = (props) => {
               imgElement.style.display = 'block';
               imgElement.style.opacity = '0';
               imgElement.style.visibility = 'hidden';
+
+              const videoElement = e.currentTarget.querySelector("video");
+              videoElement.style.display = 'block';
+              videoElement.style.opacity = '1';
+              videoElement.style.visibility = 'visible';
             }
               handleMouseEnter(e.currentTarget.querySelector("video"))
           }
@@ -67,6 +72,12 @@ const GameList = (props) => {
               imgElement.style.display = 'block';
               imgElement.style.opacity = '1';
               imgElement.style.visibility = 'visible';
+
+              const videoElement = e.currentTarget.querySelector("video");
+              videoElement.style.display = 'block';
+              videoElement.style.opacity = '0';
+              videoElement.style.visibility = 'hidden';
+
             }
             handleMouseLeave(e.currentTarget.querySelector("video"))
           }

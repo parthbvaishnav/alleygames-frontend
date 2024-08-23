@@ -94,7 +94,7 @@ const AllGame = () => {
               >
                 <div className="row justify-content-between align-items-center">
                   <div className="col-xl-4 col-md-7">
-                    <GameFilter />
+                    {/* <GameFilter /> */}
                   </div>
                   <div className="col-xl-3 col-lg-4 col-md-5">
                     <SearchFilter />

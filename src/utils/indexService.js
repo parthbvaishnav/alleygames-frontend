@@ -8,6 +8,7 @@ import { setLoading, setError, clearError } from "../redux/reducers/statusSlice"
 import { setCategoryList } from "../redux/reducers/categoryReducer";
 import { setSingleGameList } from "../redux/reducers/singleGameReducer";
 import { setBlogList } from "../redux/reducers/blogListReducer";
+import { setSimilarGameList } from "../redux/reducers/similarGameReducer";
 const getToken = () => {
   let user = localStorage.getItem("user");
   if (user != null) {
@@ -37,16 +38,12 @@ const getHeaders = () => {
     Authorization: "Bearer " + getToken(),
   };
 };
-export const getAllGame = (category_id) => {
+export const getAllGame = () => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearError());
     try {
-      let url=ALL_GAME;
-      if(category_id){
-        url = `${GAME_BY_CAT_ID}${category_id}/`
-      }
-      const response = await axios.get(url);
+      const response = await axios.get(ALL_GAME);
       dispatch(setGameList(response.data));
     } catch (error) {
       console.error("Error fetching games:", error);
@@ -78,6 +75,23 @@ export const getGameByUUID = (uuid) => {
     try {
       const response = await axios.get(`${GAME_BY_UUID}${uuid}/`);
       dispatch(setSingleGameList(response.data));
+    } catch (error) {
+      console.error("Error fetching games:", error);
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+
+export const getSimilarGame = (category_id) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearError());
+    try {      
+      const response = await axios.get(`${GAME_BY_CAT_ID}${category_id}/`);
+      dispatch(setSimilarGameList(response.data));
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));

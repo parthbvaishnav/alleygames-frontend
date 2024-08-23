@@ -24,7 +24,6 @@ const CategoriesList = () => {
     <ul className="nav gap-2 justify-content-lg-between justify-content-start" role="tablist">
         {categoriesData.map((categories, index) => (
             <li key={index} className="nav-item" role="presentation">
-                {/* Selected tab add this class "********active******" */}
                 <button onClick={() => handleFilterClick(categories.id)}
                 className={index === 0 ?  "nav-link active" : "nav-link"} id="slots-tab" data-bs-toggle="tab" data-bs-target="#slots" type="button" role="tab" aria-controls="slots" aria-selected="true">
                     <img src={categories.Category_image || gamestabicon1} alt="gamestabicon"/>
