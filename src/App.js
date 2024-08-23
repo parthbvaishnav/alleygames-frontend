@@ -19,6 +19,13 @@ export const Context = createContext();
 
 function App() {
   // useEffect(() => {
+  //   const threshold = 160;
+
+  //   const detectDevTools = () => {
+  //     return (window.outerWidth - window.innerWidth > threshold) || 
+  //            (window.outerHeight - window.innerHeight > threshold);
+  //   };
+
   //   const disableShortcuts = (event) => {
   //     if ((event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) ||
   //         (event.metaKey && event.altKey && event.key === 'I') ||
@@ -31,8 +38,20 @@ function App() {
   //     event.preventDefault();
   //   };
 
+  //   const checkDevToolsOnLoad = () => {
+  //     if (detectDevTools()) {
+  //       setInterval(() => {          
+  //         return window.location.href="*"
+  //       }, 5000);
+  //       // alert("Please close Developer Tools to proceed.");
+  //     }
+  //   };
+
   //   window.addEventListener('keydown', disableShortcuts);
   //   window.addEventListener('contextmenu', disableRightClick);
+
+  //   // Check if DevTools is open when the page loads
+  //   checkDevToolsOnLoad();
 
   //   return () => {
   //     window.removeEventListener('keydown', disableShortcuts);
@@ -49,7 +68,7 @@ function App() {
             <Route path="/allGame" element={<AllGame />} />
             <Route path="/playGame/:id" element={<PlayGame />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blogdetails" element={<BlogDetails />} />
+            <Route path="/blogdetails/:id" element={<BlogDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacyPolicy" element={<PrivacyPolicy />} />

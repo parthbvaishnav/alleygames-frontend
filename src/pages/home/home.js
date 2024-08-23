@@ -21,11 +21,11 @@ const Home = () => {
                         customer
                       </p>
                       <div className="btn-area mt-30">
-                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                        <Link data-bs-toggle="modal"
                           data-bs-target="#loginMod" className="cmn-btn reg" >
                           Sign Up
                           <i className="icon-d-right-arrow-2"></i>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -215,7 +215,7 @@ const Home = () => {
               <div className="col-lg-6">
                 <div className="title mb-20 d-flex justify-content-between">
                   <h4>Jackpot Games</h4>
-                  <a href="javascript:void(0)">Show All</a>
+                  <Link>Show All</Link>
                 </div>
                 <div className="jackpot-carousel">
                   <div className="single-slide">

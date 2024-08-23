@@ -1,38 +1,4 @@
 import React, { useEffect } from "react";
-import {
-  btcicon2,
-  dash,
-  etc,
-  gameslogo1,
-  gameslogo10,
-  gameslogo11,
-  gameslogo12,
-  gameslogo13,
-  gameslogo14,
-  gameslogo15,
-  gameslogo16,
-  gameslogo17,
-  gameslogo18,
-  gameslogo2,
-  gameslogo3,
-  gameslogo4,
-  gameslogo5,
-  gameslogo6,
-  gameslogo7,
-  gameslogo8,
-  gameslogo9,
-  gamestabicon1,
-  gamestabicon2,
-  gamestabicon3,
-  gamestabicon4,
-  gamestabicon5,
-  gamestabicon6,
-  gamestabicon7,
-  gamestabicon8,
-  playicon,
-  tableimage1,
-  trx,
-} from "../../utils/ImagesLoad";
 import { Link } from "react-router-dom";
 import { getAllGame } from "../../utils/indexService";
 import GameList from "../../components/game-containers/gameList";
@@ -107,12 +73,7 @@ const AllGame = () => {
                     role="tabpanel"
                     aria-labelledby="slots-all-tab"
                   >
-                    <GameList />
-                    <div className="btn-area mt-3 text-center">
-                      <a href="#" className="cmn-btn">
-                        Load More
-                      </a>
-                    </div>
+                    <GameList />                    
                   </div>
                 </div>
               </div>

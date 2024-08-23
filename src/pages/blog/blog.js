@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-// import { BlogImage1, BlogImage2 } from '../../utils/ImagesLoad'
 import { Link } from 'react-router-dom'
 import { blogpostimage1, emailicon, rightarrow2, security } from '../../utils/ImagesLoad'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBlogList } from '../../utils/indexService';
+import Loader from '../../components/loader/loader';
 
 const Blog = () => {
     const dispatch = useDispatch();
@@ -19,12 +19,12 @@ const Blog = () => {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
     // Calculate total number of pages, but only if blogData.count is defined
     const totalPages = blogData?.count ? Math.ceil(blogData.count / 5) : 0;
 
     return (
         <>
+         {loading && <Loader/>}
             <section className="banner-section inner-banner blog">
                 <div className="overlay">
                     <div className="banner-content">
@@ -59,12 +59,12 @@ const Blog = () => {
                                             <img src={post.Blog_cover_image || blogpostimage1} alt={post.Blog_title}/>
                                         </div>
                                         <div className="text-area">
-                                            <Link to={`/blogdetails/${post.id}`}>
+                                            <Link to={`/blogdetails/${post.UUID}`}>
                                                 <h4>{post.Blog_title}</h4>
                                             </Link>
-                                            <p dangerouslySetInnerHTML={{ __html: post.Blog_description }}></p>
+                                            <p className='blogDetailsList' dangerouslySetInnerHTML={{ __html: post.Blog_description }}></p>
                                             <div className="btn-area">
-                                                <Link to={`/blogdetails/${post.id}`}>
+                                                <Link to={`/blogdetails/${post.UUID}`}>
                                                     Read More
                                                     <div className="icon-area">
                                                         <img src={rightarrow2} alt="icon"/>
@@ -77,21 +77,21 @@ const Blog = () => {
                             ))}
                             <div className="col-lg-12 d-flex justify-content-center">
                                 <nav aria-label="Page navigation" className="d-inline-flex justify-content-center align-items-center pagination-area mt-4">
-                                    <a className="page-btn previous" href="javascript:void(0)" aria-label="Previous" onClick={() => handlePageChange(currentPage - 1)} disabled={!blogData.previous}>
+                                    <Link className="page-btn previous" aria-label="Previous" onClick={() => handlePageChange(currentPage - 1)} disabled={!blogData.previous}>
                                         <span>Previous</span>
-                                    </a>
+                                    </Link>
                                     <ul className="pagination justify-content-center align-items-center">
                                         {Array.from({ length: totalPages }, (_, index) => (
                                             <li className="page-item" key={index + 1}>
-                                                <a className={`page-link ${currentPage === index + 1 ? 'active' : ''}`} href="javascript:void(0)" onClick={() => handlePageChange(index + 1)}>
+                                                <Link className={`page-link ${currentPage === index + 1 ? 'active' : ''}`} onClick={() => handlePageChange(index + 1)}>
                                                     {index + 1}
-                                                </a>
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>
-                                    <a className="page-btn next" href="javascript:void(0)" aria-label="Next" onClick={() => handlePageChange(currentPage + 1)} disabled={!blogData.next}>
+                                    <Link className="page-btn next" aria-label="Next" onClick={() => handlePageChange(currentPage + 1)} disabled={!blogData.next}>
                                         <span>Next</span>
-                                    </a>
+                                    </Link>
                                 </nav>
                             </div>
                         </div>

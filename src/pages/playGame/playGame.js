@@ -150,6 +150,9 @@ const PlayGame = () => {
                         {similarGames.slice(0,Math.ceil(similarGames.length / 2)).map((game, index) => (
                           <Link
                             to={'/playGame/'+game.UUID}
+                            onClick={()=>{
+                              document.getElementById('overlay-div').classList.remove('overlay-div-hidden');
+                            }}
                             key={index}
                             className="single-item"
                             onMouseEnter={(e) =>{
@@ -223,6 +226,9 @@ const PlayGame = () => {
                     {similarGames.slice(Math.ceil(similarGames.length / 2)).map((game, index) => (
                           <Link
                             to={'/playGame/'+game.UUID}
+                            onClick={()=>{
+                              document.getElementById('overlay-div').classList.remove('overlay-div-hidden');
+                            }}
                             key={index}
                             className="single-item"
                             onMouseEnter={(e) =>{

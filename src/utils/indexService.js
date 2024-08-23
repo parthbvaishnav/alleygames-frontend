@@ -1,6 +1,6 @@
 // import { toast } from "react-toastify";
 import axios from "axios";
-import { ALL_BLOG, ALL_CATEGORIES, ALL_GAME, CONTACT_US, GAME_BY_CAT_ID, GAME_BY_UUID } from "../utils/constant";
+import { ALL_BLOG, ALL_CATEGORIES, ALL_GAME, CONTACT_US, GAME_BY_CAT_ID, GAME_BY_UUID, SINGLE_BLOG } from "../utils/constant";
 import {
   setGameList,
 } from "../redux/reducers/rootReducer";
@@ -9,6 +9,7 @@ import { setCategoryList } from "../redux/reducers/categoryReducer";
 import { setSingleGameList } from "../redux/reducers/singleGameReducer";
 import { setBlogList } from "../redux/reducers/blogListReducer";
 import { setSimilarGameList } from "../redux/reducers/similarGameReducer";
+import { setBlogSingle } from "../redux/reducers/blogSingleReducer";
 const getToken = () => {
   let user = localStorage.getItem("user");
   if (user != null) {
@@ -38,13 +39,23 @@ const getHeaders = () => {
     Authorization: "Bearer " + getToken(),
   };
 };
-export const getAllGame = () => {
-  return async (dispatch) => {
+export const getAllGame = (category_id, page = 1) => {
+  return async (dispatch, getState) => {
     dispatch(setLoading(true));
     dispatch(clearError());
     try {
-      const response = await axios.get(ALL_GAME);
-      dispatch(setGameList(response.data));
+      let url = `${ALL_GAME}?page=${page}`;
+      if (category_id != '0') {
+        url = `${GAME_BY_CAT_ID}${category_id}/?page=${page}`;
+      }
+      const response = await axios.get(url);
+
+      // Append new data to existing game list
+      const existingGames = getState().games.gameList;
+      const newGames = page === 1 ? response.data.results : [...existingGames, ...response.data.results];
+
+      dispatch(setGameList(newGames));
+      return response.data.count;
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));
@@ -90,8 +101,8 @@ export const getSimilarGame = (category_id) => {
     dispatch(setLoading(true));
     dispatch(clearError());
     try {      
-      const response = await axios.get(`${GAME_BY_CAT_ID}${category_id}/`);
-      dispatch(setSimilarGameList(response.data));
+      const response = await axios.get(`${GAME_BY_CAT_ID}${category_id}/?page=1`);
+      dispatch(setSimilarGameList(response.data.results));
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));
@@ -114,8 +125,8 @@ export const submitContactForm = async ({ Name, Email, Message }) => {
       // { headers: getHeaders() }
     )
     .then((response) => {
-      console.log("response----submitContactForm------", response);
       return response.data.data;
+
     });
 };
 
@@ -129,6 +140,22 @@ export const getAllBlogList = (page = 1) => {
       dispatch(setBlogList(response.data));
     } catch (error) {
       console.error("Error fetching Blog:", error);
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+export const getSingleBlogList = (uuid) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearError());
+    try {
+      const response = await axios.get(`${SINGLE_BLOG}${uuid}/`);
+      dispatch(setBlogSingle(response.data));
+    } catch (error) {
+      console.error("Error fetching games:", error);
       dispatch(setError(error.message));
     } finally {
       dispatch(setLoading(false));

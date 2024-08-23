@@ -2582,14 +2582,35 @@ video.bg-item{
     background-color: #2c1c56;
     overflow: hidden;
 }
-
 .blog-post .single-box .img-area img {
     width: 100%;
     max-height: 360px;
     overflow: hidden;
     object-fit: cover;
 }
-
+.blogDetailsSection img{
+    max-height: 350px;
+    object-fit: contain;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.blogDetailsList{
+    margin: 0;
+    font-family: var(--body-font);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--para-color);
+    line-height: 30px;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.blogDetailsList *{
+    font-size: 16px;
+}
 .blog-post .single-box .text-area {
     padding: 30px 40px 25px;
 }

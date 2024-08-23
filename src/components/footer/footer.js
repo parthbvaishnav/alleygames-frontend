@@ -40,10 +40,10 @@ const Footer = () => {
                         <div className="col-xl-3 col-lg-5 d-flex justify-content-center justify-content-lg-end">
                             <div className="social">
                                 <ul className="footer-link gap-2 d-flex align-items-center">
-                                    <li><a href="javascript:void(0)"><i className="fb fab fa-facebook-f"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i className="ins fab fa-instagram"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i className="tw fab fa-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i className="in fab fa-linkedin-in"></i></a></li>
+                                    <li><Link><i className="fb fab fa-facebook-f"></i></Link></li>
+                                    <li><Link><i className="ins fab fa-instagram"></i></Link></li>
+                                    <li><Link><i className="tw fab fa-twitter"></i></Link></li>
+                                    <li><Link><i className="in fab fa-linkedin-in"></i></Link></li>
                                 </ul>
                             </div>
                         </div>

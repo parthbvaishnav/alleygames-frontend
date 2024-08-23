@@ -9,6 +9,7 @@ import gameLinkReducer from "../reducers/gameLinkReducer";
 import singleGameReducer from "../reducers/singleGameReducer";
 import blogListReducer from "../reducers/blogListReducer";
 import similarGameReducer from "../reducers/similarGameReducer";
+import blogSingleReducer from "../reducers/blogSingleReducer";
 const store = configureStore({
   reducer: {
     games: rootReducer,
@@ -19,7 +20,8 @@ const store = configureStore({
     gameLink: gameLinkReducer,
     singleGame:singleGameReducer,
     similarGame:similarGameReducer,
-    blogList: blogListReducer
+    blogList: blogListReducer,
+    blogSingle: blogSingleReducer
   },
 });
 

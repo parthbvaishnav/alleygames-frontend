@@ -7,3 +7,4 @@ export const CONTACT_US = BASE_URL + "contactus/";
 export const GAME_BY_CAT_ID = BASE_URL + "category/";
 export const GAME_BY_UUID = BASE_URL + "game/";
 export const ALL_BLOG = BASE_URL + "blogs/";
+export const SINGLE_BLOG = BASE_URL + "blog/";
