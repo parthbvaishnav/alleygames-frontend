@@ -52,7 +52,7 @@ const BlogDetails = () => {
                             <br/><br/>
                             <h4>{blogDataSingle.Blog_title}</h4>
                             <br/>
-                            <div className="mt-40 row justify-content-center">     
+                            <div className="row gameDescriptionSection justify-content-center">    
                                 <div dangerouslySetInnerHTML={{ __html: blogDataSingle?.Blog_description }}></div>
                             </div>
                         </div>

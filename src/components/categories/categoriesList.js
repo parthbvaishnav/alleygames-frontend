@@ -12,7 +12,7 @@ const CategoriesList = () => {
 
     // Define the "ALL" category
     const allCategory = {
-        id: '0',
+        id: 0,
         Name: 'All',
         Category_image: gamestabicon1
     };

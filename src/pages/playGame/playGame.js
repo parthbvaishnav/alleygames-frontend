@@ -32,58 +32,46 @@ const PlayGame = () => {
     setIsFullScreen(false)
   }
   const handleGameSetup = async (data) => {
-    const { Game_link, Banner_image,Title, view_type } = data;
-    const handleResize = () => {
-      // document.querySelector('.banner-div').classList.remove('hidden');
-      document.addEventListener('fullscreenchange', exitHandler, false);
-
+    const { Game_link, Banner_image,Title, Landscape } = data;
+    document.addEventListener('fullscreenchange', exitHandler, false);
+    document.querySelector('.game-logo').src = Banner_image;
+    document.querySelector('.game-title').innerHTML = Title;
+    document.querySelector('.game-title-bottom').innerHTML = Title;
+    if (window.innerWidth <= mobileWidth) {
       document.querySelector('.game-logo').src = Banner_image;
-      document.querySelector('.game-title').innerHTML = Title;
-      document.querySelector('.game-title-bottom').innerHTML = Title;
-      if (window.innerWidth <= mobileWidth) {
-        // document.querySelector('.banner-div').classList.remove('hidden');
-        document.querySelector('.game-logo').src = Banner_image;
-        document.getElementById('game').classList.add('hidden');
+      document.getElementById('game').classList.add('hidden');
+    } else {
+      let frameHeight = 600;
+      let frameWidth = 350;
+      if (Landscape) {
+        frameWidth = Math.round(document.getElementById('game').clientWidth - 20);
+        frameHeight = Math.round((4 * frameWidth) / 7);
       } else {
-        // Desktop view
-        let frameHeight = 600;
-        let frameWidth = 350;
-        if (view_type === "horizontal") {
-
-          frameWidth = Math.round(document.getElementById('game').clientWidth - 20);
-          frameHeight = Math.round((4 * frameWidth) / 7);
-        } else {
-
-          if (document.body.clientHeight - document.querySelector('header').clientHeight <= 600) {
-            frameHeight = document.body.clientHeight - document.querySelector('header').clientHeight - 20;
-            frameWidth = Math.round((4 * frameHeight) / 7);
-          }
+        if (document.body.clientHeight - document.querySelector('header').clientHeight <= 600) {
+          frameHeight = document.body.clientHeight - document.querySelector('header').clientHeight - 20;
+          frameWidth = Math.round((4 * frameHeight) / 7);
         }
-        
-        const dimensions = `${frameWidth}/${frameHeight}`;
-        document.getElementById('game').src = Game_link;
-        document.getElementById('game').onload = () => {
-          setScreenSize(dimensions);
-        };
-
-        document.getElementById('game').style.width = `${frameWidth + 10}px`;
-        document.getElementById('game').style.height = isFullScreen ? '92%' : `${frameHeight + 10}px`;
-        document.getElementById('game').style.border = 'none';
       }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+      const dimensions = `${frameWidth}/${frameHeight}`;
+      document.getElementById('game').src = Game_link;
+      document.getElementById('game').onload = () => {
+        setScreenSize(dimensions);
+      };
+      document.getElementById('game').style.width = `${frameWidth + 10}px`;
+      document.getElementById('game').style.height = isFullScreen ? '92%' : `${frameHeight + 10}px`;
+      document.getElementById('game').style.border = 'none';
+    }
   };
 
 
   const fullScreenGame = () => {
     const gameFrame = document.getElementById('game');
-    gameFrame.src = gameData.Game_link;
+    // gameFrame.src = gameData.Game_link;
     gameFrame.onload = () => {
       gameFrame.contentWindow.postMessage('fullscreen', BUCKET_URL);
     };
+
+    
   };
 
   const setScreenSize = (dimensions) => {
@@ -93,24 +81,24 @@ const PlayGame = () => {
 
   const handlePlayNow = () => {
     document.getElementById('overlay-div').classList.add('overlay-div-hidden');
-    if (gameData.view_type === "horizontal") {
-      screen.orientation.lock('landscape');
-    }
+    // if (!gameData.Landscape) {
+    //   screen.orientation.lock('landscape');
+    // }
   };
 
   const handleFullScreen = () => {
     fullScreenGame();
     setIsFullScreen(true);
     screen.requestFullscreen();
-    if (gameData.view_type === "horizontal") {
-      screen.orientation.lock('landscape');
-    }
+    // if (!gameData.Landscape) {
+    //   screen.orientation.lock('landscape');
+    // }
   };
 
   const handleBack = () => {
-    if (gameData.view_type === "horizontal") {
-      screen.orientation.lock('portrait');
-    }
+    // if (!gameData.Landscape) {
+    //   screen.orientation.lock('portrait');
+    // }
     setIsFullScreen(false);
     document.exitFullscreen();
   };
@@ -134,7 +122,7 @@ const PlayGame = () => {
     event.target.style.display = "none";
   };
   return (
-    <div>
+    <div id="playGameSection">
       <section className="banner-section inner-banner blog details">
           <div className="overlay">
               <div className="banner-content game-content-banner">                  
@@ -145,7 +133,7 @@ const PlayGame = () => {
         <div className="overlay">
             <div className="container pb-120">
                 <div className="row">
-                    <div className="col-lg-2 sidebar" id="sidebar">
+                    <div className="col-lg-2 games-section sidebar" id="sidebar">
                       <div className="all-items">      
                         {similarGames.slice(0,Math.ceil(similarGames.length / 2)).map((game, index) => (
                           <Link
@@ -218,61 +206,63 @@ const PlayGame = () => {
                           </div>
                         </div>                        
                       </section>
-                      <div>                    
+                      <div className='gameDescriptionSection'>                  
                         <div dangerouslySetInnerHTML={
                             { __html: gameData?.Game_description }
                         }></div>                        
                       </div>
                     </div>
-                    <div className="col-lg-2 sidebar" id="sidebar">
-                    {similarGames.slice(Math.ceil(similarGames.length / 2)).map((game, index) => (
-                          <Link
-                            to={'/playGame/'+game.UUID}
-                            onClick={()=>{
-                              document.getElementById('overlay-div').classList.remove('overlay-div-hidden');
-                            }}
-                            key={index}
-                            className="single-item"
-                            onMouseEnter={(e) =>{
-                              const imgElement = e.currentTarget.querySelector("img");
-                              if (imgElement && game.Video_link) {
-                                imgElement.style.display = 'block';
-                                imgElement.style.opacity = '0';
-                                imgElement.style.visibility = 'hidden';
+                    <div className="col-lg-2 games-section sidebar" id="sidebar">
+                      <div className="all-items">  
+                        {similarGames.slice(Math.ceil(similarGames.length / 2)).map((game, index) => (
+                              <Link
+                                to={'/playGame/'+game.UUID}
+                                onClick={()=>{
+                                  document.getElementById('overlay-div').classList.remove('overlay-div-hidden');
+                                }}
+                                key={index}
+                                className="single-item"
+                                onMouseEnter={(e) =>{
+                                  const imgElement = e.currentTarget.querySelector("img");
+                                  if (imgElement && game.Video_link) {
+                                    imgElement.style.display = 'block';
+                                    imgElement.style.opacity = '0';
+                                    imgElement.style.visibility = 'hidden';
 
-                                const videoElement = e.currentTarget.querySelector("video");
-                                videoElement.style.display = 'block';
-                                videoElement.style.opacity = '1';
-                                videoElement.style.visibility = 'visible';
-                              }
-                                handleMouseEnter(e.currentTarget.querySelector("video"))
-                            }
-                            }
-                            onMouseLeave={(e) =>{
-                              const imgElement = e.currentTarget.querySelector("img");
-                              if (imgElement) {
-                                imgElement.style.display = 'block';
-                                imgElement.style.opacity = '1';
-                                imgElement.style.visibility = 'visible';
+                                    const videoElement = e.currentTarget.querySelector("video");
+                                    videoElement.style.display = 'block';
+                                    videoElement.style.opacity = '1';
+                                    videoElement.style.visibility = 'visible';
+                                  }
+                                    handleMouseEnter(e.currentTarget.querySelector("video"))
+                                }
+                                }
+                                onMouseLeave={(e) =>{
+                                  const imgElement = e.currentTarget.querySelector("img");
+                                  if (imgElement) {
+                                    imgElement.style.display = 'block';
+                                    imgElement.style.opacity = '1';
+                                    imgElement.style.visibility = 'visible';
 
-                                const videoElement = e.currentTarget.querySelector("video");
-                                videoElement.style.display = 'block';
-                                videoElement.style.opacity = '0';
-                                videoElement.style.visibility = 'hidden';
+                                    const videoElement = e.currentTarget.querySelector("video");
+                                    videoElement.style.display = 'block';
+                                    videoElement.style.opacity = '0';
+                                    videoElement.style.visibility = 'hidden';
 
-                              }
-                              handleMouseLeave(e.currentTarget.querySelector("video"))
-                            }
-                            }
-                          >
-                            <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
-                              <div className="bg-area">
-                                <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
-                                <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
-                              </div>
-                            </div>
-                          </Link>
-                        ))}
+                                  }
+                                  handleMouseLeave(e.currentTarget.querySelector("video"))
+                                }
+                                }
+                              >
+                                <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
+                                  <div className="bg-area">
+                                    <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
+                                    <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
+                                  </div>
+                                </div>
+                              </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

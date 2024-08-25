@@ -4,7 +4,6 @@ import { getAllGame } from "../../utils/indexService";
 import { useDispatch, useSelector } from "react-redux";
 import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
 import Loader from "../loader/loader";
-
 const GameList = (props) => {
   const dispatch = useDispatch();
   const [totalRecords, setTotalRecords] = useState(0)
@@ -44,9 +43,9 @@ const GameList = (props) => {
     console.error("Video failed to load:", event.target.src);
     event.target.style.display = "none";
   };
-
   return (
     <>
+      <ins className="adsbygoogle h-[250px] w-full ads-content" style={{display: 'block', textAlign: 'center', height: 175}} data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-8026299207830445" data-ad-slot="4155966225" data-adsbygoogle-status="done" data-ad-status="unfilled"></ins>
       <div className="all-items">
         {page===1 && loading && <Loader />}
         {gameData.map((game, index) => (

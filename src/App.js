@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { createContext, useEffect } from "react";
+import React, { createContext } from "react";
 import Home from "./pages/home/home";
 import Blog from "./pages/blog/blog";
 import Layout from "./layout/layout";

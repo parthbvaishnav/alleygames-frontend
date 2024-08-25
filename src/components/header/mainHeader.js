@@ -26,19 +26,19 @@ const MainHeader = () => {
                             <div className="collapse navbar-collapse justify-content-between" id="navbar-content">
                                 <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
                                     <li className="nav-item">
-                                        <NavLink to="/" className="nav-link" activeClassName="active">Home</NavLink>
+                                        <NavLink to="/" className="nav-link" activeclassname="active">Home</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/allGame" className="nav-link" activeClassName="active">Games</NavLink>
+                                        <NavLink to="/allGame" className="nav-link" activeclassname="active">Games</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/about" className="nav-link" activeClassName="active">About Us</NavLink>
+                                        <NavLink to="/about" className="nav-link" activeclassname="active">About Us</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/blog" className="nav-link" activeClassName="active">Blog</NavLink>
+                                        <NavLink to="/blog" className="nav-link" activeclassname="active">Blog</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" activeClassName="active" to="/contact">Contact</NavLink>
+                                        <NavLink className="nav-link" activeclassname="active" to="/contact">Contact</NavLink>
                                     </li>                                
                                 </ul>
                             </div>

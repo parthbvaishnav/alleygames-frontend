@@ -39,13 +39,21 @@ export const getUserFromAsyncStorage = () => {
 //     Authorization: "Bearer " + getToken(),
 //   };
 // };
+const loaderStart=(dispatch)=>{  
+  dispatch(setLoading(true));
+  document.body.style.overflow = 'hidden';
+}
+const loaderStop=(dispatch)=>{
+  dispatch(setLoading(false));
+  document.body.style.overflow = 'auto';
+}
 export const getAllGame = (category_id, page = 1,searchInput="") => {
   return async (dispatch, getState) => {
-    dispatch(setLoading(true));
+   loaderStart(dispatch)
     dispatch(clearError());
     try {
       let url = `${ALL_GAME}?page=${page}`;
-      if (category_id !== '0' && searchInput==="") {
+      if (category_id !== 0 && searchInput==="") {
         url = `${GAME_BY_CAT_ID}${category_id}/?page=${page}`;
       }else if(searchInput){
         url = `${SEARCH_GAME}${searchInput}`;
@@ -61,42 +69,45 @@ export const getAllGame = (category_id, page = 1,searchInput="") => {
          newGames = page === 1 ? response.data.results : [...existingGames, ...response.data.results];
       }
       dispatch(setGameList(newGames));
+      loaderStop(dispatch)
       return response.data.count;
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));
     } finally {
-      dispatch(setLoading(false));
+      loaderStop(dispatch)
     }
   };
 };
 export const getAllCategories = () => {
   return async (dispatch) => {
-    dispatch(setLoading(true));
+   loaderStart(dispatch)
     dispatch(clearError());
     try {
       const response = await axios.get(ALL_CATEGORIES);
       dispatch(setCategoryList(response.data));
+      loaderStop(dispatch)
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));
     } finally {
-      dispatch(setLoading(false));
+      loaderStop(dispatch)
     }
   };
 };
 export const getGameByUUID = (uuid) => {
   return async (dispatch) => {
-    dispatch(setLoading(true));
+   loaderStart(dispatch)
     dispatch(clearError());
     try {
       const response = await axios.get(`${GAME_BY_UUID}${uuid}/`);
       dispatch(setSingleGameList(response.data));
+      loaderStop(dispatch)
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));
     } finally {
-      dispatch(setLoading(false));
+      loaderStop(dispatch)
     }
   };
 };
@@ -104,16 +115,17 @@ export const getGameByUUID = (uuid) => {
 
 export const getSimilarGame = (category_id) => {
   return async (dispatch) => {
-    dispatch(setLoading(true));
+   loaderStart(dispatch)
     dispatch(clearError());
     try {      
       const response = await axios.get(`${GAME_BY_CAT_ID}${category_id}/?page=1`);
       dispatch(setSimilarGameList(response.data.results));
+      loaderStop(dispatch)
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));
     } finally {
-      dispatch(setLoading(false));
+      loaderStop(dispatch)
     }
   };
 };
@@ -139,32 +151,34 @@ export const submitContactForm = async ({ Name, Email, Message }) => {
 
 export const getAllBlogList = (page = 1) => {
   return async (dispatch) => {
-    dispatch(setLoading(true));
+   loaderStart(dispatch)
     dispatch(clearError());
     try {
       const response = await axios.get(`${ALL_BLOG}?page=${page}`);
       dispatch(setBlogList(response.data));
+      loaderStop(dispatch)
     } catch (error) {
       console.error("Error fetching Blog:", error);
       dispatch(setError(error.message));
     } finally {
-      dispatch(setLoading(false));
+      loaderStop(dispatch)
     }
   };
 };
 
 export const getSingleBlogList = (uuid) => {
   return async (dispatch) => {
-    dispatch(setLoading(true));
+   loaderStart(dispatch)
     dispatch(clearError());
     try {
       const response = await axios.get(`${SINGLE_BLOG}${uuid}/`);
       dispatch(setBlogSingle(response.data));
+      loaderStop(dispatch)
     } catch (error) {
       console.error("Error fetching games:", error);
       dispatch(setError(error.message));
     } finally {
-      dispatch(setLoading(false));
+      loaderStop(dispatch)
     }
   };
 };

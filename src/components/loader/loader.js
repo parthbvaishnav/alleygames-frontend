@@ -2,7 +2,9 @@ import React from 'react'
 
 const Loader = () => {
   return (
-    <div className="preloader" id="preloader"></div>
+    <div className='loaderSection'>
+      <div className="preloader" id="preloader"></div>
+    </div>
   )
 }
 
