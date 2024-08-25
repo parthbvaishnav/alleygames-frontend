@@ -1,6 +1,6 @@
 // import { toast } from "react-toastify";
 import axios from "axios";
-import { ALL_BLOG, ALL_CATEGORIES, ALL_GAME, CONTACT_US, GAME_BY_CAT_ID, GAME_BY_UUID, SINGLE_BLOG } from "../utils/constant";
+import { ALL_BLOG, ALL_CATEGORIES, ALL_GAME, CONTACT_US, GAME_BY_CAT_ID, GAME_BY_UUID, SEARCH_GAME, SINGLE_BLOG } from "../utils/constant";
 import {
   setGameList,
 } from "../redux/reducers/rootReducer";
@@ -10,50 +10,56 @@ import { setSingleGameList } from "../redux/reducers/singleGameReducer";
 import { setBlogList } from "../redux/reducers/blogListReducer";
 import { setSimilarGameList } from "../redux/reducers/similarGameReducer";
 import { setBlogSingle } from "../redux/reducers/blogSingleReducer";
-const getToken = () => {
-  let user = localStorage.getItem("user");
-  if (user != null) {
-    let data = JSON.parse(user);
-    return data.token;
-  } else {
-    return null;
-  }
-};
+// const getToken = () => {
+//   let user = localStorage.getItem("user");
+//   if (user !== null) {
+//     let data = JSON.parse(user);
+//     return data.token;
+//   } else {
+//     return null;
+//   }
+// };
 export const getUserFromAsyncStorage = () => {
   let user = localStorage.getItem("user");
-  if (user != null) {
+  if (user !== null) {
     let data = JSON.parse(user);
     return data;
   } else {
     return null;
   }
 };
-const getHeaders = () => {
-  return {
-    "Content-Type": "application/json",
-    "Cache-Control": "no-cache",
-    Accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Authorization, Content-Type",
-    Authorization: "Bearer " + getToken(),
-  };
-};
-export const getAllGame = (category_id, page = 1) => {
+// const getHeaders = () => {
+//   return {
+//     "Content-Type": "application/json",
+//     "Cache-Control": "no-cache",
+//     Accept: "application/json",
+//     "Access-Control-Allow-Origin": "*",
+//     "Access-Control-Allow-Methods": "GET, OPTIONS",
+//     "Access-Control-Allow-Headers": "Authorization, Content-Type",
+//     Authorization: "Bearer " + getToken(),
+//   };
+// };
+export const getAllGame = (category_id, page = 1,searchInput="") => {
   return async (dispatch, getState) => {
     dispatch(setLoading(true));
     dispatch(clearError());
     try {
       let url = `${ALL_GAME}?page=${page}`;
-      if (category_id != '0') {
+      if (category_id !== '0' && searchInput==="") {
         url = `${GAME_BY_CAT_ID}${category_id}/?page=${page}`;
+      }else if(searchInput){
+        url = `${SEARCH_GAME}${searchInput}`;
       }
       const response = await axios.get(url);
 
       // Append new data to existing game list
       const existingGames = getState().games.gameList;
-      const newGames = page === 1 ? response.data.results : [...existingGames, ...response.data.results];
-
+      let newGames=[];
+      if(searchInput){
+         newGames = response.data;
+      }else{
+         newGames = page === 1 ? response.data.results : [...existingGames, ...response.data.results];
+      }
       dispatch(setGameList(newGames));
       return response.data.count;
     } catch (error) {

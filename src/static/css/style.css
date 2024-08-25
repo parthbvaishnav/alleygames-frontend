@@ -1032,7 +1032,10 @@ label {
     color: var(--bs-white);
     transition: 0.3s;
 }
-
+.myCategorySection{
+    max-width: 1320px;
+    overflow: auto;
+}
 .header-section .navbar .navbar-collapse .navbar-nav .nav-item .nav-link:hover,
 .header-section .navbar .navbar-collapse .navbar-nav .nav-item .dropdown-item:hover {
     color: var(--primary-color);
@@ -1695,6 +1698,7 @@ label {
 .games-section .top-nav .nav-link img {
     margin: auto;
     margin-bottom: 10px;
+    width: 50px;
 }
 
 .games-section .bottom-nav .nav-link {

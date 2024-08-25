@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { aboutusillus, aboutusobj1, aboutusobj2, emailicon, getstartillus, playicon, security, whychooseicon1 } from '../../utils/ImagesLoad'
+import { aboutusillus, aboutusobj1, aboutusobj2,playicon, whychooseicon1 } from '../../utils/ImagesLoad'
 
 const About = () => {
   return (

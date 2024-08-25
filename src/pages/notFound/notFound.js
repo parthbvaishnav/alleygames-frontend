@@ -11,7 +11,7 @@ const NotFound = () => {
                     <div className="col-lg-7">
                         <div className="section-area pt-120 pb-120 text-center">
                             <div className="img-box">
-                                <img src={NotFoundImage} alt="Image"/>
+                                <img src={NotFoundImage} alt="NotFoundImage"/>
                             </div>
                             <h3 className="title">Oops, Something went wrong !</h3>
                             <div className="btn-area mt-30">

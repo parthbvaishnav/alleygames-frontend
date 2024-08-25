@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllGame } from "../../utils/indexService";
 import GameList from "../../components/game-containers/gameList";
 import CategoriesList from "../../components/categories/categoriesList";
-import GameFilter from "../../components/filter/gameFilter";
 import SearchFilter from "../../components/filter/searchFilter";
 
 const AllGame = () => {
+  const [searchFilter, setSearchFilter] = useState("")
   return (
     <div>
       <section className="banner-section inner-banner games">
@@ -63,7 +62,7 @@ const AllGame = () => {
                     {/* <GameFilter /> */}
                   </div>
                   <div className="col-xl-3 col-lg-4 col-md-5">
-                    <SearchFilter />
+                    <SearchFilter setSearchFilter={setSearchFilter}/>
                   </div>
                 </div>
                 <div className="tab-content">
@@ -73,7 +72,7 @@ const AllGame = () => {
                     role="tabpanel"
                     aria-labelledby="slots-all-tab"
                   >
-                    <GameList />                    
+                    <GameList searchFilter={searchFilter}/>                    
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { gamestabicon1 } from '../../utils/ImagesLoad';
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories } from '../../utils/indexService';
@@ -31,7 +31,7 @@ const CategoriesList = () => {
     const combinedCategories = [allCategory, ...categoriesData];
 
     return (
-        <ul className="nav gap-2 justify-content-lg-between justify-content-start" role="tablist">
+        <ul className="nav gap-2 justify-content-lg-between justify-content-start myCategorySection" role="tablist">
             {combinedCategories.map((category, index) => (
                 <li key={index} className="nav-item" role="presentation">
                     <button 

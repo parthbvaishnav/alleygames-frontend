@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { blogpostimage1, emailicon, rightarrow2, security } from '../../utils/ImagesLoad'
+import { blogpostimage1, rightarrow2 } from '../../utils/ImagesLoad'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBlogList } from '../../utils/indexService';
 import Loader from '../../components/loader/loader';

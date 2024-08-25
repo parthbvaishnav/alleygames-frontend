@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeaderFavLogo, HeaderLogo, LoaderLogo } from '../../utils/ImagesLoad'
+import { HeaderFavLogo, HeaderLogo } from '../../utils/ImagesLoad'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF, faTwitter, faLinkedinIn, faYoutube } from '@fortawesome/free-brands-svg-icons';

@@ -91,37 +91,37 @@ const Home = () => {
               <div className="games-carousel">
                 <div className="single">
                   <div className="single-box">
-                    <img src={populargameimage1} alt="Image" />
+                    <img src={populargameimage1} alt="populargameimage" />
                   </div>
                 </div>
                 <div className="single">
                   <div className="single-box">
-                    <img src={populargameimage2} alt="Image" />
+                    <img src={populargameimage2} alt="populargameimage" />
                   </div>
                 </div>
                 <div className="single">
                   <div className="single-box">
-                    <img src={populargameimage3} alt="Image" />
+                    <img src={populargameimage3} alt="populargameimage" />
                   </div>
                 </div>
                 <div className="single">
                   <div className="single-box">
-                    <img src={populargameimage4} alt="Image" />
+                    <img src={populargameimage4} alt="populargameimage" />
                   </div>
                 </div>
                 <div className="single">
                   <div className="single-box">
-                    <img src={populargameimage5} alt="Image" />
+                    <img src={populargameimage5} alt="populargameimage" />
                   </div>
                 </div>
                 <div className="single">
                   <div className="single-box">
-                    <img src={populargameimage6} alt="Image" />
+                    <img src={populargameimage6} alt="populargameimage" />
                   </div>
                 </div>
                 <div className="single">
                   <div className="single-box">
-                    <img src={populargameimage3} alt="Image" />
+                    <img src={populargameimage3} alt="populargameimage" />
                   </div>
                 </div>
               </div>
@@ -169,7 +169,7 @@ const Home = () => {
               <div className="col-xl-3 col-sm-6">
                 <div className="single-box">
                   <div className="icon-box">
-                    <img src={featuresicon1} alt="Image" />
+                    <img src={featuresicon1} alt="featuresicon" />
                   </div>
                   <h3>100</h3>
                   <p>Welcome Bonus</p>
@@ -178,7 +178,7 @@ const Home = () => {
               <div className="col-xl-3 col-sm-6">
                 <div className="single-box second">
                   <div className="icon-box">
-                    <img src={featuresicon2} alt="Image" />
+                    <img src={featuresicon2} alt="featuresicon" />
                   </div>
                   <h3>10%</h3>
                   <p>Cash Back </p>
@@ -187,7 +187,7 @@ const Home = () => {
               <div className="col-xl-3 col-sm-6">
                 <div className="single-box third">
                   <div className="icon-box">
-                    <img src={featuresicon3} alt="Image" />
+                    <img src={featuresicon3} alt="featuresicon" />
                   </div>
                   <h3>5000%</h3>
                   <p>Games</p>
@@ -196,7 +196,7 @@ const Home = () => {
               <div className="col-xl-3 col-sm-6">
                 <div className="single-box fourth">
                   <div className="icon-box">
-                    <img src={featuresicon4} alt="Image" />
+                    <img src={featuresicon4} alt="featuresicon" />
                   </div>
                   <h3>100%</h3>
                   <p>Scure & Stable</p>

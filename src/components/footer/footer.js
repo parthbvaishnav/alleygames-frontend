@@ -1,6 +1,5 @@
 import React from 'react'
-import { FooterImage, HeaderLogo, SendIcon } from '../../utils/ImagesLoad'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { HeaderLogo } from '../../utils/ImagesLoad'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFacebookF, faTwitter, faLinkedinIn, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faMapMarkerAlt, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';

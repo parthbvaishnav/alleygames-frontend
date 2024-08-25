@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {  blogpostimage1} from '../../utils/ImagesLoad'
 import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ const BlogDetails = () => {
     const error = useSelector((state) => state.status.error);
     useEffect(() => {
         dispatch(getSingleBlogList(id));
-    }, [dispatch, ]);
+    }, [dispatch,id ]);
 
   return (
     <>

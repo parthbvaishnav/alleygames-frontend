@@ -5,22 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
 import Loader from "../loader/loader";
 
-const GameList = () => {
+const GameList = (props) => {
   const dispatch = useDispatch();
   const [totalRecords, setTotalRecords] = useState(0)
   const gameData = useSelector((state) => state.games.gameList);
   const loading = useSelector((state) => state.status.loading);
-  const error = useSelector((state) => state.status.error);
-  const filterKey = useSelector((state) => state.filter.filterKey);
   const categoryKey = useSelector((state) => state.category_filter.filterCategoryKey);
-  const [page, setPage] = useState(1); // Track the current page
-console.log('gameData------------------',gameData)
+  const [page, setPage] = useState(1);
   useEffect(() => {
-    const count = dispatch(getAllGame(categoryKey, page));
+    const count = dispatch(getAllGame(categoryKey, page,props.searchFilter));
     count.then(data=>{
-      setTotalRecords(data)      
+      setTotalRecords(data)
     })    
-  }, [categoryKey, page]);
+  }, [categoryKey, page,props.searchFilter]);
   useEffect(() => {
     setPage(1)
   }, [categoryKey]);
@@ -51,7 +48,7 @@ console.log('gameData------------------',gameData)
   return (
     <>
       <div className="all-items">
-        {page==1 && loading && <Loader />}
+        {page===1 && loading && <Loader />}
         {gameData.map((game, index) => (
           <Link
             to={`/playGame/${game.UUID}`}

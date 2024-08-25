@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { emailicon, facebook, infoicon1, infoicon2, instagram, rightarrow2, security, twitter } from '../../utils/ImagesLoad';
+import { facebook, infoicon1, infoicon2, instagram, rightarrow2, twitter } from '../../utils/ImagesLoad';
 import { Link } from 'react-router-dom';
 import { submitContactForm } from '../../utils/indexService';
 import Loader from '../../components/loader/loader';

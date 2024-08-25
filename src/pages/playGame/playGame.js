@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import GameList from '../../components/game-containers/gameList';
 import { exitFullscreen, fullscreen } from '../../utils/ImagesLoad';
 import { useDispatch, useSelector } from "react-redux";
 import { getGameByUUID, getSimilarGame } from '../../utils/indexService';
 import { Link, useParams } from 'react-router-dom';
+import { BUCKET_URL } from '../../utils/constant';
 
 const PlayGame = () => {
   const dispatch = useDispatch();
@@ -28,11 +28,15 @@ const PlayGame = () => {
       dispatch(getSimilarGame(gameData?.Category));
     }
   }, [gameData]);
-
+  const exitHandler = ()=>{
+    setIsFullScreen(false)
+  }
   const handleGameSetup = async (data) => {
-    const { Game_link, Category, Banner_image,Title, view_type } = data;
+    const { Game_link, Banner_image,Title, view_type } = data;
     const handleResize = () => {
       // document.querySelector('.banner-div').classList.remove('hidden');
+      document.addEventListener('fullscreenchange', exitHandler, false);
+
       document.querySelector('.game-logo').src = Banner_image;
       document.querySelector('.game-title').innerHTML = Title;
       document.querySelector('.game-title-bottom').innerHTML = Title;
@@ -78,19 +82,16 @@ const PlayGame = () => {
     const gameFrame = document.getElementById('game');
     gameFrame.src = gameData.Game_link;
     gameFrame.onload = () => {
-      gameFrame.contentWindow.postMessage('fullscreen', 'https://gamersaimstorage.s3.ap-south-1.amazonaws.com');
+      gameFrame.contentWindow.postMessage('fullscreen', BUCKET_URL);
     };
   };
 
   const setScreenSize = (dimensions) => {
     const gameFrame = document.getElementById('game');
-    gameFrame.contentWindow.postMessage(`size_event,${dimensions}`, 'https://gamersaimstorage.s3.ap-south-1.amazonaws.com');
+    gameFrame.contentWindow.postMessage(`size_event,${dimensions}`, BUCKET_URL);
   };
 
   const handlePlayNow = () => {
-    // fullScreenGame();
-    // setIsFullScreen(true);
-    // screen.requestFullscreen();
     document.getElementById('overlay-div').classList.add('overlay-div-hidden');
     if (gameData.view_type === "horizontal") {
       screen.orientation.lock('landscape');
@@ -105,7 +106,6 @@ const PlayGame = () => {
       screen.orientation.lock('landscape');
     }
   };
-
 
   const handleBack = () => {
     if (gameData.view_type === "horizontal") {
@@ -203,15 +203,17 @@ const PlayGame = () => {
                           <div className="banner-div" id='overlay-div'>
                             <div className="game-logo-div">
                               <img className="game-logo" alt="game-logo" />
-                              <h4 className="game-title"></h4>
+                              <h4 className="game-title"> </h4>
                               <a className="cmn-btn play-now" onClick={handlePlayNow}>Play Now</a>
                             </div>
                           </div>
-                          <iframe id="game" className="game-frame" style={{height:isFullScreen ? '92%':'100%'}} allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
+                          <div style={{height:'95.5%', display:'flex', alignItems:'center'}}>
+                            <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
+                          </div>
                           <div className="footer-play-section">
-                            <h4 className="game-title-bottom"></h4>
-                            <div className="fullScreenIcon" onClick={isFullScreen == false ? handleFullScreen : handleBack}>
-                              <img src={isFullScreen == true ? exitFullscreen : fullscreen} alt='fullscreen'/>
+                            <h4 className="game-title-bottom"> </h4>
+                            <div className="fullScreenIcon" onClick={isFullScreen === false ? handleFullScreen : handleBack}>
+                              <img src={isFullScreen === true ? exitFullscreen : fullscreen} alt='fullscreen'/>
                             </div>
                           </div>
                         </div>                        
