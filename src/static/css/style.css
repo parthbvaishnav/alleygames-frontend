@@ -329,7 +329,7 @@ label {
 .sub-title {
     color: var(--primary-color);
     font-weight: 500;
-    margin-bottom: 27px;
+    margin-bottom: 10px;
 }
 
 .title {
@@ -3013,6 +3013,12 @@ video.bg-item{
 
 .privacy-content.terms .safe-data {
     margin-bottom: -23px;
+}
+.gameBoxSection{
+    background: #1b1d4dba;
+    padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
 }
 .gameDescriptionSection{
     padding: 20px;

@@ -2,6 +2,7 @@ import React from "react";
 import "../../App.css";
 import { countericon1, countericon2, featuresicon1, featuresicon2, featuresicon3, featuresicon4, jackpotimage1, jackpotimage2, jackpotimage3, jackpotimage4, populargameimage1, populargameimage2, populargameimage3, populargameimage4, populargameimage5, populargameimage6, populargameitem} from "../../utils/ImagesLoad";
 import { Link } from "react-router-dom";
+import GameList from "../../components/game-containers/gameList";
 
 const Home = () => {
   return (
@@ -16,16 +17,9 @@ const Home = () => {
                     <div className="top-area section-text">
                       <h5 className="sub-title">Welcome To Gaming World</h5>
                       <h1 className="title">Next Level <span>Crypto Gaming</span> Platform</h1>
-                      <p className="xlr">
-                        Mind-blowing bonuses. Zero withdrawal fees. Flash-like
-                        customer
-                      </p>
-                      <div className="btn-area mt-30">
-                        <Link data-bs-toggle="modal"
-                          data-bs-target="#loginMod" className="cmn-btn reg" >
-                          Sign Up
-                          <i className="icon-d-right-arrow-2"></i>
-                        </Link>
+                      <p className="xlr">Mind-blowing bonuses. Zero withdrawal fees. Flash-like customer</p>
+                      <div className="btn-area mt-30"> 
+                        <Link data-bs-toggle="modal" data-bs-target="#loginMod" className="cmn-btn reg" >Sign Up<i className="icon-d-right-arrow-2"></i></Link>
                       </div>
                     </div>
                   </div>
@@ -74,21 +68,20 @@ const Home = () => {
           <div className="abs-item">
             <img src={populargameitem} alt="icon" />
           </div>
-          <div className="container">
-            <div className="row justify-content-center wow fadeInUp">
-              <div className="col-lg-6 text-center">
-                <div className="section-text">
-                  <h5 className="sub-title">Easy way for crypto Play</h5>
-                  <h2 className="title">Popular Game</h2>
-                  <p>
-                    Unparalleled slots to give lovers of the gambling world an
-                    exciting gaming experience par excellence
-                  </p>
+          <div className="container gameBoxSection">
+            <div className="row wow fadeInUp">
+              <div className="text-left">
+                <h5 className="sub-title">Easy way for crypto Play</h5>
+                <div className="games-section ">
+                  <GameList/>
                 </div>
               </div>
             </div>
             <div className="row wow fadeInUp">
-              <div className="games-carousel">
+              {/* <div className="games-section ">
+                <GameList/>
+              </div> */}
+              {/* <div className="games-carousel">
                 <div className="single">
                   <div className="single-box">
                     <img src={populargameimage1} alt="populargameimage" />
@@ -127,12 +120,9 @@ const Home = () => {
               </div>
               <div className="col-lg-12">
                 <div className="btn-area mt-40 text-center">
-                  <Link to="/allGame" className="cmn-btn">
-                    All Games
-                    <i className="icon-d-right-arrow-2"></i>
-                  </Link>
+                  <Link to="/allGame" className="cmn-btn">All Games <i className="icon-d-right-arrow-2"></i></Link>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -144,23 +134,12 @@ const Home = () => {
               <div className="col-lg-9">
                 <div className="section-top">
                   <div className="section-text">
-                    <h5 className="sub-title">
-                      The Fastest Withdrawals In The Galaxy
-                    </h5>
-                    <h2 className="title">
-                      Enjoy fast, secure withdrawals at Casino Bizera.
-                    </h2>
-                    <p>
-                      Find gamers who care about the same things you do —
-                      whether you have shared values or common goals — and
-                      connect with them in a meaningful way.
-                    </p>
+                    <h5 className="sub-title">The Fastest Withdrawals In The Galaxy</h5>
+                    <h2 className="title">Enjoy fast, secure withdrawals at Casino Bizera.</h2>
+                    <p>Find gamers who care about the same things you do — whether you have shared values or common goals — and connect with them in a meaningful way.</p>
                   </div>
                   <div className="btn-area">
-                    <a href="games.html" className="cmn-btn">
-                      Enter our Universe
-                      <i className="icon-d-right-arrow-2"></i>
-                    </a>
+                    <a href="games.html" className="cmn-btn">Enter our Universe <i className="icon-d-right-arrow-2"></i></a>
                   </div>
                 </div>
               </div>
