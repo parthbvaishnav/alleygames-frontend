@@ -29,7 +29,7 @@ const MainHeader = () => {
                                         <NavLink to="/" className="nav-link" activeclassname="active">Home</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/allGame" className="nav-link" activeclassname="active">Games</NavLink>
+                                        <NavLink to="/allGame" className="nav-link" activeclassname="active">Category</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to="/about" className="nav-link" activeclassname="active">About Us</NavLink>

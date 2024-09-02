@@ -1,8 +1,9 @@
 import React from "react";
 import "../../App.css";
-import { countericon1, countericon2, featuresicon1, featuresicon2, featuresicon3, featuresicon4, jackpotimage1, jackpotimage2, jackpotimage3, jackpotimage4, populargameimage1, populargameimage2, populargameimage3, populargameimage4, populargameimage5, populargameimage6, populargameitem} from "../../utils/ImagesLoad";
+import { countericon1, countericon2, featuresicon1, featuresicon2, featuresicon3, featuresicon4, jackpotimage1, jackpotimage2, jackpotimage3, jackpotimage4, populargameitem} from "../../utils/ImagesLoad";
 import { Link } from "react-router-dom";
 import GameList from "../../components/game-containers/gameList";
+import AdComponent from "../AdComponent/AdComponent";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
                 <div className="col-xl-6 col-lg-6 col-md-8">
                   <div className="main-content">
                     <div className="top-area section-text">
+                      <AdComponent/>
                       <h5 className="sub-title">Welcome To Gaming World</h5>
                       <h1 className="title">Next Level <span>Crypto Gaming</span> Platform</h1>
                       <p className="xlr">Mind-blowing bonuses. Zero withdrawal fees. Flash-like customer</p>
@@ -68,6 +70,7 @@ const Home = () => {
           <div className="abs-item">
             <img src={populargameitem} alt="icon" />
           </div>
+          
           <div className="container gameBoxSection">
             <div className="row wow fadeInUp">
               <div className="text-left">
