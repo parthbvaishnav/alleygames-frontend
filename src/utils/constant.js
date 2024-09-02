@@ -12,3 +12,4 @@ export const GAME_BY_UUID = BASE_URL + "game/";
 export const ALL_BLOG = BASE_URL + "blogs/";
 export const SINGLE_BLOG = BASE_URL + "blog/";
 export const SEARCH_GAME = BASE_URL + "games_search/?q=";
+export const GAMES_BY_CATEGORY = BASE_URL + "games-by-category/";

@@ -61,8 +61,8 @@ const Contact = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent the default form submission
-        setLoading(true)
         if (validateForm()) {
+            setLoading(true)
             const dataToSend = {
                 Name: formData.name,
                 Email: formData.email,

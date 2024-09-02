@@ -80,6 +80,26 @@ const PlayGame = () => {
       document.getElementById('game').style.width = `${frameWidth + 0}px`;
       document.getElementById('game').style.height = isFullScreen ? '92%' : `${frameHeight + 0}px`;
       document.getElementById('game').style.border = 'none';
+
+
+      document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+           //'In fullscreen mode'
+        } else {
+           //'Exited fullscreen mode'
+          setIsFullScreen(false);
+          let frameWidth=document.getElementById("game-section").clientWidth
+          let frameHeight = Math.round((4 * frameWidth) / 7) - 58;   
+          if(!gameData.Landscape){
+            frameWidth = 353;
+            frameHeight = document.getElementById("game-section").clientHeight - 95;
+          } 
+          const dimensions = `${frameWidth}/${frameHeight}`;
+          setScreenSize(dimensions);
+          document.getElementById('game').style.width = `${frameWidth + 0}px`;
+          document.getElementById('game').style.height = `${frameHeight + 0}px`;
+        }
+    });
     }
   };
 
@@ -130,7 +150,6 @@ const PlayGame = () => {
       if(!gameData.Landscape){
         frameWidth = 353;
         frameHeight = document.getElementById("game-section").clientHeight - 95;
-        console.log('document.getElementById("game-section").clientWidth-----------------',document.getElementById("game-section").clientHeight)
       } 
       const dimensions = `${frameWidth}/${frameHeight}`;
       setScreenSize(dimensions);
