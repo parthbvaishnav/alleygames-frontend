@@ -122,8 +122,8 @@ const Contact = () => {
             <section className="get-in-touch">
                 <div className="overlay pt-120 pb-120">
                     <div className="container">
-                        <div className="row">
-                            <div className="col-lg-6">
+                        <div className="row justify-content-center">
+                            {/* <div className="col-lg-6">
                                 <div className="section-text">
                                     <h5 className="sub-title">Contact</h5>
                                     <h2 className="title">Get in Touch</h2>
@@ -145,7 +145,7 @@ const Contact = () => {
                                         <p className="phone-email"><a href="/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="157d7c55777c6f7067743b7c7a">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-lg-6">
                                 <form onSubmit={handleSubmit}>
                                     <div className="col-12">
@@ -196,7 +196,7 @@ const Contact = () => {
                     </div>
                 </div>
             </section>
-            <section className="social-media">
+            {/* <section className="social-media">
                 <div className="overlay pt-120 pb-120">
                     <div className="container">
                         <div className="row justify-content-between align-items-center">
@@ -256,7 +256,7 @@ const Contact = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </>
     );
 };

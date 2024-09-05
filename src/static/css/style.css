@@ -3944,11 +3944,11 @@ video.bg-item{
   
 
   .gameNameArrow{
-    display: none;
+    display: flex;
     align-items: center;
 }
 .gameNameArrow img{
-    display: block;
+    display: none;
     width: 33px;
     margin-right: 17px;
 }
@@ -3956,7 +3956,7 @@ video.bg-item{
     #sidebar{
         display: none;
     }
-    .gameNameArrow{
-        display: flex;
-        }
+    .gameNameArrow img{
+        display: block;
+    }
 }
