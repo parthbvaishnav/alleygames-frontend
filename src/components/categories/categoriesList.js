@@ -6,6 +6,7 @@ import { setCategoryFilterKey } from '../../redux/reducers/categoryFilter';
 
 const CategoriesList = () => {
     const dispatch = useDispatch();
+    const categoryKey = useSelector((state) => state.category_filter.filterCategoryKey);
     const categoriesData = useSelector((state) => state.categories.categoryList);
     const loading = useSelector((state) => state.status.loading);
     const error = useSelector((state) => state.status.error);
@@ -36,7 +37,7 @@ const CategoriesList = () => {
                 <li key={index} className="nav-item" role="presentation">
                     <button 
                         onClick={() => handleFilterClick(category.id)}
-                        className={index === 0 ? "nav-link active" : "nav-link"} 
+                        className={categoryKey == category.id ? "nav-link active" : "nav-link"} 
                         id={`category-tab-${index}`} 
                         data-bs-toggle="tab" 
                         data-bs-target={`#category-${index}`} 

@@ -7,6 +7,8 @@ import AdComponent from "../AdComponent/AdComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getCatWiseGame } from "../../utils/indexService";
 import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
+import { setCategoryFilterKey } from "../../redux/reducers/categoryFilter";
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -45,7 +47,7 @@ const Home = () => {
                   <div className="main-content">
                     <div className="top-area section-text">
                       {/* <AdComponent/> */}
-                      <h5 className="sub-title">Welcome To Gaming World</h5>
+                      <h5 className="sub-title">Welcome To AlleyGames</h5>
                       <h1 className="title">Next Level <span>Crypto Gaming</span> Platform</h1>
                       <p className="xlr">Mind-blowing bonuses. Zero withdrawal fees. Flash-like customer</p>
                     </div>
@@ -101,7 +103,9 @@ const Home = () => {
                 <div className="text-left">
                   <div className="d-flex justify-content-between">
                     <h5 className="sub-title">{item.Category.Name}</h5>
-                    <Link to={`/allGame`}>View All</Link>
+                    <Link to={`/allGame`} onClick={()=>{
+                          dispatch(setCategoryFilterKey(item.Category.id));
+                    }}>View All</Link>
                   </div>
                   <div className="games-section">
                     <div className="all-items">

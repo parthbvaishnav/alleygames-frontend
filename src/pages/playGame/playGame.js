@@ -40,10 +40,10 @@ const PlayGame = () => {
     // Determine screen orientation
     const isPortrait = window.innerHeight > window.innerWidth;
   
-    if (window.innerWidth <= mobileWidth) {
-      document.querySelector('.game-logo').src = Banner_image;
-      document.getElementById('game').classList.add('hidden');
-    } else {
+    // if (window.innerWidth <= mobileWidth) {
+    //   document.querySelector('.game-logo').src = Banner_image;
+    //   document.getElementById('game').classList.add('hidden');
+    // } else {
       if (Landscape) {
         if (isPortrait) {
           // For Landscape games in portrait mode
@@ -100,7 +100,7 @@ const PlayGame = () => {
           document.getElementById('game').style.height = `${frameHeight + 0}px`;
         }
     });
-    }
+    // }
   };
 
 

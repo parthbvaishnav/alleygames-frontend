@@ -34,12 +34,12 @@ const About = () => {
                 <h1 >About Us</h1>
                 <div className="space-y-8">
                     <div>
-                        <h2>Welcome to alleygames.com</h2>
+                        <h2>Welcome to alleygames.in</h2>
                         <p>alleygames is your ultimate destination for playing wide and engaging games online. Designed for real gamers of all ages, our platform offers an huge range of free games that are playable on both mobile and desktop browsers without any installation stuffs.</p>
                     </div>
                     <div>
                         <h2>Cross-Platform Gaming</h2>
-                        <p>Experience the flexibility of HTML5 technology with alleygames.com, where your gaming is not confined to one device. Enjoy seamless gameplay on any device like desktop, tablet or mobile phone anytime and anywhere you choose.</p>
+                        <p>Experience the flexibility of HTML5 technology with alleygames.in, where your gaming is not confined to one device. Enjoy seamless gameplay on any device like desktop, tablet or mobile phone anytime and anywhere you choose.</p>
                     </div>
                     <div>
                         <h2>Our Game Selection</h2>
@@ -47,7 +47,7 @@ const About = () => {
                     </div>
                     <div>
                         <h2>100% Free, Always</h2>
-                        <p>We believe great gaming experiences should be accessible to everyone. That’s why all the games on alleygames.com are 100% free. No subscriptions, no hidden fees. Just endless hours of entertainment without any cost.</p>
+                        <p>We believe great gaming experiences should be accessible to everyone. That’s why all the games on alleygames.in are 100% free. No subscriptions, no hidden fees. Just endless hours of entertainment without any cost.</p>
                     </div>
                     <div>
                         <h2>Explore Our Game Categories</h2>
@@ -61,15 +61,15 @@ const About = () => {
                             <li><span className="font-semibold">Casual Games:</span> Perfect for quick gaming sessions to Play.</li>
                             <li><span className="font-semibold">Hyper Casual Games:</span> Simple, addictive games that are easy to learn but hard to put down.</li>
                         </ul>
-                        <p>We also offer unique genres like Puzzle Games, Sports Games, and Strategy Games, ensuring that every visit to alleygames.com brings a new adventure.</p>
+                        <p>We also offer unique genres like Puzzle Games, Sports Games, and Strategy Games, ensuring that every visit to alleygames.in brings a new adventure.</p>
                     </div>
                     <div>
                         <h2>Join Our Community</h2>
-                        <p>Connect with a huge community of gamers at alleygames.com. Explore new releases, share scores, and challenge others. Whether you're a casual gamer, there’s always something new and exciting waiting for you.</p>
+                        <p>Connect with a huge community of gamers at alleygames.in. Explore new releases, share scores, and challenge others. Whether you're a casual gamer, there’s always something new and exciting waiting for you.</p>
                     </div>
                     <div>
                         <h2>Start Playing Today!</h2>
-                        <p>Why wait? Your next gaming adventure awaits at alleygames.com, where fun meets freedom and everyone can play.</p>
+                        <p>Why wait? Your next gaming adventure awaits at alleygames.in, where fun meets freedom and everyone can play.</p>
                     </div>
                 </div>
             </div>
