@@ -109,14 +109,10 @@ const PlayGame = () => {
 
 
   const fullScreenGame = () => {
-    debugger
-
     const gameFrame = document.getElementById('game');
     gameFrame.onload = () => {
       gameFrame.contentWindow.postMessage('fullscreen', BUCKET_URL);
-    };
-
-    
+    };    
   };
 
   const setScreenSize = (dimensions) => {
@@ -231,6 +227,38 @@ const PlayGame = () => {
       }
     };
   }, []);
+  const sendUnityMsg = (arg)=>{
+    const iframe = document.getElementById('game');
+    iframe.contentWindow.postMessage('unity_event,'+arg, 'https://gamersaimstorage.s3.ap-south-1.amazonaws.com');
+  }
+  useEffect(() => {
+    let event_name_stored = "";
+    window.addEventListener('message', (event) => {
+      let args;
+      console.log("event.data----------------------",event.data)
+      if (event.data.toString().includes(',')) {
+          args = event.data.split(',');
+      } else {
+          args = [event.data];
+      }
+      console.log("agrs-------",args);
+      //don't remove this comment and logs
+      //STARTTIME, SHOW_BANNER, COMPLETE_NEXT, SHOW_VIDEO, SHOW_INTER, GAMEOVER, LEVELSKIP, KINFEAD,afterLevelFiald
+      if(args[0]=="COMPLETE_NEXT"){
+          event_name_stored=args[1];
+          sendUnityMsg(event_name_stored);
+      }
+      else if(args[0]=="SHOW_VIDEO"){
+          event_name_stored=args[1];
+              sendUnityMsg(event_name_stored);
+      }
+      else if(args[0]=="SHOW_INTER"){
+          event_name_stored=args[1];
+          sendUnityMsg(event_name_stored);
+      }
+  });
+  }, [])
+  
   return (
     <div id="playGameSection">
       <section className="banner-section inner-banner blog details">
