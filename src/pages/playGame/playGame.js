@@ -109,6 +109,7 @@ const PlayGame = () => {
 
 
   const fullScreenGame = () => {
+    debugger
 
     const gameFrame = document.getElementById('game');
     gameFrame.onload = () => {
