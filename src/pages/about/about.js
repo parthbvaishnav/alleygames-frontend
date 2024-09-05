@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { aboutusillus, aboutusobj1, aboutusobj2,playicon, whychooseicon1 } from '../../utils/ImagesLoad'
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../components/loader/loader';
+import { getAboutUsData } from '../../utils/indexService';
 
 const About = () => {
+    const dispatch = useDispatch();
+    const aboutUsData = useSelector((state) => state.aboutusList.aboutusList);    
+    const loading = useSelector((state) => state.status.loading);
+    useEffect(() => {
+        dispatch(getAboutUsData());
+    }, []);
   return (
     <>
+     {loading && <Loader/>}
         <section className="banner-section inner-banner about-us">
             <div className="overlay">
                 <div className="banner-content">
@@ -31,46 +41,9 @@ const About = () => {
         </section>
         <div className="container gameBoxSectionAbout mt-5">
             <div className="gap-4">
-                <h1 >About Us</h1>
+                <h1>Alley Games</h1>
                 <div className="space-y-8">
-                    <div>
-                        <h2>Welcome to alleygames.in</h2>
-                        <p>alleygames is your ultimate destination for playing wide and engaging games online. Designed for real gamers of all ages, our platform offers an huge range of free games that are playable on both mobile and desktop browsers without any installation stuffs.</p>
-                    </div>
-                    <div>
-                        <h2>Cross-Platform Gaming</h2>
-                        <p>Experience the flexibility of HTML5 technology with alleygames.in, where your gaming is not confined to one device. Enjoy seamless gameplay on any device like desktop, tablet or mobile phone anytime and anywhere you choose.</p>
-                    </div>
-                    <div>
-                        <h2>Our Game Selection</h2>
-                        <p>At alleygames, quality and variety are paramount. Each game in our library is carefully selected and tested by our dedicated team to ensure it meets our high standards.</p>
-                    </div>
-                    <div>
-                        <h2>100% Free, Always</h2>
-                        <p>We believe great gaming experiences should be accessible to everyone. That’s why all the games on alleygames.in are 100% free. No subscriptions, no hidden fees. Just endless hours of entertainment without any cost.</p>
-                    </div>
-                    <div>
-                        <h2>Explore Our Game Categories</h2>
-                        <p>Our diverse game library spans multiple genres to cater to every gamer's preference:</p>
-                        <ul>
-                            <li><span className="font-semibold">Action Games:</span> Extreme thrilling gameplay and test your reflexes.</li>
-                            <li><span className="font-semibold">Adventure Games:</span> Play exciting quests and explore new worlds.</li>
-                            <li><span className="font-semibold">Kids Games:</span> Safe, fun, and educational games for younger players.</li>
-                            <li><span className="font-semibold">Car Games:</span> Start your engines in high-octane races and driving challenges.</li>
-                            <li><span className="font-semibold">Card Games:</span> Test your strategy and luck in classic and modern card games.</li>
-                            <li><span className="font-semibold">Casual Games:</span> Perfect for quick gaming sessions to Play.</li>
-                            <li><span className="font-semibold">Hyper Casual Games:</span> Simple, addictive games that are easy to learn but hard to put down.</li>
-                        </ul>
-                        <p>We also offer unique genres like Puzzle Games, Sports Games, and Strategy Games, ensuring that every visit to alleygames.in brings a new adventure.</p>
-                    </div>
-                    <div>
-                        <h2>Join Our Community</h2>
-                        <p>Connect with a huge community of gamers at alleygames.in. Explore new releases, share scores, and challenge others. Whether you're a casual gamer, there’s always something new and exciting waiting for you.</p>
-                    </div>
-                    <div>
-                        <h2>Start Playing Today!</h2>
-                        <p>Why wait? Your next gaming adventure awaits at alleygames.in, where fun meets freedom and everyone can play.</p>
-                    </div>
+                    <div dangerouslySetInnerHTML={{ __html: aboutUsData?.[0]?.About_us }}></div>                   
                 </div>
             </div>
         </div>

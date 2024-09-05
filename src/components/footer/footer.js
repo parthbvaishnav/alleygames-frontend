@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 library.add(faMapMarkerAlt, faPhone, faEnvelope, faFacebookF, faTwitter, faLinkedinIn, faYoutube);
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
+
   return (
     <footer className="footer-section">
         <div className="container">           
@@ -33,7 +35,7 @@ const Footer = () => {
                     <div className="row justify-content-between align-items-center">
                         <div className="col-lg-7 d-flex justify-content-center justify-content-lg-start order-lg-0 order-1">
                             <div className="copyright text-center">
-                                <p>© Alleygames, 2024 | Design by <Link to={"/"}>Alleygames.</Link> All rights reserved.</p>
+                            <p>© Alleygames, {currentYear} | Design by <Link to={"/"}>Alleygames.</Link> All rights reserved.</p>
                             </div>
                         </div>
                         <div className="col-xl-3 col-lg-5 d-flex justify-content-center justify-content-lg-end">

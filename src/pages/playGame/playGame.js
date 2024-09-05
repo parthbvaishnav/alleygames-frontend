@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { exitFullscreen, fullscreen } from '../../utils/ImagesLoad';
+import React, { useEffect, useRef, useState } from 'react';
+import { exitFullscreen, fullscreen, leftArrowIcon } from '../../utils/ImagesLoad';
 import { useDispatch, useSelector } from "react-redux";
 import { getGameByUUID, getSimilarGame } from '../../utils/indexService';
 import { Link, useParams } from 'react-router-dom';
 import { BUCKET_URL } from '../../utils/constant';
 
 const PlayGame = () => {
+  const screenRef = useRef(null);
   const dispatch = useDispatch();
   const { id } = useParams();
   const mobileWidth = 600;
@@ -28,6 +29,7 @@ const PlayGame = () => {
       dispatch(getSimilarGame(gameData?.Category));
     }
   }, [gameData]);
+  
   const handleGameSetup = async (data) => {
     const { Game_link, Banner_image, Title, Landscape } = data;
     document.querySelector('.game-logo').src = Banner_image;
@@ -87,17 +89,19 @@ const PlayGame = () => {
            //'In fullscreen mode'
         } else {
            //'Exited fullscreen mode'
+           if(document.getElementById('game')){
           setIsFullScreen(false);
-          let frameWidth=document.getElementById("game-section").clientWidth
+          let frameWidth=document.getElementById("game-section")?.clientWidth
           let frameHeight = Math.round((4 * frameWidth) / 7) - 58;   
           if(!gameData.Landscape){
             frameWidth = 353;
-            frameHeight = document.getElementById("game-section").clientHeight - 95;
+            frameHeight = document.getElementById("game-section")?.clientHeight - 95;
           } 
           const dimensions = `${frameWidth}/${frameHeight}`;
           setScreenSize(dimensions);
           document.getElementById('game').style.width = `${frameWidth + 0}px`;
           document.getElementById('game').style.height = `${frameHeight + 0}px`;
+        }
         }
     });
     // }
@@ -116,7 +120,7 @@ const PlayGame = () => {
 
   const setScreenSize = (dimensions) => {
     const gameFrame = document.getElementById('game');
-    gameFrame.contentWindow.postMessage(`size_event,${dimensions}`, BUCKET_URL);
+    gameFrame?.contentWindow.postMessage(`size_event,${dimensions}`, BUCKET_URL);
   };
 
   const handlePlayNow = () => {
@@ -124,39 +128,54 @@ const PlayGame = () => {
   };
 
   const handleFullScreen = () => {
-    fullScreenGame();
-    setIsFullScreen(true);
-    screen.requestFullscreen().then(() => {     
-      let frameWidth = window.innerWidth - 80;
-      let frameHeight = window.innerHeight -80;
-      if(!gameData.Landscape){
-        frameWidth = window.innerHeight / 2;
-        frameHeight = window.innerHeight  - 80;
-      }
-      const dimensions = `${frameWidth}/${frameHeight}`;
-
-      setScreenSize(dimensions)
-      document.getElementById('game').style.width = `${frameWidth}px`;
-      document.getElementById('game').style.height = `${frameHeight}px`;
-    }).catch(err => console.error('Error attempting to lock screen orientation:', err));
+    const screen = screenRef.current; // Access the ref instead of querying the DOM
+    if (screen) {
+      fullScreenGame();
+      setIsFullScreen(true);
+      screen.requestFullscreen().then(() => {
+        let frameWidth = window.innerWidth - 80;
+        let frameHeight = window.innerHeight - 80;
+        if (!gameData.Landscape) {
+          frameWidth = window.innerHeight / 2;
+          frameHeight = window.innerHeight - 80;
+        }
+        const dimensions = `${frameWidth}/${frameHeight}`;
+        setScreenSize(dimensions);
+        document.getElementById('game').style.width = `${frameWidth}px`;
+        document.getElementById('game').style.height = `${frameHeight}px`;
+      }).catch(err => console.error('Error attempting to lock screen orientation:', err));
+    } else {
+      console.error('Fullscreen div not found');
+    }
   };
   
-
+  
   const handleBack = () => {
     setIsFullScreen(false);
-    document.exitFullscreen().then(() => {
-      let frameWidth=document.getElementById("game-section").clientWidth
-      let frameHeight = Math.round((4 * frameWidth) / 7) - 58;   
-      if(!gameData.Landscape){
-        frameWidth = 353;
-        frameHeight = document.getElementById("game-section").clientHeight - 95;
-      } 
-      const dimensions = `${frameWidth}/${frameHeight}`;
-      setScreenSize(dimensions);
-      document.getElementById('game').style.width = `${frameWidth + 0}px`;
-      document.getElementById('game').style.height = `${frameHeight + 0}px`;
-    }).catch(err => console.error('Error exiting fullscreen:', err));
-  };
+    
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+        .then(() => {
+          const gameSection = document.getElementById("game-section");
+          if (gameSection) {
+            let frameWidth = gameSection.clientWidth;
+            let frameHeight = Math.round((4 * frameWidth) / 7) - 58;   
+            if (!gameData.Landscape) {
+              frameWidth = 353;
+              frameHeight = gameSection.clientHeight - 95;
+            } 
+            const dimensions = `${frameWidth}/${frameHeight}`;
+            setScreenSize(dimensions);
+            const gameFrame = document.getElementById('game');
+            if (gameFrame) {
+              gameFrame.style.width = `${frameWidth}px`;
+              gameFrame.style.height = `${frameHeight}px`;
+            }
+          }
+        })
+        .catch(err => console.error('Error exiting fullscreen:', err));
+    }
+  };  
   
   const handleMouseEnter = (videoRef) => {
     if (videoRef) {
@@ -191,6 +210,26 @@ const PlayGame = () => {
   //     document.body.removeChild(script);
   //   };
   // }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 991) {
+        handleFullScreen(); 
+      }
+    };  
+    handleResize();      
+    window.addEventListener('resize', handleResize);  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(err => console.error('Error exiting fullscreen:', err));
+      }
+    };
+  }, []);
   return (
     <div id="playGameSection">
       <section className="banner-section inner-banner blog details">
@@ -264,7 +303,7 @@ const PlayGame = () => {
                 </div>
                 <div className="col-lg-8 game-area" id='game-section'>
                   <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
-                    <div className="game-div" id="fullscreen_div">
+                    <div className="game-div" id="fullscreen_div" ref={screenRef}>
                       <div className="banner-div" id='overlay-div'>
                         <div className="game-logo-div">
                           <img className="game-logo" alt="game-logo" />
@@ -276,7 +315,12 @@ const PlayGame = () => {
                         <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
                       </div>
                       <div className="footer-play-section">
-                        <h4 className="game-title-bottom"> </h4>
+                        <div className='gameNameArrow'>
+                        <Link to={'/allGame'}>
+                          <img src={leftArrowIcon} alt='Back Arrow'/>
+                        </Link>
+                          <h4 className="game-title-bottom"> </h4>
+                        </div>
                         <div className="fullScreenIcon" onClick={isFullScreen === false ? handleFullScreen : handleBack}>
                           <img src={isFullScreen === true ? exitFullscreen : fullscreen} alt='fullscreen'/>
                         </div>

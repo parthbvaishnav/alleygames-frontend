@@ -3942,3 +3942,21 @@ video.bg-item{
     max-height: calc(100vh - 47px);
   }
   
+
+  .gameNameArrow{
+    display: none;
+    align-items: center;
+}
+.gameNameArrow img{
+    display: block;
+    width: 33px;
+    margin-right: 17px;
+}
+@media screen and (max-width:991px) {
+    #sidebar{
+        display: none;
+    }
+    .gameNameArrow{
+        display: flex;
+        }
+}

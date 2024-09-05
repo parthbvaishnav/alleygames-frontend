@@ -11,6 +11,8 @@ import blogListReducer from "../reducers/blogListReducer";
 import similarGameReducer from "../reducers/similarGameReducer";
 import blogSingleReducer from "../reducers/blogSingleReducer";
 import catWiseGameReducer from "../reducers/catWiseGameReducer";
+import aboutusListReducer from "../reducers/aboutusListReducer";
+import privacyPolicyListReducer from "../reducers/privacyPolicyListReducer";
 const store = configureStore({
   reducer: {
     games: rootReducer,
@@ -23,7 +25,9 @@ const store = configureStore({
     similarGame:similarGameReducer,
     blogList: blogListReducer,
     blogSingle: blogSingleReducer,
-    catWiseGame:catWiseGameReducer
+    catWiseGame:catWiseGameReducer,
+    aboutusList:aboutusListReducer,
+    privacyPolicyList:privacyPolicyListReducer,
   },
 });
 

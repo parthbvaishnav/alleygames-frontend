@@ -13,7 +13,6 @@ import { setCategoryFilterKey } from "../../redux/reducers/categoryFilter";
 const Home = () => {
   const dispatch = useDispatch();
   const gameData = useSelector((state) => state.catWiseGame.catWiseGame);
-  console.log("gameData0-000000000000000000",gameData)
   useEffect(() => {
     dispatch(getCatWiseGame());
   }, []);
@@ -102,10 +101,8 @@ const Home = () => {
               <div className="row wow fadeInUp">
                 <div className="text-left">
                   <div className="d-flex justify-content-between">
-                    <h5 className="sub-title">{item.Category.Name}</h5>
-                    <Link to={`/allGame`} onClick={()=>{
-                          dispatch(setCategoryFilterKey(item.Category.id));
-                    }}>View All</Link>
+                    <h5 className="sub-title">{item.Section_name}</h5>
+                    <Link to={`/allGame`}>View All</Link>
                   </div>
                   <div className="games-section">
                     <div className="all-items">

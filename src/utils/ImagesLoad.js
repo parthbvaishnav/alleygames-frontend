@@ -5,6 +5,7 @@ import NotFoundImageI from "../static/images/404.png";
 import aboutusillusI from "../static/images/about-us-illus.png";
 import aboutusobj1I from "../static/images/about-us-obj-1.png";
 import aboutusobj2I from "../static/images/about-us-obj-2.png";
+import leftArrowIconI from "../static/images/icon/left-arrow.png";
 
 // Css Images
 import blogdetailsbannerbgI from "../static/images/blog-details-banner-bg.png";
@@ -133,6 +134,7 @@ export const aboutusillus = aboutusillusI;
 export const aboutusobj1 = aboutusobj1I;
 export const aboutusobj2 = aboutusobj2I;
 export const blogdetailsbannerbg = blogdetailsbannerbgI;
+export const leftArrowIcon = leftArrowIconI;
 
 export const blogpostimage1 = blogpostimage1I;
 
