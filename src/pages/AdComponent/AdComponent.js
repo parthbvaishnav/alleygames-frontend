@@ -1,31 +1,19 @@
-import React, { useEffect, useRef } from "react";
+// import React, { useEffect } from 'react';
+// import AdSense from 'react-adsense';
 
-const AdComponent = () => {
-  const adRef = useRef(null);
+// const AdComponent = () => {
+//   useEffect(() => {
+//     (window.adsbygoogle = window.adsbygoogle || []).push({});
+//   }, []);
 
-  useEffect(() => {
-    if (adRef.current && !adRef.current.hasAttribute("data-adsbygoogle-status")) {
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {
-        console.error("AdSense error:", e.message);
-      }
-    }
-  }, []);
+//   return (
+//     <div>
+//       <AdSense.Google
+//         client='ca-pub-7292810486004926'
+//         slot='7806394673'
+//       />
+//     </div>
+//   );
+// };
 
-  return (
-    <div className="ad-container">
-      <ins
-        className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client="ca-pub-3940256099942544" // Test AdSense client ID
-        data-ad-slot="1234567890"                // Test AdSense ad slot ID
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-        ref={adRef}
-      ></ins>
-    </div>
-  );
-};
-
-export default AdComponent;
+// export default AdComponent;

@@ -45,7 +45,6 @@ const GameList = (props) => {
   };
   return (
     <>
-      {/* <ins className="adsbygoogle h-[250px] w-full ads-content" style={{display: 'block', textAlign: 'center', height: 175}} data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-8026299207830445" data-ad-slot="4155966225" data-adsbygoogle-status="done" data-ad-status="unfilled"></ins> */}
       <div className="all-items">
         {page===1 && loading && <Loader />}
         {gameData.map((game, index) => (
