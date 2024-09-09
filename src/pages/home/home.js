@@ -68,20 +68,20 @@ const Home = () => {
             </div>
           </div>
         </div>        
-      </section>
-      <AdvertisingProvider config={adsConfig} plugins={plugins}>
-      {/* Display Banner Ad */}
-      <AdvertisingSlot id="div-slot" />
+      </section>   
+      <div className="container">
+        <AdvertisingProvider config={adsConfig} plugins={plugins}>
 
-      {/* Display Another Banner Ad */}
-      <AdvertisingSlot id="banner-slot" />
+          {/* Display Another Banner Ad */}
+          <AdvertisingSlot id="banner-slot" />
 
-      {/* Display Video Ad */}
-      <AdvertisingSlot id="video-slot" />
+          {/* Display Video Ad */}
+          <AdvertisingSlot id="video-slot" />
 
-      {/* Trigger Interstitial Ad */}
-      <button onClick={displayInterstitialAd}>Show Interstitial Ad</button>
-    </AdvertisingProvider>
+          {/* Trigger Interstitial Ad */}
+          {/* <button onClick={displayInterstitialAd}>Show Interstitial Ad</button> */}
+        </AdvertisingProvider>  
+      </div>
       <section className="popular-game">
         <div className="overlay pt-120 pb-120">
           <div className="abs-item">

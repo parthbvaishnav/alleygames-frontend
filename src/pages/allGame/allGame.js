@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import GameList from "../../components/game-containers/gameList";
 import CategoriesList from "../../components/categories/categoriesList";
 import SearchFilter from "../../components/filter/searchFilter";
+import adsConfig from "../AdComponent/adsConfig";
+import plugins from "../AdComponent/plugins";
+import {AdvertisingProvider, AdvertisingSlot,} from 'react-advertising';
 
 const AllGame = () => {
   const [searchFilter, setSearchFilter] = useState("")
@@ -40,7 +43,7 @@ const AllGame = () => {
       </section>
       <section className="games-section">
         <div className="overlay pb-120">
-          <div className="top-nav">
+          <div className="top-nav">            
             <div className="container">
               <div className="row justify-content-center wow fadeInUp">
                 <div className="col-lg-12">
@@ -48,7 +51,7 @@ const AllGame = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div>            
           <div className="container pt-120">
             <div className="tab-content">
               <div
@@ -64,6 +67,11 @@ const AllGame = () => {
                   <div className="col-xl-3 col-lg-4 col-md-5">
                     <SearchFilter setSearchFilter={setSearchFilter}/>
                   </div>
+                </div>
+                <div className="adsSticky">
+                  <AdvertisingProvider config={adsConfig} plugins={plugins}>
+                    <AdvertisingSlot id="div-slot" />
+                  </AdvertisingProvider>
                 </div>
                 <div className="tab-content">
                   <div

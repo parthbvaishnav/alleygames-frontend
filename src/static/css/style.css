@@ -1028,7 +1028,7 @@ label {
 }
 
 .header-section .navbar {
-    padding: 23px 15px;
+    padding: 13px 15px;
 }
 
 .header-section .navbar .navbar-brand {
@@ -3960,3 +3960,14 @@ video.bg-item{
         display: block;
     }
 }
+
+/* Ads Sticky */
+.adsSticky{
+    margin: 40px auto 0;
+    display: block;
+    max-width: 728px;
+}
+/* .ads-content-flex{
+    display: flex;
+    align-items: flex-start;
+} */

@@ -3,7 +3,7 @@ export default {
       {
         id: "div-slot",
         path: "/6355419/Travel/Europe",
-        sizes: [[100, 100]] // Banner Ad Slot
+        sizes: [[728, 90]] // Banner Ad Slot
       },
       {
         id: "video-slot",
@@ -14,6 +14,11 @@ export default {
         id: "banner-slot",
         path: "/6355419/Travel/Europe/Banner",
         sizes: [[300, 250]] // Another Banner Ad Slot
+      },
+      {
+        id: "wide-skyscraper",
+        path: "/6355419/Travel/Europe",
+        sizes: [[160, 600]] // Another Banner Ad Slot
       }
     ],
     interstitialSlot: {
