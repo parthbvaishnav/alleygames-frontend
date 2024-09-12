@@ -49,7 +49,7 @@ const GameList = (props) => {
         {page===1 && loading && <Loader />}
         {gameData.map((game, index) => (
           <Link
-            to={`/playGame/${game.UUID}`}
+            to={`/view-game/${game.UUID}`}
             key={index}
             className="single-item"
             onClick={() => {

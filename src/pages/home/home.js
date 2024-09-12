@@ -99,7 +99,7 @@ const Home = () => {
                     <div className="all-items">
                       {item?.Games?.map((game, index) => (
                           <Link
-                            to={`/playGame/${game.UUID}`}
+                            to={`/view-game/${game.UUID}`}
                             key={index}
                             className="single-item"
                             onClick={() => {

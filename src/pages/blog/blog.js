@@ -53,7 +53,7 @@ const Blog = () => {
                     <div className="container">
                         <div className="row">
                             {blogData.results && blogData.results.map((post) => (
-                                <div className="col-lg-6" key={post.id}>
+                                <div className="col-lg-4" key={post.id}>
                                     <div className="single-box">
                                         <div className="img-area">
                                             <img src={post.Blog_cover_image || blogpostimage1} alt={post.Blog_title}/>

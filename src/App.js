@@ -14,6 +14,7 @@ import store from "./redux/store/store";
 import { Provider } from "react-redux";
 import PlayGame from "./pages/playGame/playGame";
 import NotFound from "./pages/notFound/notFound";
+import ViewGame from "./pages/viewGame/viewGame";
 
 export const Context = createContext();
 
@@ -66,6 +67,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/allGame" element={<AllGame />} />
+            <Route path="/view-game/:id" element={<ViewGame />} />
             <Route path="/playGame/:id" element={<PlayGame />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blogdetails/:id" element={<BlogDetails />} />

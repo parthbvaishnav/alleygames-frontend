@@ -5,23 +5,19 @@ import { getGameByUUID, getSimilarGame } from '../../utils/indexService';
 import { Link, useParams } from 'react-router-dom';
 import { BUCKET_URL } from '../../utils/constant';
 
-const PlayGame = () => {
+const ViewGame = () => {
   const screenRef = useRef(null);
   const dispatch = useDispatch();
   const { id } = useParams();
   const mobileWidth = 600;
-  const gameData = useSelector((state) => state.singleGame.singleGameList); 
+  const gameData = useSelector((state) => state.singleGame.singleGameList);
   const similarGames = useSelector((state) => state.similarGame.similarGameList);
   const loading = useSelector((state) => state.status.loading);
   const error = useSelector((state) => state.status.error);
-
+  console.log('gameData-----------------',gameData)
   const [isFullScreen, setIsFullScreen] = useState(false);
   const screen = document.getElementById('fullscreen_div');
-  useEffect(() => {
-    document.querySelector('.header-section').style.display = 'none';
-    document.querySelector('.banner-section').style.display = 'none';
-    document.querySelector('.footer-section').style.display = 'none';
-  }, [])
+
   useEffect(() => {
     handleGameSetup(gameData);
   }, [gameData]);
@@ -46,6 +42,10 @@ const PlayGame = () => {
     // Determine screen orientation
     const isPortrait = window.innerHeight > window.innerWidth;
   
+    // if (window.innerWidth <= mobileWidth) {
+    //   document.querySelector('.game-logo').src = Banner_image;
+    //   document.getElementById('game').classList.add('hidden');
+    // } else {
       if (Landscape) {
         if (isPortrait) {
           // For Landscape games in portrait mode
@@ -104,6 +104,7 @@ const PlayGame = () => {
         }
         }
     });
+    // }
   };
 
 
@@ -266,11 +267,68 @@ const PlayGame = () => {
             </div>
           </div>
       </section>
-      <section className="blog-details" style={{marginTop:10}}>
+      <section className="blog-details">
         <div className="overlay">
-          <div className="container">
+          <div className="container pb-120">
             <div className="row">
-                <div className="col-lg-2 games-section sidebar" id="sidebar">                 
+                <div className="col-lg-2 games-section sidebar" id="sidebar">
+                  <div>
+                    <ins className="adsbygoogle"
+                      style={{ display: 'block' }}
+                      data-ad-client="ca-pub-1234567890123456"
+                      data-ad-slot="1234567890"
+                      data-ad-format="auto"></ins>
+                  </div>
+                  <div className="all-items">      
+                    {similarGames.slice(0,Math.ceil(similarGames.length / 2)).map((game, index) => (
+                      <Link
+                        to={'/playGame/'+game.UUID}
+                        onClick={()=>{
+                          document.getElementById('overlay-div').classList.remove('overlay-div-hidden');
+                        }}
+                        key={index}
+                        className="single-item"
+                        onMouseEnter={(e) =>{
+                          const imgElement = e.currentTarget.querySelector("img");
+                          if (imgElement && game.Video_link) {
+                            imgElement.style.display = 'block';
+                            imgElement.style.opacity = '0';
+                            imgElement.style.visibility = 'hidden';
+
+                            const videoElement = e.currentTarget.querySelector("video");
+                            videoElement.style.display = 'block';
+                            videoElement.style.opacity = '1';
+                            videoElement.style.visibility = 'visible';
+                          }
+                            handleMouseEnter(e.currentTarget.querySelector("video"))
+                        }
+                        }
+                        onMouseLeave={(e) =>{
+                          const imgElement = e.currentTarget.querySelector("img");
+                          if (imgElement) {
+                            imgElement.style.display = 'block';
+                            imgElement.style.opacity = '1';
+                            imgElement.style.visibility = 'visible';
+
+                            const videoElement = e.currentTarget.querySelector("video");
+                            videoElement.style.display = 'block';
+                            videoElement.style.opacity = '0';
+                            videoElement.style.visibility = 'hidden';
+
+                          }
+                          handleMouseLeave(e.currentTarget.querySelector("video"))
+                        }
+                        }
+                      >
+                        <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
+                          <div className="bg-area">
+                            <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
+                            <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
                 <div className="col-lg-8 game-area" id='game-section'>
                   <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
@@ -279,7 +337,12 @@ const PlayGame = () => {
                         <div className="game-logo-div">
                           <img className="game-logo" alt="game-logo" />
                           <h4 className="game-title"> </h4>
-                          <a className="cmn-btn play-now" id="link" onClick={handlePlayNow}>Play Now</a>
+                          <Link
+                        // to={'/playGame/'+gameData.UUID}
+                         className="cmn-btn play-now" id="link" 
+                        onClick={handlePlayNow}
+                        >Play Now
+                        </Link>
                         </div>
                       </div>
                       <div className="game-frame-container" style={{height:isFullScreen ? '100vh':''}} id='gameFrameContainer'>
@@ -298,8 +361,63 @@ const PlayGame = () => {
                       </div>
                     </div>                        
                   </section>
+                  <div className='gameDescriptionSection'>                  
+                    <div dangerouslySetInnerHTML={
+                        { __html: gameData?.Game_description }
+                    }></div>                        
+                  </div>
                 </div>
                 <div className="col-lg-2 games-section sidebar" id="sidebar">
+                  <div className="all-items">  
+                    {similarGames.slice(Math.ceil(similarGames.length / 2)).map((game, index) => (
+                          <Link
+                            to={'/playGame/'+game.UUID}
+                            onClick={()=>{
+                              document.getElementById('overlay-div').classList.remove('overlay-div-hidden');
+                            }}
+                            key={index}
+                            className="single-item"
+                            onMouseEnter={(e) =>{
+                              const imgElement = e.currentTarget.querySelector("img");
+                              if (imgElement && game.Video_link) {
+                                imgElement.style.display = 'block';
+                                imgElement.style.opacity = '0';
+                                imgElement.style.visibility = 'hidden';
+
+                                const videoElement = e.currentTarget.querySelector("video");
+                                videoElement.style.display = 'block';
+                                videoElement.style.opacity = '1';
+                                videoElement.style.visibility = 'visible';
+                              }
+                                handleMouseEnter(e.currentTarget.querySelector("video"))
+                            }
+                            }
+                            onMouseLeave={(e) =>{
+                              const imgElement = e.currentTarget.querySelector("img");
+                              if (imgElement) {
+                                imgElement.style.display = 'block';
+                                imgElement.style.opacity = '1';
+                                imgElement.style.visibility = 'visible';
+
+                                const videoElement = e.currentTarget.querySelector("video");
+                                videoElement.style.display = 'block';
+                                videoElement.style.opacity = '0';
+                                videoElement.style.visibility = 'hidden';
+
+                              }
+                              handleMouseLeave(e.currentTarget.querySelector("video"))
+                            }
+                            }
+                          >
+                            <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
+                              <div className="bg-area">
+                                <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
+                                <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                    </div>
                 </div>
             </div>
           </div>
@@ -309,4 +427,4 @@ const PlayGame = () => {
   );
 };
 
-export default PlayGame;
+export default ViewGame;
