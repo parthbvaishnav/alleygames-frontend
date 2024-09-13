@@ -66,9 +66,8 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route exact path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/allGame" element={<AllGame />} />
+            <Route path="/games" element={<AllGame />} />
             <Route path="/view-game/:id" element={<ViewGame />} />
-            <Route path="/playGame/:id" element={<PlayGame />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blogdetails/:id" element={<BlogDetails />} />
             <Route path="/about" element={<About />} />
@@ -79,6 +78,7 @@ function App() {
             {/* Catch all other routes and render NotFound component */}
           </Route>
             <Route path="*" element={<NotFound />} />
+            <Route path="/game/:id" element={<PlayGame />} />
         </Routes>
       </BrowserRouter>
     </Provider>

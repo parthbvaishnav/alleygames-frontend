@@ -27,7 +27,6 @@ const About = () => {
                                         <nav aria-label="breadcrumb">
                                             <ol className="breadcrumb d-flex align-items-center">
                                                 <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                                                <li className="breadcrumb-item"><Link>Pages</Link></li>
                                                 <li className="breadcrumb-item active" aria-current="page">About Us</li>
                                             </ol>
                                         </nav>
@@ -43,7 +42,7 @@ const About = () => {
             <div className="gap-4">
                 <h1>Alley Games</h1>
                 <div className="space-y-8">
-                    <div dangerouslySetInnerHTML={{ __html: aboutUsData?.[0]?.About_us }}></div>                   
+                    <div dangerouslySetInnerHTML={{ __html: aboutUsData?.[0]?.About_us }}></div>
                 </div>
             </div>
         </div>        

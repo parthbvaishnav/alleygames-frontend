@@ -27,7 +27,6 @@ const PrivacyPolicy = () => {
                                         <nav aria-label="breadcrumb">
                                             <ol className="breadcrumb d-flex align-items-center">
                                                 <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                                                <li className="breadcrumb-item"><Link>Pages</Link></li>
                                                 <li className="breadcrumb-item active" aria-current="page">Privacy Policy</li>
                                             </ol>
                                         </nav>
@@ -39,11 +38,13 @@ const PrivacyPolicy = () => {
                 </div>
             </div>
         </section>
-        <div className="container gameBoxSectionAbout mt-5">
-            <div className="gap-4">
-                <h1>Alley Games</h1>
-                <div className="space-y-8">
-                    <div dangerouslySetInnerHTML={{ __html: privacyPolicyData?.[0]?.Policy_description }}></div>                   
+        <div className="container gameBoxSectionAbout mt-5 mb-5">
+            <div className="row justify-content-center">
+                <div className="col-lg-11">
+                    <h1>Alley Games</h1>
+                    <div className="space-y-8">
+                        <div dangerouslySetInnerHTML={{ __html: privacyPolicyData?.[0]?.Policy_description }}></div>
+                    </div>
                 </div>
             </div>
         </div>

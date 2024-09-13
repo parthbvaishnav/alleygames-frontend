@@ -29,7 +29,7 @@ const BlogDetails = () => {
                                     <div className="breadcrumb-area">
                                         <nav aria-label="breadcrumb">
                                             <ol className="breadcrumb d-flex align-items-center">
-                                                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+                                                <li className="breadcrumb-item"><Link to="/blog">Blog</Link></li>
                                                 <li className="breadcrumb-item active" aria-current="page">Blog Details</li>
                                             </ol>
                                         </nav>

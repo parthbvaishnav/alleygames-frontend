@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GameList from "../../components/game-containers/gameList";
 import CategoriesList from "../../components/categories/categoriesList";
-import SearchFilter from "../../components/filter/searchFilter";
-import adsConfig from "../AdComponent/adsConfig";
-import plugins from "../AdComponent/plugins";
-import {AdvertisingProvider, AdvertisingSlot,} from 'react-advertising';
-
+import { useLocation } from 'react-router-dom';
 const AllGame = () => {
-  const [searchFilter, setSearchFilter] = useState("")
+  const location = useLocation();
+  const [searchFilter, setSearchFilter] = useState(location.state?.searchFilter)
+  useEffect(() => {
+    setSearchFilter(location.state?.searchFilter)
+  }, [location.state?.searchFilter])
+  
   return (
     <div>
       <section className="banner-section inner-banner games">
@@ -60,19 +61,14 @@ const AllGame = () => {
                 role="tabpanel"
                 aria-labelledby="slots-tab"
               >
-                <div className="row justify-content-between align-items-center">
+                {/* <div className="row justify-content-between align-items-center">
                   <div className="col-xl-4 col-md-7">
-                    {/* <GameFilter /> */}
+                    <GameFilter />
                   </div>
                   <div className="col-xl-3 col-lg-4 col-md-5">
                     <SearchFilter setSearchFilter={setSearchFilter}/>
                   </div>
-                </div>
-                <div className="adsSticky">
-                  <AdvertisingProvider config={adsConfig} plugins={plugins}>
-                    <AdvertisingSlot id="div-slot" />
-                  </AdvertisingProvider>
-                </div>
+                </div> */}
                 <div className="tab-content">
                   <div
                     className="tab-pane fade show active"
@@ -80,7 +76,7 @@ const AllGame = () => {
                     role="tabpanel"
                     aria-labelledby="slots-all-tab"
                   >
-                    <GameList searchFilter={searchFilter}/>                    
+                    <GameList searchFilter={searchFilter}/>
                   </div>
                 </div>
               </div>

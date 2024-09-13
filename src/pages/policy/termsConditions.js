@@ -16,7 +16,6 @@ const TermsConditions = () => {
                                         <nav aria-label="breadcrumb">
                                             <ol className="breadcrumb d-flex align-items-center">
                                                 <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                                                <li className="breadcrumb-item"><Link>Pages</Link></li>
                                                 <li className="breadcrumb-item active" aria-current="page">Terms Conditions</li>
                                             </ol>
                                         </nav>
@@ -29,10 +28,10 @@ const TermsConditions = () => {
             </div>
         </section>
         <section className="privacy-content terms">
-            <div className="overlay pt-120 pb-120">
-                <div className="container">
+            <div className="overlay">
+                <div className="container gameBoxSectionAbout mt-5 mb-5">
                     <div className="row justify-content-center">
-                        <div className="col-lg-10">
+                        <div className="col-lg-11">
                             <div className="top-wrapper">
                                 <h4>We're always looking for new ways to provide privacy for our customers.</h4>
                                 <p>Id ipsum mi tempor eget. Pretium consectetur scelerisque blandit habitasse non ullamcorper enim, diam quam id et, tempus massa. Sed nam vulputate pellentesque quis. Varius a, nunc faucibus proin elementum id odio auctor. Nunc,

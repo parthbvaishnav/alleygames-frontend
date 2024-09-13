@@ -7,22 +7,11 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCatWiseGame } from "../../utils/indexService";
 import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
-import {
-  AdvertisingProvider,
-  AdvertisingSlot,
-  logVersionInfo
-} from 'react-advertising';
-import adsConfig from "../AdComponent/adsConfig";
-import plugins from "../AdComponent/plugins.js";
+import AdComponent from "../AdComponent/AdComponent";
+import GoogleAd from "../AdComponent/GoogleAd";
 
 
 const Home = () => {
-
-  logVersionInfo();
-
-  const displayInterstitialAd = () => {
-    plugins[0].refreshInterstitialSlot();
-  };
 
   const dispatch = useDispatch();
   const gameData = useSelector((state) => state.catWiseGame.catWiseGame);
@@ -61,6 +50,8 @@ const Home = () => {
                       <h5 className="sub-title">Welcome To AlleyGames</h5>
                       <h1 className="title">Next Level <span>Crypto Gaming</span> Platform</h1>
                       <p className="xlr">Mind-blowing bonuses. Zero withdrawal fees. Flash-like customer</p>
+                      {/* <AdComponent/> */}
+                      <GoogleAd/>
                     </div>
                   </div>
                 </div>
@@ -69,31 +60,18 @@ const Home = () => {
           </div>
         </div>        
       </section>   
-      <div className="container">
-        <AdvertisingProvider config={adsConfig} plugins={plugins}>
-
-          {/* Display Another Banner Ad */}
-          <AdvertisingSlot id="banner-slot" />
-
-          {/* Display Video Ad */}
-          <AdvertisingSlot id="video-slot" />
-
-          {/* Trigger Interstitial Ad */}
-          {/* <button onClick={displayInterstitialAd}>Show Interstitial Ad</button> */}
-        </AdvertisingProvider>  
-      </div>
       <section className="popular-game">
         <div className="overlay pt-120 pb-120">
           <div className="abs-item">
             <img src={populargameitem} alt="icon" />
           </div>
           {gameData.map((item, index) => (
-            <div className="container gameBoxSection">
+            <div key={index} className="container gameBoxSection">
               <div className="row wow fadeInUp">
                 <div className="text-left">
                   <div className="d-flex justify-content-between">
                     <h5 className="sub-title">{item.Section_name}</h5>
-                    <Link to={`/allGame`}>View All</Link>
+                    <Link to={`/games`}>View All</Link>
                   </div>
                   <div className="games-section">
                     <div className="all-items">
@@ -147,7 +125,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          ))}                  
+          ))}
         </div>
       </section>   
     </div>

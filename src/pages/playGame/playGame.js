@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGameByUUID, getSimilarGame } from '../../utils/indexService';
 import { Link, useParams } from 'react-router-dom';
 import { BUCKET_URL } from '../../utils/constant';
+import AdComponent from '../AdComponent/AdComponent';
 
 const PlayGame = () => {
   const screenRef = useRef(null);
@@ -18,9 +19,9 @@ const PlayGame = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const screen = document.getElementById('fullscreen_div');
   useEffect(() => {
-    document.querySelector('.header-section').style.display = 'none';
-    document.querySelector('.banner-section').style.display = 'none';
-    document.querySelector('.footer-section').style.display = 'none';
+    // document.querySelector('.header-section').style.display = 'none';
+    // document.querySelector('.banner-section').style.display = 'none';
+    // document.querySelector('.footer-section').style.display = 'none';
   }, [])
   useEffect(() => {
     handleGameSetup(gameData);
@@ -36,8 +37,6 @@ const PlayGame = () => {
   
   const handleGameSetup = async (data) => {
     const { Game_link, Banner_image, Title, Landscape } = data;
-    document.querySelector('.game-logo').src = Banner_image;
-    document.querySelector('.game-title').innerHTML = Title;
     document.querySelector('.game-title-bottom').innerHTML = Title;
   
     let frameHeight;
@@ -119,10 +118,6 @@ const PlayGame = () => {
     gameFrame?.contentWindow.postMessage(`size_event,${dimensions}`, BUCKET_URL);
   };
 
-  const handlePlayNow = () => {
-    document.getElementById('overlay-div').classList.add('overlay-div-hidden');
-  };
-
   const handleFullScreen = () => {
     const screen = screenRef.current; // Access the ref instead of querying the DOM
     if (screen) {
@@ -192,20 +187,6 @@ const PlayGame = () => {
     console.error("Video failed to load:", event.target.src);
     event.target.style.display = "none";
   };
-  // useEffect(() => {
-  //   const script = document.createElement('script');
-  //   script.async = true;
-  //   script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-  //   document.body.appendChild(script);
-
-  //   script.onload = () => {
-  //     (window.adsbygoogle = window.adsbygoogle || []).push({});
-  //   };
-
-  //   return () => {
-  //     document.body.removeChild(script);
-  //   };
-  // }, []);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 991) {
@@ -259,47 +240,38 @@ const PlayGame = () => {
   }, [])
 
   return (
-    <div id="playGameSection">
-      <section className="banner-section inner-banner blog details">
-          <div className="overlay">
-            <div className="banner-content game-content-banner">                  
-            </div>
-          </div>
-      </section>
+    <div id="playGameSection">      
       <section className="blog-details" style={{marginTop:10}}>
         <div className="overlay">
           <div className="container">
             <div className="row">
-                <div className="col-lg-2 games-section sidebar" id="sidebar">                 
+                <div className="col-lg-2 games-section sidebar" id="sidebar">
+                  <AdComponent/>
                 </div>
-                <div className="col-lg-8 game-area" id='game-section'>
-                  <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
-                    <div className="game-div" id="fullscreen_div" ref={screenRef}>
-                      <div className="banner-div" id='overlay-div'>
-                        <div className="game-logo-div">
-                          <img className="game-logo" alt="game-logo" />
-                          <h4 className="game-title"> </h4>
-                          <a className="cmn-btn play-now" id="link" onClick={handlePlayNow}>Play Now</a>
+                <div className="col-lg-8">
+                  <div className='game-area' id='game-section'>
+                    <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
+                      <div className="game-play-div" id="fullscreen_div" ref={screenRef}>
+                        <div className="game-frame-container" style={{height:isFullScreen ? '100vh':''}} id='gameFrameContainer'>
+                          <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
+                        </div>
+                        <div className="footer-play-section">
+                          <div className='gameNameArrow'>
+                            <Link to={'/games'}>
+                              <img src={leftArrowIcon} alt='Back Arrow'/>
+                            </Link>
+                            <h4 className="game-title-bottom"> </h4>
+                          </div>
+                          <div className="fullScreenIcon" onClick={isFullScreen === false ? handleFullScreen : handleBack}>
+                            <img src={isFullScreen === true ? exitFullscreen : fullscreen} alt='fullscreen'/>
+                          </div>
                         </div>
                       </div>
-                      <div className="game-frame-container" style={{height:isFullScreen ? '100vh':''}} id='gameFrameContainer'>
-                        <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
-                      </div>
-                      <div className="footer-play-section">
-                        <div className='gameNameArrow'>
-                        <Link to={'/allGame'}>
-                          <img src={leftArrowIcon} alt='Back Arrow'/>
-                        </Link>
-                          <h4 className="game-title-bottom"> </h4>
-                        </div>
-                        <div className="fullScreenIcon" onClick={isFullScreen === false ? handleFullScreen : handleBack}>
-                          <img src={isFullScreen === true ? exitFullscreen : fullscreen} alt='fullscreen'/>
-                        </div>
-                      </div>
-                    </div>                        
-                  </section>
+                    </section>
+                  </div>
                 </div>
                 <div className="col-lg-2 games-section sidebar" id="sidebar">
+                  {/* <AdComponent/> */}
                 </div>
             </div>
           </div>

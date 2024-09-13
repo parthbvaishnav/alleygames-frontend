@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { facebook, infoicon1, infoicon2, instagram, rightarrow2, twitter } from '../../utils/ImagesLoad';
 import { Link } from 'react-router-dom';
 import { submitContactForm } from '../../utils/indexService';
 import Loader from '../../components/loader/loader';
@@ -107,7 +106,6 @@ const Contact = () => {
                                             <nav aria-label="breadcrumb">
                                                 <ol className="breadcrumb d-flex align-items-center">
                                                     <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                                                    <li className="breadcrumb-item"><Link>Pages</Link></li>
                                                     <li className="breadcrumb-item active" aria-current="page">Contact</li>
                                                 </ol>
                                             </nav>
@@ -122,44 +120,23 @@ const Contact = () => {
             <section className="get-in-touch">
                 <div className="overlay pt-120 pb-120">
                     <div className="container">
-                        <div className="row justify-content-center">                            
+                        <div className="row justify-content-center">
                             <div className="col-lg-6">
                                 <form onSubmit={handleSubmit}>
                                     <div className="col-12">
                                         <div className="single-input">
                                             <label htmlFor="name">Name</label>
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                placeholder="John Doe"
-                                                autoComplete="off"
-                                                value={formData.name || ''}
-                                                onChange={handleChange}
-                                            />
+                                            <input type="text" id="name"placeholder="John Doe" style={{borderColor:formData.errors.message ? "#d54443" : "#694cb9"}} autoComplete="off"value={formData.name || ''} onChange={handleChange}/>
                                             {formData.errors.name && <p className="error">{formData.errors.name}</p>}
                                         </div>
                                         <div className="single-input">
                                             <label htmlFor="email">Email</label>
-                                            <input
-                                                type="text"
-                                                id="email"
-                                                placeholder="your@gmail.com"
-                                                autoComplete="off"
-                                                value={formData.email || ''}
-                                                onChange={handleChange}
-                                            />
+                                            <input type="text" id="email" placeholder="your@gmail.com" style={{borderColor:formData.errors.message ? "#d54443" : "#694cb9"}} autoComplete="off" value={formData.email || ''} onChange={handleChange}/>
                                             {formData.errors.email && <p className="error">{formData.errors.email}</p>}
                                         </div>
                                         <div className="single-input">
                                             <label htmlFor="message">Message</label>
-                                            <textarea
-                                                cols="30"
-                                                id="message"
-                                                rows="4"
-                                                placeholder="Type something here"
-                                                value={formData.message || ''}
-                                                onChange={handleChange}
-                                            ></textarea>
+                                            <textarea cols="30" id="message" rows="4" style={{borderColor:formData.errors.message ? "#d54443" : "#694cb9"}} placeholder="Type something here" value={formData.message || ''} onChange={handleChange}></textarea>
                                             {formData.errors.message && <p className="error">{formData.errors.message}</p>}
                                         </div>
                                         <div className="btn-area text-center">

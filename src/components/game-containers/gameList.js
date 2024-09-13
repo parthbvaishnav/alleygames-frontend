@@ -12,7 +12,11 @@ const GameList = (props) => {
   const categoryKey = useSelector((state) => state.category_filter.filterCategoryKey);
   const [page, setPage] = useState(1);
   useEffect(() => {
-    const count = dispatch(getAllGame(categoryKey, page,props.searchFilter));
+    let search = props.searchFilter
+    if(categoryKey){
+      search="";
+    }
+    const count = dispatch(getAllGame(categoryKey, page,search));
     count.then(data=>{
       setTotalRecords(data)
     })    

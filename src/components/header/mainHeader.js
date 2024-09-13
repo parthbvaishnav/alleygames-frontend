@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { HeaderFavLogo, HeaderLogo } from '../../utils/ImagesLoad'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF, faTwitter, faLinkedinIn, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import SearchFilter from "../filter/searchFilter";
 
 library.add(faBars, faSearch, faFacebookF, faTwitter, faLinkedinIn, faYoutube);
 
 const MainHeader = () => {
+  const [searchFilter, setSearchFilter] = useState("")
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(searchFilter){
+        navigate('/games', { state: { searchFilter }});
+    }
+  }, [searchFilter])
+  
   return (
     <>
         <header className="header-section">
@@ -29,7 +39,7 @@ const MainHeader = () => {
                                         <NavLink to="/" className="nav-link" activeclassname="active">Home</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/allGame" className="nav-link" activeclassname="active">Category</NavLink>
+                                        <NavLink to="/games" className="nav-link" activeclassname="active">Category</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to="/about" className="nav-link" activeclassname="active">About Us</NavLink>
@@ -39,8 +49,11 @@ const MainHeader = () => {
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link" activeclassname="active" to="/contact">Contact</NavLink>
-                                    </li>                                
+                                    </li>
                                 </ul>
+                                <div className='games-section'>
+                                    <SearchFilter setSearchFilter={setSearchFilter}/>
+                                </div>
                             </div>
                         </nav>
                     </div>
