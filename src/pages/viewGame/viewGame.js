@@ -96,7 +96,7 @@ const ViewGame = () => {
                                 >
                                     <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
                                     <div className="bg-area">
-                                        <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
+                                        <img className="bg-item" src={game.Banner_image} alt="game bg banner" />
                                         <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
                                     </div>
                                     </div>
@@ -173,7 +173,7 @@ const ViewGame = () => {
                                     >
                                         <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
                                             <div className="bg-area">
-                                                <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
+                                                <img className="bg-item" src={game.Banner_image} alt="game banner" />
                                                 <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
                                             </div>
                                         </div>

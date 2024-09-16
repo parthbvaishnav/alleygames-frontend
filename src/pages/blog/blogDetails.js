@@ -49,10 +49,8 @@ const BlogDetails = () => {
                             <div className="img-area blogDetailsSection">
                                 <img src={blogDataSingle.Blog_cover_image || blogpostimage1} alt={blogDataSingle.Blog_cover_image}/>
                             </div>
-                            <br/><br/>
-                            <h4>{blogDataSingle.Blog_title}</h4>
-                            <br/>
                             <div className="row gameDescriptionSection justify-content-center">    
+                                <h4 className="blogTitle">{blogDataSingle.Blog_title}</h4>
                                 <div dangerouslySetInnerHTML={{ __html: blogDataSingle?.Blog_description }}></div>
                             </div>
                         </div>

@@ -995,7 +995,7 @@ label {
 }
 
 .header-section {
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: 0;
     width: 100%;
@@ -1387,7 +1387,7 @@ label {
 .popular-game .abs-item {
     position: absolute;
     bottom: 10%;
-    z-index: -1;
+    z-index: 0;
     left: 5%;
     animation: ripple2Ani 4s linear infinite;
 }
@@ -1677,7 +1677,7 @@ label {
 }
 
 .games-section {
-    background-image: url(../images/games-bg.png);
+    background-image: url(../images/popular-game-bg.png);
     background-size: contain;
     background-position: top 120px left;
     background-repeat: no-repeat;
@@ -1749,6 +1749,7 @@ label {
 }
 .games-section.sidebar {
     background-image: none;
+    padding: 0;
 }
 
 .games-section.sidebar .all-items{
@@ -2245,6 +2246,7 @@ video.bg-item{
     padding: 0;
     margin: 0 auto;
     min-height: 600px;
+    max-height: calc(100vh - 53px);
 }
 .game-area .game-logo{
     border-radius: 10px;
@@ -2684,7 +2686,7 @@ video.bg-item{
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(1deg, #140836, transparent);
+    background: linear-gradient(1deg, #140836, #1408366e, #14083600);
 }
 
 .blog-post .single-box .text-area h4 {
@@ -3049,7 +3051,12 @@ video.bg-item{
     background-image: none;
 }
 .gameDescriptionSection{
+    background: #1b1d4dba;
     padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    margin-bottom: 20px;
+    margin-top: 40px;
 }
 .gameDescriptionSection p{
     display: block;
@@ -3143,6 +3150,11 @@ video.bg-item{
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     unicode-bidi: isolate;
+}
+.gameDescriptionSection .blogTitle{
+    margin: 0;
+    border-bottom: 1px solid #140836;
+    padding-bottom: 19px;
 }
 .gameBoxSectionAbout h1{
     display: block;
@@ -3965,8 +3977,8 @@ video.bg-item{
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: calc(100vh - 100px);
-    height: 100vh;
+    max-height: calc(100vh - 53px);
+    height: calc(100vh - 93px);
   }
   
 

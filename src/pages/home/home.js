@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "../../App.css";
-import { countericon1, countericon2, featuresicon1, featuresicon2, featuresicon3, featuresicon4, jackpotimage1, jackpotimage2, jackpotimage3, jackpotimage4, populargameitem} from "../../utils/ImagesLoad";
 import { Link } from "react-router-dom";
 // import GameList from "../../components/game-containers/gameList";
 // import AdComponent from "../AdComponent/AdComponent";
@@ -62,9 +61,6 @@ const Home = () => {
       </section>   
       <section className="popular-game">
         <div className="overlay pt-120 pb-120">
-          <div className="abs-item">
-            <img src={populargameitem} alt="icon" />
-          </div>
           {gameData.map((item, index) => (
             <div key={index} className="container gameBoxSection">
               <div className="row wow fadeInUp">
@@ -114,7 +110,7 @@ const Home = () => {
                           >
                             <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
                               <div className="bg-area">
-                                <img className="bg-item" src={game.Banner_image} alt="gamestabicon" />
+                                <img className="bg-item" src={game.Banner_image} alt="game banner" />
                                 <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
                               </div>
                             </div>

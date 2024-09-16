@@ -5,24 +5,17 @@ import { getGameByUUID, getSimilarGame } from '../../utils/indexService';
 import { Link, useParams } from 'react-router-dom';
 import { BUCKET_URL } from '../../utils/constant';
 import AdComponent from '../AdComponent/AdComponent';
+import GoogleAd from '../AdComponent/GoogleAd';
 
 const PlayGame = () => {
   const screenRef = useRef(null);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const mobileWidth = 600;
   const gameData = useSelector((state) => state.singleGame.singleGameList); 
-  const similarGames = useSelector((state) => state.similarGame.similarGameList);
   const loading = useSelector((state) => state.status.loading);
   const error = useSelector((state) => state.status.error);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const screen = document.getElementById('fullscreen_div');
-  useEffect(() => {
-    // document.querySelector('.header-section').style.display = 'none';
-    // document.querySelector('.banner-section').style.display = 'none';
-    // document.querySelector('.footer-section').style.display = 'none';
-  }, [])
   useEffect(() => {
     handleGameSetup(gameData);
   }, [gameData]);
@@ -36,74 +29,40 @@ const PlayGame = () => {
   }, [gameData]);
   
   const handleGameSetup = async (data) => {
-    const { Game_link, Banner_image, Title, Landscape } = data;
-    document.querySelector('.game-title-bottom').innerHTML = Title;
-  
-    let frameHeight;
-    let frameWidth;
-  
-    // Determine screen orientation
+    const { Game_link, Landscape } = data;
+    let frameWidth, frameHeight;
     const isPortrait = window.innerHeight > window.innerWidth;
-  
-      if (Landscape) {
-        if (isPortrait) {
-          // For Landscape games in portrait mode
-          frameWidth = window.innerWidth - 10;
-          frameHeight = Math.round((4 * frameWidth) / 7);
-        } else {
-          // For Landscape games in landscape mode
-          frameWidth = window.innerWidth - 10;
-          if(!isFullScreen){
-            frameWidth=document.getElementById("game-section").clientWidth            
-          }
-          frameHeight = Math.round((4 * frameWidth) / 7) - 58;         
-        }
-      } else {
-        if (isPortrait) {
-          // For Portrait games in portrait mode
-          frameHeight = window.innerHeight - document.querySelector('header').clientHeight - 26;
-          frameWidth = Math.round((4 * frameHeight) / 7);         
-        } else {
-          // For Portrait games in landscape mode
-          frameWidth = 353;
-          frameHeight = document.getElementById("game-section").clientHeight - 95;
-          // frameHeight = window.innerHeight - document.querySelector('header').clientHeight - 26;
-          // frameWidth = Math.round((4 * frameHeight) / 7);
-        }
-      }
-  
-      // Set iframe size
-      const dimensions = `${frameWidth}/${frameHeight}`;
-      document.getElementById('game').src = Game_link;
-      document.getElementById('game').onload = () => {
+
+    // Calculate frame dimensions based on game orientation and screen mode
+    if (Landscape) {
+      frameWidth = isPortrait ? window.innerWidth - 10 : document.getElementById("game-section").clientWidth || window.innerWidth - 10;
+      frameHeight = Math.round((4 * frameWidth) / 7) - (isPortrait ? 0 : 58);
+    } else {
+      frameHeight = isPortrait ? window.innerHeight - document.querySelector('header')?.clientHeight - 26 : document.getElementById("game-section").clientHeight - 95;
+      frameWidth = isPortrait ? Math.round((4 * frameHeight) / 7) : 353;
+    }
+
+    const dimensions = `${frameWidth}/${frameHeight}`;
+    const gameFrame = document.getElementById('game');
+    gameFrame.src = Game_link;
+    gameFrame.style.width = `${frameWidth}px`;
+    gameFrame.style.height = isFullScreen ? '92%' : `${frameHeight}px`;
+    gameFrame.style.border = 'none';
+    gameFrame.onload = () => setScreenSize(dimensions);
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && gameFrame) {
+        setIsFullScreen(false);
+        frameWidth = gameData.Landscape ? document.getElementById("game-section")?.clientWidth : 353;
+        frameHeight = gameData.Landscape ? Math.round((4 * frameWidth) / 7) - 58 : document.getElementById("game-section")?.clientHeight - 95;
+        const dimensions = `${frameWidth}/${frameHeight}`;
         setScreenSize(dimensions);
-      };
-      document.getElementById('game').style.width = `${frameWidth + 0}px`;
-      document.getElementById('game').style.height = isFullScreen ? '92%' : `${frameHeight + 0}px`;
-      document.getElementById('game').style.border = 'none';
-
-
-      document.addEventListener('fullscreenchange', () => {
-        if (document.fullscreenElement) {
-           //'In fullscreen mode'
-        } else {
-           //'Exited fullscreen mode'
-           if(document.getElementById('game')){
-          setIsFullScreen(false);
-          let frameWidth=document.getElementById("game-section")?.clientWidth
-          let frameHeight = Math.round((4 * frameWidth) / 7) - 58;   
-          if(!gameData.Landscape){
-            frameWidth = 353;
-            frameHeight = document.getElementById("game-section")?.clientHeight - 95;
-          } 
-          const dimensions = `${frameWidth}/${frameHeight}`;
-          setScreenSize(dimensions);
-          document.getElementById('game').style.width = `${frameWidth + 0}px`;
-          document.getElementById('game').style.height = `${frameHeight + 0}px`;
-        }
-        }
+        gameFrame.style.width = `${frameWidth}px`;
+        gameFrame.style.height = `${frameHeight}px`;
+    }
     });
   };
+
 
 
   const fullScreenGame = () => {
@@ -168,25 +127,7 @@ const PlayGame = () => {
     }
   };  
   
-  const handleMouseEnter = (videoRef) => {
-    if (videoRef) {
-      videoRef.play().catch((error) => {
-        console.error("Error trying to play video:", error);
-      });
-    }
-  };
 
-  const handleMouseLeave = (videoRef) => {
-    if (videoRef) {
-      videoRef.pause();
-      videoRef.currentTime = 0;
-    }
-  };
-
-  const handleVideoError = (event) => {
-    console.error("Video failed to load:", event.target.src);
-    event.target.style.display = "none";
-  };
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 991) {
@@ -246,12 +187,12 @@ const PlayGame = () => {
           <div className="container">
             <div className="row">
                 <div className="col-lg-2 games-section sidebar" id="sidebar">
-                  <AdComponent/>
+                  <GoogleAd/>
                 </div>
                 <div className="col-lg-8">
                   <div className='game-area' id='game-section'>
                     <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
-                      <div className="game-play-div" id="fullscreen_div" ref={screenRef}>
+                      <div className="game-play-div" ref={screenRef}>
                         <div className="game-frame-container" style={{height:isFullScreen ? '100vh':''}} id='gameFrameContainer'>
                           <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
                         </div>
@@ -260,7 +201,7 @@ const PlayGame = () => {
                             <Link to={'/games'}>
                               <img src={leftArrowIcon} alt='Back Arrow'/>
                             </Link>
-                            <h4 className="game-title-bottom"> </h4>
+                            <h4 className="game-title-bottom">{gameData.Title}</h4>
                           </div>
                           <div className="fullScreenIcon" onClick={isFullScreen === false ? handleFullScreen : handleBack}>
                             <img src={isFullScreen === true ? exitFullscreen : fullscreen} alt='fullscreen'/>
@@ -271,7 +212,7 @@ const PlayGame = () => {
                   </div>
                 </div>
                 <div className="col-lg-2 games-section sidebar" id="sidebar">
-                  {/* <AdComponent/> */}
+                  <GoogleAd/>
                 </div>
             </div>
           </div>

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { aboutusillus, aboutusobj1, aboutusobj2,playicon, whychooseicon1 } from '../../utils/ImagesLoad'
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/loader/loader';
 import { getAboutUsData } from '../../utils/indexService';
