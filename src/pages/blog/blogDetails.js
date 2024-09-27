@@ -47,7 +47,7 @@ const BlogDetails = () => {
                     <div className="row justify-content-center">
                         <div className="col-lg-8">
                             <div className="img-area blogDetailsSection">
-                                <img src={blogDataSingle.Blog_cover_image || blogpostimage1} alt={blogDataSingle.Blog_cover_image}/>
+                                {blogDataSingle.Blog_cover_image && <img src={blogDataSingle.Blog_cover_image} alt={blogDataSingle.Blog_cover_image}/>}
                             </div>
                             <div className="row gameDescriptionSection justify-content-center">    
                                 <h4 className="blogTitle">{blogDataSingle.Blog_title}</h4>

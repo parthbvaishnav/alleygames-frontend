@@ -96,7 +96,7 @@ const ViewGame = () => {
                                 >
                                     <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
                                     <div className="bg-area">
-                                        <img className="bg-item" src={game.Banner_image} alt="game bg banner" />
+                                        <img className="bg-item" src={game.Game_Banner_image} alt="game bg banner" />
                                         <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
                                     </div>
                                     </div>
@@ -105,26 +105,29 @@ const ViewGame = () => {
                             </div>
                         </div>
                         <div className="col-lg-8" id='game-section'>
-                            <div className='game-area'>
+                            <div className='game-area gameViewSection'>
                                 <section className={`games-container play-game`}>
-                                    <div className="game-div" ref={screenRef} style={{backgroundImage:`url("${gameData.Banner_image}")`}}>
+                                    <div className="game-div" ref={screenRef} style={{backgroundImage:`url("${gameData.Game_Banner_image}")`}}>
+                                        {gameData.Video_link &&
+                                            <video className="viewVideoGame" src={gameData.Video_link} muted autoPlay/>
+                                        }
                                         <div className="banner-div" id='overlay-div'>
                                             <div className="game-logo-div">
-                                            <img className="game-logo" src={gameData.Banner_image} alt="game-logo" />
-                                            <h4 className="game-title">{gameData.Title} </h4>
-                                            <Link
-                                            to={'/game/'+gameData.UUID}
-                                            className="cmn-btn play-now" id="link" 
-                                            //onClick={handlePlayNow}
-                                            >Play Now
-                                            </Link>
+                                                <img className="game-logo" src={gameData.Game_Banner_image} alt="game-logo" />
+                                                <h4 className="game-title">{gameData.Title} </h4>
+                                                <Link
+                                                to={'/game/'+gameData.UUID}
+                                                className="cmn-btn play-now" id="link" 
+                                                //onClick={handlePlayNow}
+                                                >Play Now
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
                             </div>
                             {gameData?.Game_description && 
-                                <div className='game-area'>
+                                <div className='game-area-description'>
                                     <div className='gameDescriptionSection'>
                                         <div dangerouslySetInnerHTML={{ __html: gameData?.Game_description }}></div>
                                     </div>
@@ -173,7 +176,7 @@ const ViewGame = () => {
                                     >
                                         <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
                                             <div className="bg-area">
-                                                <img className="bg-item" src={game.Banner_image} alt="game banner" />
+                                                <img className="bg-item" src={game.Game_Banner_image} alt="game banner" />
                                                 <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
                                             </div>
                                         </div>

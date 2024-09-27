@@ -90,7 +90,7 @@ const GameList = (props) => {
           >
             <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
               <div className="bg-area">
-                <img className="bg-item" src={game.Banner_image} alt="game banner" />
+                <img className="bg-item" src={game.Game_Banner_image} alt="game banner" />
                 <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
               </div>
             </div>

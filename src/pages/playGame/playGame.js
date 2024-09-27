@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGameByUUID, getSimilarGame } from '../../utils/indexService';
 import { Link, useParams } from 'react-router-dom';
 import { BUCKET_URL } from '../../utils/constant';
-import AdComponent from '../AdComponent/AdComponent';
 import GoogleAd from '../AdComponent/GoogleAd';
+import ParticleBg from '../../components/particleBg/particleBg';
 
 const PlayGame = () => {
   const screenRef = useRef(null);
@@ -32,14 +32,14 @@ const PlayGame = () => {
     const { Game_link, Landscape } = data;
     let frameWidth, frameHeight;
     const isPortrait = window.innerHeight > window.innerWidth;
-
     // Calculate frame dimensions based on game orientation and screen mode
     if (Landscape) {
       frameWidth = isPortrait ? window.innerWidth - 10 : document.getElementById("game-section").clientWidth || window.innerWidth - 10;
-      frameHeight = Math.round((4 * frameWidth) / 7) - (isPortrait ? 0 : 58);
+      frameHeight = Math.round((4 * frameWidth) / 7) - (isPortrait ? 0 : 54);
     } else {
-      frameHeight = isPortrait ? window.innerHeight - document.querySelector('header')?.clientHeight - 26 : document.getElementById("game-section").clientHeight - 95;
-      frameWidth = isPortrait ? Math.round((4 * frameHeight) / 7) : 353;
+      frameHeight = isPortrait ? document.querySelector('gameFrameContainer')?.clientHeight : document.getElementById("game-section").clientHeight - 53;
+      // frameWidth = isPortrait ? Math.round((4 * frameHeight) / 7) : 732;
+      frameWidth = isPortrait ? document.getElementById("gameFrameContainer").clientWidth : document.getElementById("gameFrameContainer").clientWidth+50;
     }
 
     const dimensions = `${frameWidth}/${frameHeight}`;
@@ -52,13 +52,14 @@ const PlayGame = () => {
 
     document.addEventListener('fullscreenchange', () => {
       if (!document.fullscreenElement && gameFrame) {
-        setIsFullScreen(false);
-        frameWidth = gameData.Landscape ? document.getElementById("game-section")?.clientWidth : 353;
-        frameHeight = gameData.Landscape ? Math.round((4 * frameWidth) / 7) - 58 : document.getElementById("game-section")?.clientHeight - 95;
-        const dimensions = `${frameWidth}/${frameHeight}`;
-        setScreenSize(dimensions);
-        gameFrame.style.width = `${frameWidth}px`;
-        gameFrame.style.height = `${frameHeight}px`;
+        handleBack()
+          // setIsFullScreen(false);
+          // frameWidth = gameData.Landscape ? document.getElementById("game-section")?.clientWidth : document.getElementById("gameFrameContainer").clientWidth+50;
+          // frameHeight = gameData.Landscape ? Math.round((4 * frameWidth) / 7) - 54 : document.getElementById("gameFrameContainer")?.clientHeight - 53;
+          // const dimensions = `${frameWidth}/${frameHeight}`;
+          // setScreenSize(dimensions);
+          // gameFrame.style.width = `${frameWidth}px`;
+          // gameFrame.style.height = `${frameHeight}px`;
     }
     });
   };
@@ -83,11 +84,13 @@ const PlayGame = () => {
       fullScreenGame();
       setIsFullScreen(true);
       screen.requestFullscreen().then(() => {
-        let frameWidth = window.innerWidth - 80;
-        let frameHeight = window.innerHeight - 80;
+        let w = document.getElementById("gameFrameContainer").clientWidth
+        let h = document.getElementById("gameFrameContainer").clientHeight
+        let frameWidth =  w-0 //window.innerWidth - 80;
+        let frameHeight = h-0 //window.innerHeight - 80;
         if (!gameData.Landscape) {
-          frameWidth = window.innerHeight / 2;
-          frameHeight = window.innerHeight - 80;
+          frameWidth = h / 2;
+          frameHeight = w / 2;
         }
         const dimensions = `${frameWidth}/${frameHeight}`;
         setScreenSize(dimensions);
@@ -108,11 +111,12 @@ const PlayGame = () => {
         .then(() => {
           const gameSection = document.getElementById("game-section");
           if (gameSection) {
-            let frameWidth = gameSection.clientWidth;
-            let frameHeight = Math.round((4 * frameWidth) / 7) - 58;               
+            // let frameWidth = gameSection.clientWidth;
+            let frameWidth = document.getElementById("gameFrameContainer").clientWidth+50;
+            let frameHeight = document.getElementById("gameFrameContainer").clientHeight;               
             if (!gameData.Landscape) {
-              frameWidth = 353;
-              frameHeight = gameSection.clientHeight - 95;
+              frameWidth = document.getElementById("gameFrameContainer").clientWidth+50;
+              frameHeight = gameSection.clientHeight - 53;
             } 
             const dimensions = `${frameWidth}/${frameHeight}`;
             setScreenSize(dimensions);
@@ -181,8 +185,9 @@ const PlayGame = () => {
   }, [])
 
   return (
-    <div id="playGameSection">      
-      <section className="blog-details" style={{marginTop:10}}>
+    <div id="playGameSection">
+      <ParticleBg/>
+      <section className="blog-details" style={{marginTop:0}}>
         <div className="overlay">
           <div className="container">
             <div className="row">
@@ -190,15 +195,12 @@ const PlayGame = () => {
                   <GoogleAd/>
                 </div>
                 <div className="col-lg-8">
-                  <div className='game-area' id='game-section'>
+                  <div className='game-area' id='game-section' style={{width: gameData.Landscape == true ? '100%':'fit-content'}}>
                     <section className={`games-container play-game ${isFullScreen ? 'fullscreen' : ''}`}>
                       <div className="game-play-div" ref={screenRef}>
-                        <div className="game-frame-container" style={{height:isFullScreen ? '100vh':''}} id='gameFrameContainer'>
-                          <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
-                        </div>
                         <div className="footer-play-section">
                           <div className='gameNameArrow'>
-                            <Link to={'/games'}>
+                            <Link to={`/view-game/${gameData.UUID}`}>
                               <img src={leftArrowIcon} alt='Back Arrow'/>
                             </Link>
                             <h4 className="game-title-bottom">{gameData.Title}</h4>
@@ -207,6 +209,9 @@ const PlayGame = () => {
                             <img src={isFullScreen === true ? exitFullscreen : fullscreen} alt='fullscreen'/>
                           </div>
                         </div>
+                        <div className="game-frame-container" style={{height: gameData.Landscape ? 'auto' : isFullScreen ? '100vh':''}} id='gameFrameContainer'>
+                          <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen></iframe>
+                        </div>                        
                       </div>
                     </section>
                   </div>

@@ -1,32 +1,29 @@
-import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useEffect, useRef } from 'react';
 
 const GoogleAd = () => {
+  const adRef = useRef(null);
+
   useEffect(() => {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.error("AdsbyGoogle push error:", e);
+    if (adRef.current) {
+      adRef.current.innerHTML = "";
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error("Adsense error:", e);
+      }
     }
   }, []);
 
   return (
     <div>
-      <Helmet>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6750010916802163"
-          crossorigin="anonymous"
-        ></script>
-      </Helmet>
-
       <ins
+        ref={adRef}
         className="adsbygoogle"
-        style={{ display: 'block', textAlign: 'center' }}
-        data-ad-layout="in-article"
-        data-ad-format="fluid"
+        style={{ display:"inline-block", width:200, height:800 }}
         data-ad-client="ca-pub-6750010916802163"
-        data-ad-slot="3163093922"
+        data-ad-slot={"6802522234"}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
       ></ins>
     </div>
   );

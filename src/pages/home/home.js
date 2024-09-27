@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCatWiseGame } from "../../utils/indexService";
 import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
-import AdComponent from "../AdComponent/AdComponent";
-import GoogleAd from "../AdComponent/GoogleAd";
 
 
 const Home = () => {
@@ -49,8 +47,6 @@ const Home = () => {
                       <h5 className="sub-title">Welcome To AlleyGames</h5>
                       <h1 className="title">Next Level <span>Crypto Gaming</span> Platform</h1>
                       <p className="xlr">Mind-blowing bonuses. Zero withdrawal fees. Flash-like customer</p>
-                      {/* <AdComponent/> */}
-                      <GoogleAd/>
                     </div>
                   </div>
                 </div>
@@ -110,7 +106,7 @@ const Home = () => {
                           >
                             <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
                               <div className="bg-area">
-                                <img className="bg-item" src={game.Banner_image} alt="game banner" />
+                                <img className="bg-item" src={game.Game_Banner_image} alt="game banner" />
                                 <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
                               </div>
                             </div>

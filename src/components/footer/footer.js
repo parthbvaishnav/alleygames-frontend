@@ -1,14 +1,32 @@
 import React from 'react'
 import { HeaderLogo } from '../../utils/ImagesLoad'
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faFacebookF, faTwitter, faLinkedinIn, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { faMapMarkerAlt, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSocialMediaData } from '../../utils/indexService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faFacebookF, faTwitter, faLinkedinIn, faYoutube, faInstagram, faPinterest } from '@fortawesome/free-brands-svg-icons';
 
-library.add(faMapMarkerAlt, faPhone, faEnvelope, faFacebookF, faTwitter, faLinkedinIn, faYoutube);
+library.add( faFacebookF, faTwitter, faLinkedinIn, faYoutube, faInstagram, faPinterest );
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const dispatch = useDispatch();
+    const { socialMedia, loading, error } = useSelector((state) => state.socialMedia);
+    
+    useEffect(() => {
+        dispatch(getSocialMediaData());
+    }, [dispatch]);
+
+    const iconMap = {
+        Facebook: faFacebookF,
+        instagram: faInstagram,
+        twitter: faTwitter,
+        linkedin: faLinkedinIn,
+        youtube: faYoutube,
+        pinterest: faPinterest,
+    };
 
   return (
     <footer className="footer-section">
@@ -35,16 +53,23 @@ const Footer = () => {
                     <div className="row justify-content-between align-items-center">
                         <div className="col-lg-7 d-flex justify-content-center justify-content-lg-start order-lg-0 order-1">
                             <div className="copyright text-center">
-                            <p>© Alleygames, {currentYear} | Design by <Link to={"/"}>Alleygames.</Link> All rights reserved.</p>
+                                <p>© Alleygames, {currentYear} | Design by <Link to={"/"}>Alleygames.</Link> All rights reserved.</p>
                             </div>
                         </div>
                         <div className="col-xl-3 col-lg-5 d-flex justify-content-center justify-content-lg-end">
                             <div className="social">
                                 <ul className="footer-link gap-2 d-flex align-items-center">
-                                    <li><Link><i className="fb fab fa-facebook-f"></i></Link></li>
-                                    <li><Link><i className="ins fab fa-instagram"></i></Link></li>
-                                    <li><Link><i className="tw fab fa-twitter"></i></Link></li>
-                                    <li><Link><i className="in fab fa-linkedin-in"></i></Link></li>
+                                {socialMedia && socialMedia.length > 0 ? (
+                                    socialMedia.map((link) => (
+                                        <li key={link.id}>
+                                            <Link to={link.Media_link} target='_blank'>
+                                                <FontAwesomeIcon icon={iconMap[link.Social_Media]}/>
+                                            </Link>
+                                        </li>
+                                    ))
+                                    ) : (
+                                        <li>No social links available</li> // Add a fallback if no data
+                                    )}
                                 </ul>
                             </div>
                         </div>

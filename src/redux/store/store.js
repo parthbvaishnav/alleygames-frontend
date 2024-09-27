@@ -13,6 +13,7 @@ import blogSingleReducer from "../reducers/blogSingleReducer";
 import catWiseGameReducer from "../reducers/catWiseGameReducer";
 import aboutusListReducer from "../reducers/aboutusListReducer";
 import privacyPolicyListReducer from "../reducers/privacyPolicyListReducer";
+import socialMediaReducer from "../reducers/socialMediaReducer";
 const store = configureStore({
   reducer: {
     games: rootReducer,
@@ -28,6 +29,7 @@ const store = configureStore({
     catWiseGame:catWiseGameReducer,
     aboutusList:aboutusListReducer,
     privacyPolicyList:privacyPolicyListReducer,
+    socialMedia: socialMediaReducer,
   },
 });
 
