@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 import Home from "./pages/home/home";
 import Blog from "./pages/blog/blog";
 import Layout from "./layout/layout";
@@ -15,11 +15,12 @@ import { Provider } from "react-redux";
 import PlayGame from "./pages/playGame/playGame";
 import NotFound from "./pages/notFound/notFound";
 import ViewGame from "./pages/viewGame/viewGame";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 export const Context = createContext();
 
 function App() {
-  // useEffect(() => {
+  //  useEffect(() => {
   //   const threshold = 160;
 
   //   const detectDevTools = () => {
@@ -62,6 +63,7 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <ScrollToTop /> 
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route exact path="/" element={<Home />} />
@@ -74,15 +76,12 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/TermsConditions" element={<TermsConditions />} />
-            
-            {/* Catch all other routes and render NotFound component */}
           </Route>
-            <Route path="*" element={<NotFound />} />
-            <Route path="/game/:id" element={<PlayGame />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/game/:id" element={<PlayGame />} />
         </Routes>
       </BrowserRouter>
     </Provider>
-
   );
 }
 

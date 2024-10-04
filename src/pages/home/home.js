@@ -45,8 +45,8 @@ const Home = () => {
                   <div className="main-content">
                     <div className="top-area section-text">
                       <h5 className="sub-title">Welcome To AlleyGames</h5>
-                      <h1 className="title">Next Level <span>Crypto Gaming</span> Platform</h1>
-                      <p className="xlr">Mind-blowing bonuses. Zero withdrawal fees. Flash-like customer</p>
+                      <h1 className="title">Next Level <span>Online Gaming</span> Platform</h1>
+                      <p className="xlr">Play to win, but never forgot to have fun</p>
                     </div>
                   </div>
                 </div>

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { getGameByUUID, getSimilarGame } from '../../utils/indexService';
 import { Link, useParams } from 'react-router-dom';
+import ParticleBg from '../../components/particleBg/particleBg';
+import { leftArrowIcon } from '../../utils/ImagesLoad';
 
 const ViewGame = () => {
   const screenRef = useRef(null);
@@ -48,6 +50,7 @@ const ViewGame = () => {
                 <div className="banner-content game-content-banner"></div>
             </div>
         </section>
+        {/* <ParticleBg /> */}
         <section className="blog-details">
             <div className="overlay">
                 <div className="container pb-120">
@@ -107,6 +110,14 @@ const ViewGame = () => {
                         <div className="col-lg-8" id='game-section'>
                             <div className='game-area gameViewSection'>
                                 <section className={`games-container play-game`}>
+                                        <div className="footer-play-section">
+                                            <div className="gameNameArrow">
+                                                <Link to={`/games`}>
+                                                    <img src={leftArrowIcon} alt="Back Arrow" />
+                                                </Link>
+                                                <h4 className="game-title-bottom">{gameData.Title}</h4>
+                                            </div>
+                                        </div>
                                     <div className="game-div" ref={screenRef} style={{backgroundImage:`url("${gameData.Game_Banner_image}")`}}>
                                         {gameData.Video_link &&
                                             <video className="viewVideoGame" src={gameData.Video_link} muted autoPlay/>
@@ -114,7 +125,7 @@ const ViewGame = () => {
                                         <div className="banner-div" id='overlay-div'>
                                             <div className="game-logo-div">
                                                 <img className="game-logo" src={gameData.Game_Banner_image} alt="game-logo" />
-                                                <h4 className="game-title">{gameData.Title} </h4>
+                                                {/* <h4 className="game-title">{gameData.Title} </h4> */}
                                                 <Link
                                                 to={'/game/'+gameData.UUID}
                                                 className="cmn-btn play-now" id="link" 

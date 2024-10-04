@@ -242,7 +242,6 @@ export const getSocialMediaData = () => {
     dispatch(clearError());
     try {
       const response = await axios.get(GET_SOCIAL_LINK);
-      console.log('response.data-------------------------',response.data)
       dispatch(setSocialMedia(response.data));
       loaderStop(dispatch)
     } catch (error) {
