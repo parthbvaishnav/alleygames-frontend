@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCatWiseGame } from "../../utils/indexService";
 import { setGameLinkKey } from "../../redux/reducers/gameLinkReducer";
+import ParticleBg from "../../components/particleBg/particleBg";
 
 
 const Home = () => {
@@ -56,6 +57,7 @@ const Home = () => {
         </div>        
       </section>   
       <section className="popular-game">
+        <ParticleBg/>
         <div className="overlay pt-120 pb-120">
           {gameData.map((item, index) => (
             <div key={index} className="container gameBoxSection">

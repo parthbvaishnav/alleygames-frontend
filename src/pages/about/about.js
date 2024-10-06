@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/loader/loader';
 import { getAboutUsData } from '../../utils/indexService';
+import ParticleBg from '../../components/particleBg/particleBg';
 
 const About = () => {
     const dispatch = useDispatch();
@@ -37,7 +38,8 @@ const About = () => {
                 </div>
             </div>
         </section>
-        <div className="container gameBoxSectionAbout mt-5">
+        <ParticleBg/>
+        <div className="container gameBoxSectionAbout ptb-100">
             <div className="gap-4">
                 <h1>Alley Games</h1>
                 <div className="space-y-8">

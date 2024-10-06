@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import GameList from "../../components/game-containers/gameList";
 import CategoriesList from "../../components/categories/categoriesList";
 import { useLocation } from 'react-router-dom';
+import ParticleBg from "../../components/particleBg/particleBg";
 const AllGame = () => {
   const location = useLocation();
   const [searchFilter, setSearchFilter] = useState(location.state?.searchFilter)
@@ -43,6 +44,7 @@ const AllGame = () => {
         </div>
       </section>
       <section className="games-section">
+        <ParticleBg/>
         <div className="overlay pb-120">
           <div className="top-nav">            
             <div className="container">

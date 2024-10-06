@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { getSingleBlogList } from '../../utils/indexService';
 import Loader from '../../components/loader/loader';
+import ParticleBg from '../../components/particleBg/particleBg';
 
 const BlogDetails = () => {
     const { id } = useParams();
@@ -42,6 +43,7 @@ const BlogDetails = () => {
             </div>
         </section>
         <section className="blog-details">
+            <ParticleBg/>
             <div className="overlay">
                 <div className="container pb-120">
                     <div className="row justify-content-center">

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Loader from "../../components/loader/loader";
 import { blogpostimage1, rightarrow2 } from "../../utils/ImagesLoad";
+import ParticleBg from "../../components/particleBg/particleBg";
 
 const Blog = () => {
     const dispatch = useDispatch();
@@ -50,6 +51,7 @@ const Blog = () => {
             </section>
 
             <section className="blog-post">
+                <ParticleBg/>
                 <div className="overlay pt-120 pb-120">
                     <div className="container">
                         <div className="row">

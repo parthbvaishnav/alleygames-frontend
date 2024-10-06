@@ -870,6 +870,7 @@ label {
     width: 100%;
     z-index: 999;
     background-color: #1b1d4d;
+    position: relative;
 }
 
 .header-section.header-fixed {
@@ -1022,7 +1023,10 @@ label {
     top: 30px;
     pointer-events: auto;
 }
-
+section.banner-section {
+    position: relative;
+    z-index: 3;
+}
 .banner-section .overlay {
     background-image: url(../images/index-banner-bg.png);
     background-repeat: no-repeat;
@@ -1042,6 +1046,8 @@ label {
 
 .banner-section.index {
     overflow-x: initial;
+    position: relative;
+    z-index: 3;
 }
 
 .banner-section.inner-banner .main-content .breadcrumb-area {
@@ -1125,12 +1131,14 @@ label {
 
 .banner-section.blog.details .overlay .banner-content {
     /* padding: 180px 0 235px; */
-    padding: 100px 0 185px;
+    padding: 100px 0 105px;
 }
 .footer-section {
     background-image: url(../images/footer-bg.png);
     background-repeat: no-repeat;
     background-position: bottom;
+    position: relative;
+    z-index: 3;
 }
 
 
@@ -1445,6 +1453,8 @@ label {
     background-color: rgb(29, 12, 79);
     border-top: 1px solid rgb(61, 38, 128);
     border-bottom: 1px solid rgb(61, 38, 128);
+    position: relative;
+    z-index: 3;
 }
 
 .games-section .top-nav .nav-link {
@@ -2162,6 +2172,8 @@ video.bg-item{
 .pagination-area {
     background-color: rgb(32, 16, 72);
     border-radius: 20px;
+    position: relative;
+    z-index: 3;
 }
 
 .pagination-area .page-btn {
@@ -2210,7 +2222,7 @@ video.bg-item{
 
 .blog-details {
     transform: translateZ(10px);
-    margin-top: -150px;
+    margin-top: 60px;
     overflow-x: initial;
     position: relative;
     z-index: 1;
@@ -2228,6 +2240,8 @@ video.bg-item{
 
 .blog-details .container {
     /* border-bottom: 1px solid rgb(112, 81, 189); */
+    position: relative;
+    z-index: 12;
 }
 
 .blog-details .sidebar-area {
@@ -3176,7 +3190,8 @@ video.bg-item{
 
 /*================== particles ================== */
 #tsparticles{
-    height: calc(100vh - 8px);
+    /* height: calc(100vh - 8px); */
+    height: 100%;
     position: absolute;
     z-index: 0;
     width: 100%;
@@ -3275,3 +3290,10 @@ video.bg-item{
     vertical-align: middle;
   }
   
+  .container{
+    position: relative;
+  }
+  .ptb-100{
+    margin-top: 150px;
+    margin-bottom: 150px;
+  }

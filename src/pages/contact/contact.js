@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { submitContactForm } from '../../utils/indexService';
 import Loader from '../../components/loader/loader';
+import ParticleBg from '../../components/particleBg/particleBg';
 
 const Contact = () => {
     const [loading, setLoading] = useState(false)
@@ -118,6 +119,7 @@ const Contact = () => {
                 </div>
             </section>
             <section className="get-in-touch">
+                <ParticleBg/>
                 <div className="overlay pt-120 pb-120">
                     <div className="container">
                         <div className="row justify-content-center">
