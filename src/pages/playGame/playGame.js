@@ -29,17 +29,9 @@ const PlayGame = () => {
   }, [gameData]);
   const handleGameSetup = async (data) => {
     const { Game_link, Landscape } = data;
-    let frameWidth, frameHeight;
-    const isPortrait = window.innerHeight > window.innerWidth;
-    // Calculate frame dimensions based on game orientation and screen mode
-    if (Landscape) {
-      frameWidth = isPortrait ? window.innerWidth - 10 : document.getElementById("game-section").clientWidth || window.innerWidth - 10;
-      frameHeight = Math.round((4 * frameWidth) / 7) - (isPortrait ? 0 : 54);
-    } else {
-      frameHeight = isPortrait ? document.querySelector("gameFrameContainer")?.clientHeight : document.getElementById("game-section").clientHeight - 53;
-      // frameWidth = isPortrait ? Math.round((4 * frameHeight) / 7) : 732;
-      frameWidth = isPortrait ? document.getElementById("gameFrameContainer").clientWidth : document.getElementById("gameFrameContainer").clientWidth - 53;
-    }
+    let frameWidth, frameHeight; 
+    frameHeight = document.getElementById("game-section").clientHeight - 53;
+    frameWidth = document.getElementById("gameFrameContainer").clientWidth - 1;
 
     const dimensions = `${frameWidth}/${frameHeight}`;
     const gameFrame = document.getElementById("game");
@@ -52,13 +44,6 @@ const PlayGame = () => {
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement && gameFrame) {
         handleBack();
-        // setIsFullScreen(false);
-        // frameWidth = gameData.Landscape ? document.getElementById("game-section")?.clientWidth : document.getElementById("gameFrameContainer").clientWidth+50;
-        // frameHeight = gameData.Landscape ? Math.round((4 * frameWidth) / 7) - 54 : document.getElementById("gameFrameContainer")?.clientHeight - 53;
-        // const dimensions = `${frameWidth}/${frameHeight}`;
-        // setScreenSize(dimensions);
-        // gameFrame.style.width = `${frameWidth}px`;
-        // gameFrame.style.height = `${frameHeight}px`;
       }
     });
   };
@@ -81,14 +66,8 @@ const PlayGame = () => {
       fullScreenGame();
       setIsFullScreen(true);
       screen.requestFullscreen().then(() => {
-          let w = document.getElementById("gameFrameContainer").clientWidth;
-          let h = document.getElementById("gameFrameContainer").clientHeight;
-          let frameWidth = w - 0; //window.innerWidth - 80;
-          let frameHeight = h - 0; //window.innerHeight - 80;
-          if (!gameData.Landscape) {
-            frameWidth = h / 2;
-            frameHeight = h;
-          }
+          let frameHeight = document.getElementById("gameFrameContainer").clientHeight - 53;
+          let frameWidth = document.getElementById("gameFrameContainer").clientWidth - 1;
           const dimensions = `${frameWidth}/${frameHeight}`;
           setScreenSize(dimensions);
           document.getElementById("game").style.width = `${frameWidth}px`;
@@ -110,17 +89,8 @@ const PlayGame = () => {
         .then(() => {
           const gameSection = document.getElementById("game-section");
           if (gameSection) {
-            // let frameWidth = gameSection.clientWidth;
-            let frameWidth = document.getElementById("gameFrameContainer").clientWidth + 50;
-            let frameHeight = document.getElementById("gameFrameContainer").clientHeight;
-            if (!gameData.Landscape) {
-              frameWidth = document.getElementById("gameFrameContainer").clientWidth + 50;
-              frameHeight = gameSection.clientHeight - 53;
-            }else{
-              const isPortrait = window.innerHeight > window.innerWidth;
-              frameWidth = isPortrait ? window.innerWidth - 10 : document.getElementById("game-section").clientWidth || window.innerWidth - 10;
-              frameHeight = Math.round((4 * frameWidth) / 7) - (isPortrait ? 0 : 54);
-            }
+            let frameHeight = document.getElementById("game-section").clientHeight - 53;
+            let frameWidth = document.getElementById("gameFrameContainer").clientWidth - 1;            
             const dimensions = `${frameWidth}/${frameHeight}`;
             setScreenSize(dimensions);
             const gameFrame = document.getElementById("game");
@@ -171,7 +141,7 @@ const PlayGame = () => {
   };
   const manageAdCloseEvent = (soundCheck, isOn, nextevent) => {
     setSound(soundCheck, isOn);
-    sendUnityMsg(nextevent);
+    // sendUnityMsg(nextevent);
   };
   useEffect(() => {
     let event_name_stored = "";
@@ -262,7 +232,7 @@ const PlayGame = () => {
                         className="game-frame-container"
                         style={{
                           height: gameData.Landscape ? "auto" : isFullScreen ? "100vh" : "",
-                            aspectRatio: gameData.Landscape ? '16 / 9' : '9 / 16'
+                            //aspectRatio: gameData.Landscape ? '16 / 9' : '9 / 16'
                         }}
                         id="gameFrameContainer"
                       >
@@ -272,7 +242,7 @@ const PlayGame = () => {
                   </section>
                 </div>
               </div>
-                <div className="games-section sidebar" id="sidebar-left">
+                <div className="games-section sidebar" id="sidebar-right">
                   {/* <GoogleAd /> */}
                   <p>Google Ads</p>
                 </div>

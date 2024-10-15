@@ -44,14 +44,14 @@ const ParticleBg = () => {
                         modes: {
                             bubble: {
                                 distance: 500,
-                                size: 2,
+                                size: 1,
                                 duration: 0.5,
                                 opacity: 0.2,
                                 speed: 3,
                             },
                             repulse: {
                                 distance: 200,
-                                size: 2,
+                                size: 1,
                                 duration: 0.2,
                             },
                             push: {
@@ -81,7 +81,7 @@ const ParticleBg = () => {
                             random: true,
                         },
                         size: {
-                            value: { min: 1, max: 5 },
+                            value: { min: 1, max: 2 },
                             random: true,
                         },
                         links: {
