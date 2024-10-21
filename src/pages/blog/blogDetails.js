@@ -49,12 +49,14 @@ const BlogDetails = () => {
                     <div className="row justify-content-center">
                         <div className="col-lg-8">
                             <div className="img-area blogDetailsSection">
-                                {blogDataSingle.Blog_cover_image && <img src={blogDataSingle.Blog_cover_image} alt={blogDataSingle.Blog_cover_image}/>}
+                                {!loading && blogDataSingle.Blog_cover_image && <img src={blogDataSingle.Blog_cover_image} alt={blogDataSingle.Blog_cover_image}/>}
                             </div>
-                            <div className="row gameDescriptionSection justify-content-center">    
-                                <h4 className="blogTitle">{blogDataSingle.Blog_title}</h4>
-                                <div dangerouslySetInnerHTML={{ __html: blogDataSingle?.Blog_description }}></div>
-                            </div>
+                            {!loading && 
+                                <div className="row gameDescriptionSection justify-content-center">    
+                                    <h4 className="blogTitle">{blogDataSingle.Blog_title}</h4>
+                                    <div dangerouslySetInnerHTML={{ __html: blogDataSingle?.Blog_description }}></div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

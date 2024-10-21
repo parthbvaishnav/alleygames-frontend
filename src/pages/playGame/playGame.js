@@ -37,7 +37,7 @@ const PlayGame = () => {
     const gameFrame = document.getElementById("game");
     gameFrame.src = Game_link;
     gameFrame.style.width = `${frameWidth}px`;
-    gameFrame.style.height = isFullScreen ? "100%" : `${frameHeight}px`;
+    gameFrame.style.height = `${frameHeight}px`;
     gameFrame.style.border = "none";
     gameFrame.onload = () => setScreenSize(dimensions);
 
@@ -141,7 +141,9 @@ const PlayGame = () => {
   };
   const manageAdCloseEvent = (soundCheck, isOn, nextevent) => {
     setSound(soundCheck, isOn);
-    // sendUnityMsg(nextevent);
+    setTimeout(() => {
+      sendUnityMsg(nextevent);
+    }, 100);
   };
   useEffect(() => {
     let event_name_stored = "";
@@ -165,7 +167,9 @@ const PlayGame = () => {
             soundCheck = args[2];
           }
           setSound(soundCheck, false);
-          manageAdCloseEvent(soundCheck, false, event_name_stored);
+          setTimeout(() => {
+            manageAdCloseEvent(soundCheck, false, event_name_stored);
+          },10)
         } else {
           is_completeNext = true;
           sendUnityMsg(event_name_stored);
@@ -177,7 +181,9 @@ const PlayGame = () => {
             soundCheck = args[2];
           }
           setSound(soundCheck, false);
-          manageAdCloseEvent(soundCheck, false, event_name_stored);
+          setTimeout(() => {
+            manageAdCloseEvent(soundCheck, false, event_name_stored);
+          },10)
         } else {
           is_videoAd = true;
           sendUnityMsg(event_name_stored);
@@ -189,7 +195,9 @@ const PlayGame = () => {
             soundCheck = args[2];
           }
           setSound(soundCheck, false);
-          manageAdCloseEvent(soundCheck, false, event_name_stored);
+          setTimeout(() => {
+            manageAdCloseEvent(soundCheck, false, event_name_stored);
+          },10)
         } else {
           is_interstitial = true;
           sendUnityMsg(event_name_stored);
@@ -231,7 +239,7 @@ const PlayGame = () => {
                       <div
                         className="game-frame-container"
                         style={{
-                          height: gameData.Landscape ? "auto" : isFullScreen ? "100vh" : "",
+                          height: isFullScreen ? "100vh" : null,
                             //aspectRatio: gameData.Landscape ? '16 / 9' : '9 / 16'
                         }}
                         id="gameFrameContainer"

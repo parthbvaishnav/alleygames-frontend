@@ -1578,7 +1578,7 @@ img.bg-item{
     aspect-ratio: 4 / 5;
     object-fit: cover;
 }
-img.bg-item.landscape{
+.landscapon img.bg-item {
     aspect-ratio: 6 / 4;
 }
 
@@ -1596,7 +1596,7 @@ video.bg-item{
     object-fit: cover;
     aspect-ratio: 4 / 5;
 }
-video.bg-item.landscape{
+.landscapon video.bg-item{
     aspect-ratio: 6 / 4;
 }
 .games-section .all-items .magnific-area:hover .bg-area video.bg-item{

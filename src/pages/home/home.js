@@ -41,7 +41,7 @@ const Home = () => {
       [sectionId]: !prevState[sectionId], 
     }));
   };
-
+  
   return (
     <div>
       <section className="banner-section index">
@@ -67,7 +67,7 @@ const Home = () => {
         <ParticleBg />
         <div className="overlay pt-120 pb-120">
           {gameData.map((item, index) => (
-            <div key={index} className="container gameBoxSection">
+            <div key={index} className={`container gameBoxSection ${item.is_landscap == true ? 'landscapon' : null}`}>
               <div className="row wow fadeInUp">
                 <div className="text-left">
                   <div className="d-flex justify-content-between">
