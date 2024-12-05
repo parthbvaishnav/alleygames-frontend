@@ -2,7 +2,7 @@
 
 export const BUCKET_URL = "https://gamersaimstorage.s3.ap-south-1.amazonaws.com";
 
-export const MAIN_URL = "https://alleygames.pythonanywhere.com/";
+export const MAIN_URL = "https://api.alleygames.in/";
 export const BASE_URL = MAIN_URL;
 export const ALL_GAME = BASE_URL + "allgames/";
 export const ALL_CATEGORIES = BASE_URL + "categories/";

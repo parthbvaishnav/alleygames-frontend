@@ -6,6 +6,8 @@ import { Link, useParams } from "react-router-dom";
 import { BUCKET_URL } from "../../utils/constant";
 import GoogleAd from "../AdComponent/GoogleAd";
 import ParticleBg from "../../components/particleBg/particleBg";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs } from "firebase/firestore"; 
 
 const PlayGame = () => {
   const screenRef = useRef(null);
@@ -14,6 +16,33 @@ const PlayGame = () => {
   const gameData = useSelector((state) => state.singleGame.singleGameList);
   const loading = useSelector((state) => state.status.loading);
   const error = useSelector((state) => state.status.error);
+  const [isCompleteNext, setIsCompleteNext] = useState(false)
+  const [isVideoAd, setIsVideoAd] = useState(false)
+  const [isInterstitial, setIsInterstitial] = useState(false)
+  const firebaseConfig = {
+    apiKey: "AIzaSyD1zKVxsNfRqEnl5DCtLmyUiy7K3pgj_Rc",
+    authDomain: "alley-b9d49.firebaseapp.com",
+    projectId: "alley-b9d49",
+    storageBucket: "alley-b9d49.appspot.com",
+    messagingSenderId: "466077068329",
+    appId: "1:466077068329:web:d2215cf58588f6fa594038",
+    measurementId: "G-CLVTHKDXPW"
+};
+
+  useEffect(() => {
+    firebaseSetting()
+  }, [])
+  const firebaseSetting=async()=>{
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, "alley"));
+    querySnapshot.forEach((doc) => {
+        const FireRes = doc.data();
+        setIsCompleteNext(FireRes.is_completeNext);
+        setIsVideoAd(FireRes.is_videoAd);
+        setIsInterstitial(FireRes.is_interstitial);
+    });
+  }
 
   const [isFullScreen, setIsFullScreen] = useState(false);
   useEffect(() => {
@@ -148,9 +177,6 @@ const PlayGame = () => {
   useEffect(() => {
     let event_name_stored = "";
     let soundCheck = "";
-    let is_completeNext = false;
-    let is_videoAd = false;
-    let is_interstitial = false;
     window.addEventListener("message", (event) => {
       let args;
       if (event.data.toString().includes(",")) {
@@ -162,7 +188,7 @@ const PlayGame = () => {
       //STARTTIME, SHOW_BANNER, COMPLETE_NEXT, SHOW_VIDEO, SHOW_INTER, GAMEOVER, LEVELSKIP, KINFEAD,afterLevelFiald
       if (args[0] == "COMPLETE_NEXT") {
         event_name_stored = args[1];
-        if (is_completeNext) {
+        if (isCompleteNext) {
           if (args.length > 2) {
             soundCheck = args[2];
           }
@@ -171,12 +197,11 @@ const PlayGame = () => {
             manageAdCloseEvent(soundCheck, false, event_name_stored);
           },10)
         } else {
-          is_completeNext = true;
           sendUnityMsg(event_name_stored);
         }
       } else if (args[0] == "SHOW_VIDEO") {
         event_name_stored = args[1];
-        if (is_videoAd) {
+        if (isVideoAd) {
           if (args.length > 2) {
             soundCheck = args[2];
           }
@@ -185,12 +210,11 @@ const PlayGame = () => {
             manageAdCloseEvent(soundCheck, false, event_name_stored);
           },10)
         } else {
-          is_videoAd = true;
           sendUnityMsg(event_name_stored);
         }
       } else if (args[0] == "SHOW_INTER") {
         event_name_stored = args[1];
-        if (is_interstitial) {
+        if (isInterstitial) {
           if (args.length > 2) {
             soundCheck = args[2];
           }
@@ -199,7 +223,6 @@ const PlayGame = () => {
             manageAdCloseEvent(soundCheck, false, event_name_stored);
           },10)
         } else {
-          is_interstitial = true;
           sendUnityMsg(event_name_stored);
         }
       }
