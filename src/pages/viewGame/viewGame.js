@@ -124,12 +124,16 @@ const ViewGame = () => {
                                         }
                                         <div className="banner-div" id='overlay-div'>
                                             <div className="game-logo-div">
-                                                <img className="game-logo" src={gameData.Game_Banner_image} alt="game-logo" />
+                                                <img className="game-logo" src={gameData.Game_icon} alt="game-logo" />
                                                 {/* <h4 className="game-title">{gameData.Title} </h4> */}
                                                 <Link
-                                                to={'/game/'+gameData.UUID}
+                                                // to={'/game/'+gameData.UUID}
                                                 className="cmn-btn play-now" id="link" 
-                                                //onClick={handlePlayNow}
+                                                onClick={()=>{
+                                                    const currentUrl = window.location.href;
+                                                    const newUrl = currentUrl.replace('/view-game/', '/game/');
+                                                    window.location.href = newUrl;
+                                                }}
                                                 >Play Now
                                                 </Link>
                                             </div>
