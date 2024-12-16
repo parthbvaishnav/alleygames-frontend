@@ -115,7 +115,7 @@ const Home = () => {
                         >
                           <div className="magnific-area position-relative d-flex align-items-center justify-content-around">
                             <div className="bg-area">
-                              <img className="bg-item" src={game.Game_Banner_image} alt="game banner"/>
+                              <img className="bg-item" src={item.is_landscap == true ? game.Game_Banner_image : game.Game_icon} alt={item.is_landscap == true ? "game icon" : "game banner"}/>
                               <video className="bg-item" src={game.Video_link} muted onError={handleVideoError} />
                             </div>
                           </div>
