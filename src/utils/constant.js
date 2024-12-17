@@ -17,3 +17,4 @@ export const GAMES_BY_SECTION = BASE_URL + "gamesections/";
 export const GET_ABOUT_US = BASE_URL + "about_us/";
 export const GET_PRIVACY_POLICY = BASE_URL + "policy/";
 export const GET_SOCIAL_LINK = BASE_URL + "socialmedia/";
+export const GET_ADS_MANAGER = BASE_URL + "active_ad/";

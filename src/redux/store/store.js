@@ -14,6 +14,7 @@ import catWiseGameReducer from "../reducers/catWiseGameReducer";
 import aboutusListReducer from "../reducers/aboutusListReducer";
 import privacyPolicyListReducer from "../reducers/privacyPolicyListReducer";
 import socialMediaReducer from "../reducers/socialMediaReducer";
+import adsManagerReducer from "../reducers/adsManagerReducer";
 const store = configureStore({
   reducer: {
     games: rootReducer,
@@ -30,6 +31,7 @@ const store = configureStore({
     aboutusList:aboutusListReducer,
     privacyPolicyList:privacyPolicyListReducer,
     socialMedia: socialMediaReducer,
+    adsManager: adsManagerReducer,
   },
 });
 

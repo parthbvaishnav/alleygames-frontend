@@ -1,6 +1,6 @@
 // import { toast } from "react-toastify";
 import axios from "axios";
-import { ALL_BLOG, ALL_CATEGORIES, ALL_GAME, CONTACT_US, GAME_BY_CAT_ID, GAME_BY_UUID, GAMES_BY_SECTION, GET_ABOUT_US, GET_PRIVACY_POLICY, GET_SOCIAL_LINK, SEARCH_GAME, SINGLE_BLOG } from "../utils/constant";
+import { ALL_BLOG, ALL_CATEGORIES, ALL_GAME, CONTACT_US, GAME_BY_CAT_ID, GAME_BY_UUID, GAMES_BY_SECTION, GET_ABOUT_US, GET_ADS_MANAGER, GET_PRIVACY_POLICY, GET_SOCIAL_LINK, SEARCH_GAME, SINGLE_BLOG } from "../utils/constant";
 import {
   setGameList,
 } from "../redux/reducers/rootReducer";
@@ -14,6 +14,7 @@ import { setCatWiseGame } from "../redux/reducers/catWiseGameReducer";
 import { setAboutusList } from "../redux/reducers/aboutusListReducer";
 import { setPrivacyPolicyList } from "../redux/reducers/privacyPolicyListReducer";
 import { setSocialMedia } from "../redux/reducers/socialMediaReducer";
+import { setAdsManager } from "../redux/reducers/adsManagerReducer";
 // const getToken = () => {
 //   let user = localStorage.getItem("user");
 //   if (user !== null) {
@@ -246,6 +247,22 @@ export const getSocialMediaData = () => {
       loaderStop(dispatch)
     } catch (error) {
       console.error("Error fetching games:", error);
+      dispatch(setError(error.message));
+    } finally {
+      loaderStop(dispatch)
+    }
+  };
+};
+export const getAdsManager = () => {
+  return async (dispatch) => {
+   loaderStart(dispatch)
+    dispatch(clearError());
+    try {
+      const response = await axios.get(GET_ADS_MANAGER);
+      dispatch(setAdsManager(response.data));
+      loaderStop(dispatch)
+    } catch (error) {
+      console.error("Error fetching ads:", error);
       dispatch(setError(error.message));
     } finally {
       loaderStop(dispatch)

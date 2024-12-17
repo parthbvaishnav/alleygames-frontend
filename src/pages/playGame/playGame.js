@@ -1,24 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
-import { exitFullscreen, fullscreen, leftArrowIcon } from "../../utils/ImagesLoad";
+import {
+  exitFullscreen,
+  fullscreen,
+  leftArrowIcon,
+} from "../../utils/ImagesLoad";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameByUUID, getSimilarGame } from "../../utils/indexService";
+import { getAdsManager, getGameByUUID, getSimilarGame } from "../../utils/indexService";
 import { Link, useParams } from "react-router-dom";
 import { BUCKET_URL } from "../../utils/constant";
 import GoogleAd from "../AdComponent/GoogleAd";
 import ParticleBg from "../../components/particleBg/particleBg";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore"; 
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const PlayGame = () => {
   const screenRef = useRef(null);
   const dispatch = useDispatch();
   const { id } = useParams();
   const gameData = useSelector((state) => state.singleGame.singleGameList);
-  const loading = useSelector((state) => state.status.loading);
-  const error = useSelector((state) => state.status.error);
-  const [isCompleteNext, setIsCompleteNext] = useState(false)
-  const [isVideoAd, setIsVideoAd] = useState(false)
-  const [isInterstitial, setIsInterstitial] = useState(false)
+  const { adsManager, loading, error } = useSelector((state) => state.adsManager);
+  const [isCompleteNext, setIsCompleteNext] = useState(false);
+  const [isVideoAd, setIsVideoAd] = useState(false);
+  const [isInterstitial, setIsInterstitial] = useState(false);
   const firebaseConfig = {
     apiKey: "AIzaSyD1zKVxsNfRqEnl5DCtLmyUiy7K3pgj_Rc",
     authDomain: "alley-b9d49.firebaseapp.com",
@@ -26,23 +29,27 @@ const PlayGame = () => {
     storageBucket: "alley-b9d49.appspot.com",
     messagingSenderId: "466077068329",
     appId: "1:466077068329:web:d2215cf58588f6fa594038",
-    measurementId: "G-CLVTHKDXPW"
-};
+    measurementId: "G-CLVTHKDXPW",
+  };
 
   useEffect(() => {
-    firebaseSetting()
-  }, [])
-  const firebaseSetting=async()=>{
+    firebaseSetting();
+  }, []);
+  useEffect(() => {
+    dispatch(getAdsManager());
+
+  }, [dispatch]);
+  const firebaseSetting = async () => {
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const querySnapshot = await getDocs(collection(db, "alley"));
     querySnapshot.forEach((doc) => {
-        const FireRes = doc.data();
-        setIsCompleteNext(FireRes.is_completeNext);
-        setIsVideoAd(FireRes.is_videoAd);
-        setIsInterstitial(FireRes.is_interstitial);
+      const FireRes = doc.data();
+      setIsCompleteNext(FireRes.is_completeNext);
+      setIsVideoAd(FireRes.is_videoAd);
+      setIsInterstitial(FireRes.is_interstitial);
     });
-  }
+  };
 
   const [isFullScreen, setIsFullScreen] = useState(false);
   useEffect(() => {
@@ -58,7 +65,7 @@ const PlayGame = () => {
   }, [gameData]);
   const handleGameSetup = async (data) => {
     const { Game_link, Landscape } = data;
-    let frameWidth, frameHeight; 
+    let frameWidth, frameHeight;
     frameHeight = document.getElementById("game-section").clientHeight - 53;
     frameWidth = document.getElementById("gameFrameContainer").clientWidth - 1;
 
@@ -86,7 +93,15 @@ const PlayGame = () => {
 
   const setScreenSize = (dimensions) => {
     const gameFrame = document.getElementById("game");
-    gameFrame?.contentWindow.postMessage(`size_event,${dimensions}`,BUCKET_URL);
+    gameFrame?.contentWindow.postMessage(
+      `size_event,${dimensions}`,
+      BUCKET_URL
+    );
+    let arg = 'ADS_ON';
+    if(adsManager.length<=0){
+      arg='ADS_OFF';
+    }
+    gameFrame.contentWindow.postMessage("unity_event," + arg,"https://gamersaimstorage.s3.ap-south-1.amazonaws.com");
   };
 
   const handleFullScreen = () => {
@@ -94,9 +109,13 @@ const PlayGame = () => {
     if (screen) {
       fullScreenGame();
       setIsFullScreen(true);
-      screen.requestFullscreen().then(() => {
-          let frameHeight = document.getElementById("gameFrameContainer").clientHeight - 53;
-          let frameWidth = document.getElementById("gameFrameContainer").clientWidth - 1;
+      screen
+        .requestFullscreen()
+        .then(() => {
+          let frameHeight =
+            document.getElementById("gameFrameContainer").clientHeight - 53;
+          let frameWidth =
+            document.getElementById("gameFrameContainer").clientWidth - 1;
           const dimensions = `${frameWidth}/${frameHeight}`;
           setScreenSize(dimensions);
           document.getElementById("game").style.width = `${frameWidth}px`;
@@ -114,12 +133,15 @@ const PlayGame = () => {
     setIsFullScreen(false);
 
     if (document.fullscreenElement) {
-      document.exitFullscreen()
+      document
+        .exitFullscreen()
         .then(() => {
           const gameSection = document.getElementById("game-section");
           if (gameSection) {
-            let frameHeight = document.getElementById("game-section").clientHeight - 53;
-            let frameWidth = document.getElementById("gameFrameContainer").clientWidth - 1;            
+            let frameHeight =
+              document.getElementById("game-section").clientHeight - 53;
+            let frameWidth =
+              document.getElementById("gameFrameContainer").clientWidth - 1;
             const dimensions = `${frameWidth}/${frameHeight}`;
             setScreenSize(dimensions);
             const gameFrame = document.getElementById("game");
@@ -149,13 +171,18 @@ const PlayGame = () => {
   useEffect(() => {
     return () => {
       if (document.fullscreenElement) {
-        document.exitFullscreen().catch((err) => console.error("Error exiting fullscreen:", err));
+        document
+          .exitFullscreen()
+          .catch((err) => console.error("Error exiting fullscreen:", err));
       }
     };
   }, []);
   const sendUnityMsg = (arg) => {
     const iframe = document.getElementById("game");
-    iframe.contentWindow.postMessage("unity_event," + arg,"https://gamersaimstorage.s3.ap-south-1.amazonaws.com");
+    iframe.contentWindow.postMessage(
+      "unity_event," + arg,
+      "https://gamersaimstorage.s3.ap-south-1.amazonaws.com"
+    );
   };
   const setSound = (soundCheck, isOn) => {
     if (isOn) {
@@ -195,7 +222,7 @@ const PlayGame = () => {
           setSound(soundCheck, false);
           setTimeout(() => {
             manageAdCloseEvent(soundCheck, false, event_name_stored);
-          },10)
+          }, 10);
         } else {
           sendUnityMsg(event_name_stored);
         }
@@ -208,7 +235,7 @@ const PlayGame = () => {
           setSound(soundCheck, false);
           setTimeout(() => {
             manageAdCloseEvent(soundCheck, false, event_name_stored);
-          },10)
+          }, 10);
         } else {
           sendUnityMsg(event_name_stored);
         }
@@ -221,7 +248,7 @@ const PlayGame = () => {
           setSound(soundCheck, false);
           setTimeout(() => {
             manageAdCloseEvent(soundCheck, false, event_name_stored);
-          },10)
+          }, 10);
         } else {
           sendUnityMsg(event_name_stored);
         }
@@ -236,47 +263,75 @@ const PlayGame = () => {
         <div className="overlay">
           <div className="container">
             <div className="grid-view">
-                <div className="games-section sidebar" id="sidebar-left">
-                  {/* <GoogleAd /> */}
-                  <p>Google Ads</p>
-                </div>
+              <div className="games-section sidebar" id="sidebar-left">
+                {/* <GoogleAd /> */}
+                <p>Google Ads</p>
+              </div>
               <div className="game-play-area">
-                <div className="game-area" id="game-section"
+                <div
+                  className="game-area"
+                  id="game-section"
                   // style={{
                   //   width: gameData.Landscape == true ? "100%" : "fit-content",
                   // }}
                 >
-                  <section className={`games-container play-game ${isFullScreen ? "fullscreen" : ""}`}>
+                  <section
+                    className={`games-container play-game ${
+                      isFullScreen ? "fullscreen" : ""
+                    }`}
+                  >
                     <div className="game-play-div" ref={screenRef}>
                       <div className="footer-play-section">
                         <div className="gameNameArrow">
                           <Link to={`/view-game/${gameData.UUID}`}>
                             <img src={leftArrowIcon} alt="Back Arrow" />
                           </Link>
-                          <h4 className="game-title-bottom">{gameData.Title}</h4>
+                          <h4 className="game-title-bottom">
+                            {gameData.Title}
+                          </h4>
                         </div>
-                        <div className="fullScreenIcon" onClick={isFullScreen === false ? handleFullScreen : handleBack}>
-                          <img src={isFullScreen === true? exitFullscreen : fullscreen} alt="fullscreen"/>
+                        <div
+                          className="fullScreenIcon"
+                          onClick={
+                            isFullScreen === false
+                              ? handleFullScreen
+                              : handleBack
+                          }
+                        >
+                          <img
+                            src={
+                              isFullScreen === true
+                                ? exitFullscreen
+                                : fullscreen
+                            }
+                            alt="fullscreen"
+                          />
                         </div>
                       </div>
                       <div
                         className="game-frame-container"
                         style={{
                           height: isFullScreen ? "100vh" : null,
-                            //aspectRatio: gameData.Landscape ? '16 / 9' : '9 / 16'
+                          //aspectRatio: gameData.Landscape ? '16 / 9' : '9 / 16'
                         }}
                         id="gameFrameContainer"
                       >
-                        <iframe id="game" className="game-frame" allowFullScreen webkitAllowFullScreen mozAllowFullScreen ></iframe>
+                        <iframe
+                          id="game"
+                          className="game-frame"
+                          allowFullScreen
+                          webkitAllowFullScreen
+                          mozAllowFullScreen
+                        ></iframe>
                       </div>
                     </div>
                   </section>
                 </div>
               </div>
-                <div className="games-section sidebar" id="sidebar-right">
-                  {/* <GoogleAd /> */}
-                  <p>Google Ads</p>
-                </div>
+              <div className="games-section sidebar" id="sidebar-right">
+                {/* <GoogleAd /> */}
+                <p>Google Ads</p>
+              </div>
             </div>
           </div>
         </div>

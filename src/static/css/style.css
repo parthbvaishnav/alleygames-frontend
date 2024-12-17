@@ -1579,7 +1579,7 @@ img.bg-item{
     object-fit: cover;
 }
 .landscapon img.bg-item {
-    aspect-ratio: 6 / 4;
+    aspect-ratio: 6 / 3;
 }
 
 video.bg-item{
