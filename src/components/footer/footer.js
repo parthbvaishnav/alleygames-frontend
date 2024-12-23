@@ -20,7 +20,7 @@ const Footer = () => {
     }, [dispatch]);
 
     const iconMap = {
-        Facebook: faFacebookF,
+        facebook: faFacebookF,
         instagram: faInstagram,
         twitter: faTwitter,
         linkedin: faLinkedinIn,

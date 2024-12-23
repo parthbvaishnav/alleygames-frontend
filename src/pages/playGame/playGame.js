@@ -76,6 +76,13 @@ const PlayGame = () => {
     gameFrame.style.height = `${frameHeight}px`;
     gameFrame.style.border = "none";
     gameFrame.onload = () => setScreenSize(dimensions);
+    setTimeout(() => {      
+      let arg = 'ADS_ON';
+      if(adsManager.length<=0){
+        arg='ADS_OFF';
+      }
+      gameFrame.contentWindow.postMessage("unity_event," + arg,"https://gamersaimstorage.s3.ap-south-1.amazonaws.com");
+    }, 12000);
 
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement && gameFrame) {
@@ -97,11 +104,6 @@ const PlayGame = () => {
       `size_event,${dimensions}`,
       BUCKET_URL
     );
-    let arg = 'ADS_ON';
-    if(adsManager.length<=0){
-      arg='ADS_OFF';
-    }
-    gameFrame.contentWindow.postMessage("unity_event," + arg,"https://gamersaimstorage.s3.ap-south-1.amazonaws.com");
   };
 
   const handleFullScreen = () => {
