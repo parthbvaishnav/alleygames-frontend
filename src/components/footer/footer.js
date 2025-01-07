@@ -68,7 +68,7 @@ const Footer = () => {
                                         </li>
                                     ))
                                     ) : (
-                                        <li>No social links available</li> // Add a fallback if no data
+                                        <li>No social links available</li>
                                     )}
                                 </ul>
                             </div>
