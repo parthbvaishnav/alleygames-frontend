@@ -110,14 +110,14 @@ const ViewGame = () => {
                         <div className="col-lg-8" id='game-section'>
                             <div className='game-area gameViewSection'>
                                 <section className={`games-container play-game`}>
-                                        <div className="footer-play-section">
-                                            <div className="gameNameArrow">
-                                                <Link to={`/games`}>
-                                                    <img src={leftArrowIcon} alt="Back Arrow" />
-                                                </Link>
-                                                <h4 className="game-title-bottom">{gameData.Title}</h4>
-                                            </div>
+                                    <div className="footer-play-section">
+                                        <div className="gameNameArrow">
+                                            <Link to={`/games`}>
+                                                <img src={leftArrowIcon} alt="Back Arrow" />
+                                            </Link>
+                                            <h4 className="game-title-bottom">{gameData.Title}</h4>
                                         </div>
+                                    </div>
                                     <div className="game-div" ref={screenRef} style={{backgroundImage:`url("${gameData.Game_Banner_image}")`}}>
                                         {gameData.Video_link &&
                                             <video className="viewVideoGame" src={gameData.Video_link} muted autoPlay/>
@@ -141,6 +141,12 @@ const ViewGame = () => {
                                     </div>
                                 </section>
                             </div>
+                            <ins className="adsbygoogle"
+                            style={{display:"block", textAlign:"center", minHeight:160}}
+                            data-ad-layout="in-article"
+                            data-ad-format="fluid"
+                            data-ad-client="ca-pub-6750010916802163"
+                            data-ad-slot="3163093922"></ins>
                             {gameData?.Game_description && 
                                 <div className='game-area-description'>
                                     <div className='gameDescriptionSection'>

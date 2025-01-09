@@ -155,7 +155,26 @@ const PlayGame = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    const enterFullScreen = () => {
+      const screenElement = screenRef.current;
+      if (screenElement) {
+        screenElement
+          .requestFullscreen()
+          .then(() => {
+            console.log("Fullscreen mode enabled");
+          })
+          .catch(err => {
+            console.error("Error attempting to enable fullscreen:", err);
+          });
+      } else {
+        console.error("Fullscreen element not found");
+      }
+    };
 
+    // Attempt fullscreen on page load
+    enterFullScreen();
+  }, []); 
   useEffect(() => {
     return () => {
       if (document.fullscreenElement) {
@@ -191,7 +210,6 @@ const PlayGame = () => {
       let args;
       if (event.data.toString().includes(",")) {
         args = event.data.split(",");
-        console.log("agrs-------", args);
       } else {
         args = [event.data];
       }
@@ -244,7 +262,7 @@ const PlayGame = () => {
       <ParticleBg />
       <section className="blog-details" style={{ marginTop: 0 }}>
         <div className="overlay">
-          <div className="container">
+          <div className="container mobileFull">
             <div className="grid-view">
               <div className="games-section sidebar" id="sidebar-left">
                 {/* <GoogleAd /> */}
@@ -292,8 +310,11 @@ const PlayGame = () => {
                 </div>
               </div>
               <div className="games-section sidebar" id="sidebar-right">
-                {/* <GoogleAd /> */}
-                <p>Google Ads</p>
+                <ins className="adsbygoogle"
+                  style={{display:"inline-block", width:200, height:800,}}
+                  data-ad-client="ca-pub-6750010916802163"
+                  data-ad-slot="6802522234"
+                ></ins>
               </div>
             </div>
           </div>
