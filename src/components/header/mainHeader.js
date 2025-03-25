@@ -12,7 +12,15 @@ library.add(faBars, faSearch, faFacebookF, faTwitter, faLinkedinIn, faYoutube);
 const MainHeader = () => {
   const [searchFilter, setSearchFilter] = useState("")
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
+  const handleToggle = () => {
+      setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+      setIsOpen(false);
+  };
   useEffect(() => {
     if(searchFilter){
         navigate('/games', { state: { searchFilter }});
@@ -27,32 +35,36 @@ const MainHeader = () => {
                     <div className="row d-flex header-area">
                         <nav className="navbar navbar-expand-lg navbar-light">
                             <Link to="/" className="navbar-brand">
-                                <img src={HeaderFavLogo} className="fav d-none d-lg-block d-xl-none" alt="fav"/>
-                                <img src={HeaderLogo} className="logo d-block d-lg-none d-xl-block" alt="logo"/>
+                                <img src={HeaderFavLogo} className="fav d-none d-lg-block d-xl-none" alt="fav" />
+                                <img src={HeaderLogo} className="logo d-block d-lg-none d-xl-block" alt="logo" />
                             </Link>
-                            <button className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content">
+                            <button 
+                                className={`navbar-toggler ${isOpen ? "" : "collapsed"}`} 
+                                type="button" 
+                                onClick={handleToggle}
+                            >
                                 <i className="fas fa-bars"></i>
                             </button>
-                            <div className="collapse navbar-collapse justify-content-between" id="navbar-content">
+                            <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`} id="navbar-content">
                                 <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
                                     <li className="nav-item">
-                                        <NavLink to="/" className="nav-link" activeclassname="active">Home</NavLink>
+                                        <NavLink to="/" className="nav-link" activeclassname="active" onClick={closeMenu}>Home</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/games" className="nav-link" activeclassname="active">Category</NavLink>
+                                        <NavLink to="/games" className="nav-link" activeclassname="active" onClick={closeMenu}>Category</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/about" className="nav-link" activeclassname="active">About Us</NavLink>
+                                        <NavLink to="/about" className="nav-link" activeclassname="active" onClick={closeMenu}>About Us</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/blog" className="nav-link" activeclassname="active">Blog</NavLink>
+                                        <NavLink to="/blog" className="nav-link" activeclassname="active" onClick={closeMenu}>Blog</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" activeclassname="active" to="/contact">Contact</NavLink>
+                                        <NavLink to="/contact" className="nav-link" activeclassname="active" onClick={closeMenu}>Contact</NavLink>
                                     </li>
                                 </ul>
                                 <div className='games-section'>
-                                    <SearchFilter setSearchFilter={setSearchFilter}/>
+                                    <SearchFilter setSearchFilter={setSearchFilter} />
                                 </div>
                             </div>
                         </nav>

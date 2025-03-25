@@ -99,7 +99,7 @@ const PlayGame = () => {
   };
 
   const handleFullScreen = () => {
-    const screen = screenRef.current; // Access the ref instead of querying the DOM
+    const screen = screenRef.current; 
     if (screen) {
       fullScreenGame();
       setIsFullScreen(true);
@@ -110,8 +110,13 @@ const PlayGame = () => {
           let frameWidth = document.getElementById("gameFrameContainer").clientWidth - 1;
           const dimensions = `${frameWidth}/${frameHeight}`;
           setScreenSize(dimensions);
-          document.getElementById("game").style.width = `${frameWidth}px`;
-          document.getElementById("game").style.height = `${frameHeight}px`;
+          if(gameData.Landscape){
+            document.getElementById("game").style.height = `${frameWidth}px`;
+            document.getElementById("game").style.width = `${frameHeight}px`;
+          } else{
+            document.getElementById("game").style.width = `${frameWidth}px`;
+            document.getElementById("game").style.height = `${frameHeight}px`;
+          }
         })
         .catch(err => console.error("Error attempting to lock screen orientation:", err));
     } else {
@@ -143,6 +148,11 @@ const PlayGame = () => {
     }
   };
 
+  useEffect(() => {
+    if (window.innerWidth <= 991) {
+      handleFullScreen();
+    }
+  },[]);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 991) {

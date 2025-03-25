@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import Home from "./pages/home/home";
 import Blog from "./pages/blog/blog";
 import Layout from "./layout/layout";
@@ -20,6 +20,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 export const Context = createContext();
 
 function App() {
+  const [buttonShow, setButtonShow] = useState(true)
   //  useEffect(() => {
   //   const threshold = 160;
 
@@ -60,8 +61,49 @@ function App() {
   //     window.removeEventListener('contextmenu', disableRightClick);
   //   };
   // }, []);
+  const handleFullscreen = () => {
+    setButtonShow(false)
+    const elem = document.documentElement; 
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen().catch(err => {
+        console.error("Fullscreen request failed:", err);
+      });
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen().catch(err => {
+        console.error("Fullscreen request failed:", err);
+      });
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen().catch(err => {
+        console.error("Fullscreen request failed:", err);
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 992) {
+        document.querySelector(".fullScreenButton")?.classList.add("show");
+      } else {
+        document.querySelector(".fullScreenButton")?.classList.remove("show");
+      }
+    };
+  
+    window.addEventListener('resize', handleResize);
+    handleResize();
+  
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
   return (
     <Provider store={store}>
+      {window.innerWidth <= 992 && buttonShow ? 
+        <div className="fullScreenButton">
+          <a className="cmn-btn play-now" onClick={handleFullscreen}>Go Fullscreen</a>
+        </div>
+        :
+        null
+      }
       <BrowserRouter>
         <ScrollToTop /> 
         <Routes>
